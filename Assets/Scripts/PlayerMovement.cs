@@ -4,52 +4,33 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour {
 
-    private Rigidbody2D player;
+    private Rigidbody2D player;                                         // The player's rigidbody
 
-    [SerializeField] private float speed = 1;
-    [SerializeField] private float speedLimit = 3;
-    [SerializeField] private float rotationSpeed  = 3;
+    [SerializeField] [Range(1f, 15f)] private float acceleration = 5;   // The player's acceleration speed
+    [SerializeField] [Range(1f, 20f)] private float maxSpeed = 10;      // The player's max speed
+    [SerializeField] [Range(1f, 20f)] private float rotationSpeed = 5;  // The player's rotation speed
 
 	// Use this for initialization
 	void Start () {
+        // Get the player's rigidbody
         player = GetComponent<Rigidbody2D>();
-	}
-
-    // Takes care of movement by the player
-    void Update()
-    {
-        //Rotates left when the left arrow is pressed
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            player.transform.Rotate(0, 0, rotationSpeed);
-        }
-
-        //Accelerates the player when the up arrow is pressed and stops acceleration if speedlimit is reached.
-        if (Input.GetKey(KeyCode.UpArrow))
-        {
-            player.AddForce(player.transform.up * speed);
-            player.velocity = Vector2.ClampMagnitude(player.velocity, speedLimit);
-        }
-
-
-        //Rotates right when the right arrow is pressed
-        if (Input.GetKey(KeyCode.RightArrow))
-        {
-            player.transform.Rotate(0, 0, -rotationSpeed);
-        }
-
-
-        //Accelerates the player backwards when the down arrow is pressed and stops acceleration if speedlimit is reached.
-        if (Input.GetKey(KeyCode.DownArrow))
-        {
-            player.AddForce(player.transform.up * -speed);
-            player.velocity = Vector2.ClampMagnitude(player.velocity, speedLimit);
-        }
     }
 
-    //Fixes a bug where the player continously spins after colliding with objects
-    void OnCollisionExit2D(Collision2D coll)
+    // Takes care of movement by the player
+    void FixedUpdate()
     {
-        player.angularVelocity = 0;
+        // In order for the player object to work properly, it is important
+        // that the player's rigidbody has a reasonably large value in
+        // "Angular Drag", otherwise the player will not stop spinning by
+        // itself after a collision or rotation
+
+        // Increase the torque based on the virtual horizontal axis input
+        player.AddTorque(-Input.GetAxis("Horizontal") * rotationSpeed);
+
+        // Increase velocity in the forward direction based on the virtual vertical axis input
+        player.AddForce(Input.GetAxis("Vertical") * transform.up * acceleration);
+
+        // Clamp the player's velocity to the max speed
+        player.velocity = Vector2.ClampMagnitude(player.velocity, maxSpeed);
     }
 }
