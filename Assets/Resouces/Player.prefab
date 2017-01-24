@@ -21,6 +21,7 @@ GameObject:
   - 4: {fileID: 4720616932855892}
   - 212: {fileID: 212387541980621792}
   - 114: {fileID: 114000011789163210}
+  - 114: {fileID: 114000013024093854}
   - 50: {fileID: 50759656086605300}
   - 60: {fileID: 60035867785400688}
   m_Layer: 0
@@ -38,7 +39,7 @@ Transform:
   m_GameObject: {fileID: 1333593586440964}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2.6474667, y: -0.6674286, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 2, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
@@ -53,7 +54,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDrag: 0.1
-  m_AngularDrag: 10
+  m_AngularDrag: 15
   m_GravityScale: 0
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -88,10 +89,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afc6d79242d5f494db8b27ab6724c14b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1
-  maxSpeed: 3
-  rotationSpeed: 3
-  maxRotationSpeed: 5
+  acceleration: 5
+  maxSpeed: 15
+  rotationSpeed: 5
+--- !u!114 &114000013024093854
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1333593586440964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae7073b2c94de96478155f069a8fe537, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &212387541980621792
 SpriteRenderer:
   m_ObjectHideFlags: 1

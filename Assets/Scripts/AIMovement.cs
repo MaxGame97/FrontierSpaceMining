@@ -6,7 +6,7 @@ public class AIMovement : MonoBehaviour {
     [SerializeField] private Transform target;
     [SerializeField] [Range(1f, 15f)] private float acceleration = 2;   // The AI's acceleration speed
     [SerializeField] [Range(1f, 20f)] private float maxSpeed = 2;       // The AI's max speed
-    [SerializeField] [Range(1f, 20f)] private float rotationSpeed = 2;  // The AI's rotation speed
+    [SerializeField] [Range(0.1f, 20f)] private float rotationSpeed = 2;  // The AI's rotation speed
     private float minDistance = 1;                                      // The AI's minimum distance to the player
     private float range;                                                // The AI's range towards the player
     private Quaternion newRotation;                                     // The AI's rotation angle
