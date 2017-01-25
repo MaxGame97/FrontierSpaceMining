@@ -15,7 +15,7 @@ public class CameraBehaviour : MonoBehaviour {
     public float ViewportHeight { get { return viewportHeight; } }
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
         Camera camera = GetComponent<Camera>();         // Get the camera component
 
         viewportHeight = camera.orthographicSize;       // Get the camera's viewport height (in units)
