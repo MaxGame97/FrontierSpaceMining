@@ -7,7 +7,7 @@ public class EnemyBehaviour : MonoBehaviour {
     [SerializeField] [Range(1f, 15f)] private float acceleration = 2;       // The AI's acceleration speed
     [SerializeField] [Range(1f, 20f)]  private float maxSpeed = 2;          // The AI's max speed
     [SerializeField] [Range(0.01f, 0.1f)] private float rotationSpeed = 2;  // The AI's rotation speed
-    private float minDistance = 1;                                          // The AI's minimum distance to the player
+    private float minDistance = 0.1f;                                          // The AI's minimum distance to the player
     private float range;                                                    // The AI's range towards the player
     private Quaternion newRotation;                                         // The AI's rotation angle
 
@@ -22,7 +22,8 @@ public class EnemyBehaviour : MonoBehaviour {
     private SpriteRenderer viewConeSprite;
     private Transform viewConeTransform;
 
-    private LayerMask layerMask;
+    private LayerMask environmentLayerMask;
+    private LayerMask playerLayerMask;
 
     private State movementState;
     private IdleState idleState;
@@ -40,28 +41,13 @@ public class EnemyBehaviour : MonoBehaviour {
 
         public override void Entry()
         {
-            Debug.Log("Entered new state: IdleState");
-
             enemy.viewConeSprite.color = new Color(0f / 255f, 120f / 255f, 255f / 255f);
         }
 
         public override void Update()
         {
-            enemy.AI.velocity = new Vector2(enemy.AI.velocity.x / 2, enemy.AI.velocity.y / 2);
-
-            Vector3 targetDirection = enemy.target.position - enemy.transform.position;
-            float angle = Vector3.Angle(targetDirection, enemy.transform.up);
-
-            if (Mathf.Abs(angle) <= enemy.fieldOfView / 2)
-            {
-                if (Vector3.Distance(enemy.transform.position, enemy.target.transform.position) <= enemy.viewDistance)
-                {
-                    if (!Physics2D.Raycast(enemy.transform.position, targetDirection, Mathf.Infinity, enemy.layerMask))
-                    {
-                        Exit(enemy.alertState);
-                    }
-                }
-            }
+            if (enemy.CanSeePlayer())
+                Exit(enemy.alertState);
         }
 
         public override void Exit(State exitState)
@@ -82,8 +68,6 @@ public class EnemyBehaviour : MonoBehaviour {
 
         public override void Entry()
         {
-            Debug.Log("Entered new state: AlertState");
-
             enemy.viewConeSprite.color = new Color(255f / 255f, 40f / 255f, 0f / 255f);
         }
 
@@ -109,22 +93,7 @@ public class EnemyBehaviour : MonoBehaviour {
                 enemy.transform.rotation = Quaternion.Slerp(enemy.transform.rotation, enemy.newRotation, enemy.rotationSpeed);
             }
 
-            Vector3 targetDirection = enemy.target.position - enemy.transform.position;
-            float angle = Vector3.Angle(targetDirection, enemy.transform.up);
-
-            if (Mathf.Abs(angle) <= enemy.fieldOfView / 2)
-            {
-                if (Vector3.Distance(enemy.transform.position, enemy.target.transform.position) <= enemy.viewDistance)
-                {
-                    if (Physics2D.Raycast(enemy.transform.position, targetDirection, Mathf.Infinity, enemy.layerMask))
-                    {
-                        Exit(enemy.searchingState);
-                    }
-                }
-                else
-                    Exit(enemy.searchingState);
-            }
-            else
+            if(!enemy.CanSeePlayer())
                 Exit(enemy.searchingState);
         }
 
@@ -147,7 +116,6 @@ public class EnemyBehaviour : MonoBehaviour {
 
         public override void Entry()
         {
-            Debug.Log("Entered new state: SearchingState");
             lastSeenPosition = enemy.target.position;
 
             enemy.viewConeSprite.color = new Color(255f / 255f, 255f / 255f, 60f / 255f);
@@ -179,19 +147,8 @@ public class EnemyBehaviour : MonoBehaviour {
                 Exit(enemy.idleState);
             }
 
-            Vector3 targetDirection = enemy.target.position - enemy.transform.position;
-            float angle = Vector3.Angle(targetDirection, enemy.transform.up);
-
-            if (Mathf.Abs(angle) <= enemy.fieldOfView / 2)
-            {
-                if (Vector3.Distance(enemy.transform.position, enemy.target.transform.position) <= enemy.viewDistance)
-                {
-                    if (!Physics2D.Raycast(enemy.transform.position, targetDirection, Mathf.Infinity, enemy.layerMask))
-                    {
-                        Exit(enemy.alertState);
-                    }
-                }
-            }
+            if(enemy.CanSeePlayer())
+                Exit(enemy.alertState);
         }
 
         public override void Exit(State exitState)
@@ -216,7 +173,8 @@ public class EnemyBehaviour : MonoBehaviour {
 
         target = GameObject.FindGameObjectWithTag("Player").transform;
 
-        layerMask = LayerMask.GetMask("Environment");
+        environmentLayerMask = LayerMask.GetMask("Environment");
+        playerLayerMask = LayerMask.GetMask("Player");
 
         GameObject tempCone = Instantiate(viewCone);
         viewConeTransform = tempCone.transform;
@@ -234,5 +192,27 @@ public class EnemyBehaviour : MonoBehaviour {
     void FixedUpdate()
     {
         movementState.Update();
+    }
+
+    bool CanSeePlayer()
+    {
+        Vector3 targetDirection = target.position - transform.position;
+        float angle = Vector3.Angle(targetDirection, transform.up);
+
+        if (Mathf.Abs(angle) <= fieldOfView / 2)
+        {
+            if (Vector3.Distance(transform.position, target.transform.position) <= viewDistance)
+            {
+                RaycastHit2D environmentRaycast = Physics2D.Raycast(transform.position, targetDirection, Mathf.Infinity, environmentLayerMask);
+                RaycastHit2D playerRaycast = Physics2D.Raycast(transform.position, targetDirection, Mathf.Infinity, playerLayerMask);
+
+                if (playerRaycast.distance < environmentRaycast.distance || environmentRaycast.collider == null)
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }
