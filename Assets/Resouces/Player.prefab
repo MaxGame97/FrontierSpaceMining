@@ -180,8 +180,8 @@ MonoBehaviour:
   tempItem: {fileID: 1000012310755678, guid: 67a7826e2266eba4ab09f517bd76ea09, type: 2}
   miningParticles: {fileID: 1000011481895062, guid: a4c1682058a248a4995719ab1251dd5b,
     type: 2}
-  maxRange: 5
-  maxSpawnDelay: 0.44
+  maxRange: 10
+  maxSpawnDelay: 0.4
 --- !u!114 &114000013744109730
 MonoBehaviour:
   m_ObjectHideFlags: 1

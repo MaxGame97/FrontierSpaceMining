@@ -24,10 +24,10 @@ public class MiningLaser : MonoBehaviour
     {
         // If the fire button is pressed, the laser coroutine is started
         if (Input.GetButtonDown("Fire1"))
-            StartCoroutine("FireLaser");
-        // If the fire button is released, the laser coroutine is stopped
-        else if (Input.GetButtonUp("Fire1"))
+        {
             StopCoroutine("FireLaser");
+            StartCoroutine("FireLaser");
+        }
 
         // Decrease the spawn delay if it is larger than 0
         if(spawnDelay > 0)
