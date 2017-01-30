@@ -7,11 +7,12 @@ public class EnemyBehaviour : MonoBehaviour {
     [SerializeField] [Range(1f, 20f)]  private float maxSpeed = 2;          // The AI's max speed
     [SerializeField] [Range(0.01f, 0.1f)] private float rotationSpeed = 2;  // The AI's rotation speed
     [SerializeField] [Range(0.5f, 2.5f)] private float minDistance = 1f;    // The AI's minimum distance to the player
+    [SerializeField] [Range(0.01f, 1)] private float bulletSpeed = 0.1f;    // The Ai's speed of their bullets 
 
     [SerializeField] [Range(10f, 180f)] private float fieldOfView;          // The enemy's field of view
     [SerializeField] [Range(5f, 25f)] private float viewDistance;           // The enemy's view distance
     [SerializeField] GameObject viewCone;                                   // The prefab object used for the view cone
-    [SerializeField] private GameObject bullet;                             // The prefab object used for the bullet
+    [SerializeField] GameObject bullet;                                     // The prefab object used for the bullet
 
     private float range;                                                    // The AI's range towards the player
     private Quaternion newRotation;                                         // The AI's rotation angle
@@ -30,7 +31,6 @@ public class EnemyBehaviour : MonoBehaviour {
     private IdleState idleState;                                            // An idlestate instance
     private AlertState alertState;                                          // An alertstate instance
     private SearchingState searchingState;                                  // A searchingstate instance
-    private AttackState attackState;
 
     // When the enemy is in the idle state, it is waiting for the player to enter it's line of sight
     private class IdleState : State
@@ -110,13 +110,21 @@ public class EnemyBehaviour : MonoBehaviour {
                 enemy.transform.rotation = Quaternion.Slerp(enemy.transform.rotation, enemy.newRotation, enemy.rotationSpeed);
             }
 
-            // If the enemy can see the player and is within range, enter attackState
-            if (enemy.CanSeePlayer() && enemy.range < 10)
-                Exit(enemy.attackState);
+            if (!enemy.IsInvoking("Shoot"))
+            {
+                enemy.InvokeRepeating("Shoot", 1, 1);
+            }
 
             // If the enemy has lost sight of the player, enter the searching state
-            else if (!enemy.CanSeePlayer())
+            if (!enemy.CanSeePlayer())
+            {
+
+                if (enemy.IsInvoking("Shoot"))
+                {
+                    enemy.CancelInvoke("Shoot");
+                }
                 Exit(enemy.searchingState);
+            }
         }
 
         public override void Exit(State exitState)
@@ -189,81 +197,11 @@ public class EnemyBehaviour : MonoBehaviour {
         }
     }
 
-    // When the enemy is in the idle state, it is waiting for the player to enter it's line of sight
-    private class AttackState : State
-    {
-        // The current enemybehaviour instance
-        EnemyBehaviour enemy;
-
-        public AttackState(EnemyBehaviour enemy)
-        {
-            this.enemy = enemy;
-        }
-
-        public override void Entry()
-        {
-            // Change the view cone color to purple
-            enemy.viewConeSprite.color = new Color(255f / 255f, 0f / 255f, 255f / 255f);
-        }
-
-        public override void Update()
-        {
-            enemy.range = Vector2.Distance(enemy.transform.position, enemy.target.position);
-
-            // If the enemy is too far away from the player
-            if (enemy.range > enemy.minDistance)
-            {
-                //Move AI towards player
-                enemy.enemyRigidbody.AddForce(enemy.transform.up * enemy.acceleration);
-
-                // Clamp the player's velocity to the max speed
-                enemy.enemyRigidbody.velocity = Vector2.ClampMagnitude(enemy.enemyRigidbody.velocity, enemy.maxSpeed);
-
-                //Find what to rotate towards and reset x and y value since we dont want to ratate those axis
-                enemy.newRotation = Quaternion.LookRotation(enemy.transform.position - enemy.target.position, Vector3.forward);
-                enemy.newRotation.x = 0.0f;
-                enemy.newRotation.y = 0.0f;
-
-                //rotate AI towards player
-                enemy.transform.rotation = Quaternion.Slerp(enemy.transform.rotation, enemy.newRotation, enemy.rotationSpeed);
-            }
-            if (!enemy.IsInvoking("Shoot"))
-            {
-                enemy.InvokeRepeating("Shoot", 1, 1);
-            }
-
-            // If the enemy can see the player, enter the alert state
-            if (enemy.CanSeePlayer() && enemy.range > 10)
-            {
-                if (enemy.IsInvoking("Shoot"))
-                {
-                    enemy.CancelInvoke("Shoot");
-                }
-                Exit(enemy.alertState);
-            }
-            else if (!enemy.CanSeePlayer())
-            {
-                if (enemy.IsInvoking("Shoot"))
-                {
-                    enemy.CancelInvoke("Shoot");
-                }
-                Exit(enemy.searchingState);
-            }
-        }
-
-        public override void Exit(State exitState)
-        {
-            enemy.currentState = exitState;
-            exitState.Entry();
-        }
-    }
     void Shoot()
     {
-        Instantiate(bullet, transform.position, transform.rotation);
+        GameObject tempBullet = (GameObject)Instantiate(bullet, transform.position, transform.rotation);
 
-        Physics2D.IgnoreCollision(bullet.GetComponent<Collider2D>(), GetComponent<Collider2D>());
-
-        bullet.GetComponent<Rigidbody2D>().AddForce(bullet.transform.up * acceleration);
+        tempBullet.GetComponent<Rigidbody2D>().AddForce(tempBullet.transform.up * bulletSpeed);
     }
 
     void Awake()
@@ -271,7 +209,6 @@ public class EnemyBehaviour : MonoBehaviour {
         idleState = new IdleState(this);            // Instantiates the idle state
         alertState = new AlertState(this);          // Instantiates the alert state
         searchingState = new SearchingState(this);  // Instantiates the searching state
-        attackState = new AttackState(this);        // Instantiates the attack state
     }
 
     // Use this for initialization
