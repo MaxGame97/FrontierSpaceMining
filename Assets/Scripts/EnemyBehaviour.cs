@@ -7,7 +7,9 @@ public class EnemyBehaviour : MonoBehaviour {
     [SerializeField] [Range(1f, 20f)]  private float maxSpeed = 2;          // The AI's max speed
     [SerializeField] [Range(0.01f, 0.1f)] private float rotationSpeed = 2;  // The AI's rotation speed
     [SerializeField] [Range(0.5f, 2.5f)] private float minDistance = 1f;    // The AI's minimum distance to the player
-    [SerializeField] [Range(0.01f, 1)] private float bulletSpeed = 0.1f;    // The Ai's speed of their bullets 
+    [SerializeField] [Range(5, 300)] private float bulletSpeed = 5;    // The Ai's speed of their bullets 
+    [SerializeField] [Range(1f, 5)] private float bulletAliveTime = 5f;    // The Ai's speed of their bullets 
+
 
     [SerializeField] [Range(10f, 180f)] private float fieldOfView;          // The enemy's field of view
     [SerializeField] [Range(5f, 25f)] private float viewDistance;           // The enemy's view distance
@@ -202,6 +204,8 @@ public class EnemyBehaviour : MonoBehaviour {
         GameObject tempBullet = (GameObject)Instantiate(bullet, transform.position, transform.rotation);
 
         tempBullet.GetComponent<Rigidbody2D>().AddForce(tempBullet.transform.up * bulletSpeed);
+
+        Destroy(tempBullet, bulletAliveTime);
     }
 
     void Awake()
