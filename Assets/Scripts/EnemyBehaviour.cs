@@ -7,10 +7,12 @@ public class EnemyBehaviour : MonoBehaviour {
     [SerializeField] [Range(1f, 20f)]  private float maxSpeed = 2;          // The AI's max speed
     [SerializeField] [Range(0.01f, 0.1f)] private float rotationSpeed = 2;  // The AI's rotation speed
     [SerializeField] [Range(0.5f, 2.5f)] private float minDistance = 1f;    // The AI's minimum distance to the player
+    [SerializeField] [Range(0.01f, 1)] private float bulletSpeed = 0.1f;    // The Ai's speed of their bullets 
 
     [SerializeField] [Range(10f, 180f)] private float fieldOfView;          // The enemy's field of view
     [SerializeField] [Range(5f, 25f)] private float viewDistance;           // The enemy's view distance
     [SerializeField] GameObject viewCone;                                   // The prefab object used for the view cone
+    [SerializeField] GameObject bullet;                                     // The prefab object used for the bullet
 
     private float range;                                                    // The AI's range towards the player
     private Quaternion newRotation;                                         // The AI's rotation angle
@@ -108,9 +110,21 @@ public class EnemyBehaviour : MonoBehaviour {
                 enemy.transform.rotation = Quaternion.Slerp(enemy.transform.rotation, enemy.newRotation, enemy.rotationSpeed);
             }
 
+            if (!enemy.IsInvoking("Shoot"))
+            {
+                enemy.InvokeRepeating("Shoot", 1, 1);
+            }
+
             // If the enemy has lost sight of the player, enter the searching state
-            if(!enemy.CanSeePlayer())
+            if (!enemy.CanSeePlayer())
+            {
+
+                if (enemy.IsInvoking("Shoot"))
+                {
+                    enemy.CancelInvoke("Shoot");
+                }
                 Exit(enemy.searchingState);
+            }
         }
 
         public override void Exit(State exitState)
@@ -181,6 +195,13 @@ public class EnemyBehaviour : MonoBehaviour {
             enemy.currentState = exitState;
             exitState.Entry();
         }
+    }
+
+    void Shoot()
+    {
+        GameObject tempBullet = (GameObject)Instantiate(bullet, transform.position, transform.rotation);
+
+        tempBullet.GetComponent<Rigidbody2D>().AddForce(tempBullet.transform.up * bulletSpeed);
     }
 
     void Awake()
