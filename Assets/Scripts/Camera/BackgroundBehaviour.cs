@@ -8,7 +8,9 @@ public class BackgroundBehaviour : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         mainCamera = Camera.main;
-        
+
+        transform.localScale = new Vector3(1f, 1f, 1f);
+
         Vector3 originalSize = GetComponent<SpriteRenderer>().bounds.extents;
 
         float scaleX = mainCamera.GetComponent<CameraBehaviour>().ViewportWidth / originalSize.x;
