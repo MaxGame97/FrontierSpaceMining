@@ -426,6 +426,11 @@ Prefab:
       value: 
       objectReference: {fileID: 1000011634733356, guid: b2a1d8d79e470134dafe8978acffaea5,
         type: 2}
+    - target: {fileID: 114000012686877430, guid: d8d1b13322f147c42b4747ea6c49dfc5,
+        type: 2}
+      propertyPath: bulletSpeed
+      value: 300
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d8d1b13322f147c42b4747ea6c49dfc5, type: 2}
   m_IsPrefabParent: 0
