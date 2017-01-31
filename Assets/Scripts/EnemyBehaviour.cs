@@ -203,7 +203,7 @@ public class EnemyBehaviour : MonoBehaviour {
     {
         GameObject tempBullet = (GameObject)Instantiate(bullet, transform.position, transform.rotation);
 
-        tempBullet.GetComponent<Rigidbody2D>().AddForce(tempBullet.transform.up * bulletSpeed);
+        //tempBullet.GetComponent<Rigidbody2D>().AddForce(tempBullet.transform.up * bulletSpeed);
 
         Destroy(tempBullet, bulletAliveTime);
     }

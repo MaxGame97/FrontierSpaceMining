@@ -24,6 +24,7 @@ GameObject:
   - 114: {fileID: 114000013048414704}
   - 114: {fileID: 114000013744109730}
   - 114: {fileID: 114000013269480234}
+  - 114: {fileID: 114000012747595990}
   - 50: {fileID: 50000011094050456}
   - 60: {fileID: 60000010346797458}
   - 120: {fileID: 120000010039154508}
@@ -141,6 +142,23 @@ PolygonCollider2D:
       - {x: -1.1999999, y: -2.54}
       - {x: -1.17, y: -2.47}
       - {x: -1.18, y: -2.01}
+--- !u!114 &114000012747595990
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013032522566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6bfe00099bd88c44a855efb31d64417b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 150
+  currentHealth: 0
+  healthSlider: {fileID: 0}
+  playerMovement: {fileID: 114000012890105420}
+  playerMining: {fileID: 114000013269480234}
+  playerPickup: {fileID: 114000013048414704}
 --- !u!114 &114000012890105420
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -149,12 +167,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 1000013032522566}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afc6d79242d5f494db8b27ab6724c14b, type: 3}
+  m_Script: {fileID: 11500000, guid: 8590c6c3fba4fcd49b507e6990e344bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   acceleration: 5
   maxSpeed: 15
   rotationSpeed: 15
+  speedDamageLimit: 5
+  playerHealth: {fileID: 114000012747595990}
+  ScrollText: {fileID: 0}
+  speedtext: {fileID: 0}
 --- !u!114 &114000013048414704
 MonoBehaviour:
   m_ObjectHideFlags: 1
