@@ -25,5 +25,23 @@
 		"weight": 25,
 		"stackable": false,
 		"slug": "spare_part_printer"
+	},
+	{
+		"iD": 3,
+		"name": "Scarp Mtela",
+		"description": "Not scrap metal, i promise",
+		"value": 112,
+		"weight": 60,
+		"stackable": true,
+		"slug": "scrap_metal_not"
+	},
+	{
+		"iD": 4,
+		"name": "Placeholder name",
+		"description": "Placeholder description",
+		"value": -50,
+		"weight": -100,
+		"stackable": true,
+		"slug": "placeholder"
 	}
 ]

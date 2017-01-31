@@ -3,21 +3,34 @@ using System.Collections;
 
 public class ItemPickupBehaviour : MonoBehaviour {
 
-    void TempItemPickupFunction(GameObject item)
+    private Inventory inventory; // The player's inventory
+
+    // Use this for initialization
+    void Start()
     {
-        // TODO - Add logic here when inventory system exists
+        // Get the player's inventory
+        inventory = GameObject.Find("Inventory").GetComponent<Inventory>();
     }
 
-	void OnCollisionEnter2D(Collision2D collision)
+        void OnCollisionEnter2D(Collision2D collision)
     {
         // If the player is colliding with an item
         if (collision.gameObject.tag == "Item")
         {
             // Send the item to the inventory
-            TempItemPickupFunction(collision.gameObject);
+            ItemPickup(collision.gameObject);
 
             // Destory the item instance
             Destroy(collision.gameObject);
         }
+    }
+
+    void ItemPickup(GameObject itemObject)
+    {
+        // Get the item behaviour from the collided item
+        ItemBehaviour item = itemObject.GetComponent<ItemBehaviour>();
+
+        // Add the item to the inventory, by its ID
+        inventory.AddItem(item.ID);
     }
 }
