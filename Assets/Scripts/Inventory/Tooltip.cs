@@ -19,7 +19,7 @@ public class Tooltip : MonoBehaviour {
 
         tooltipText = tooltipPanel.transform.GetChild(0).GetComponent<Text>();  // Get the text component from the tooltip panel's child object
         tooltipRect = tooltipPanel.GetComponent<RectTransform>().rect;          // Get the rectangle object from the tooltip panel
-        canvas = GameObject.Find("Canvas").GetComponent<Canvas>();              // Find the UI canvas and get its canvas component
+        canvas = GameObject.Find("InventoryCanvas").GetComponent<Canvas>();              // Find the UI canvas and get its canvas component
 
         // Hides the tooltip panel
         tooltipPanel.SetActive(false);
