@@ -22,6 +22,7 @@ GameObject:
   - 212: {fileID: 212000012516907728}
   - 50: {fileID: 50000010625390988}
   - 60: {fileID: 60000013908951450}
+  - 114: {fileID: 114000012736212548}
   m_Layer: 0
   m_Name: Item
   m_TagString: Item
@@ -108,6 +109,18 @@ PolygonCollider2D:
       - {x: 0.35999998, y: -1.13}
       - {x: 0.47, y: -1.1}
       - {x: 0.62, y: -1.01}
+--- !u!114 &114000012736212548
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012310755678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cf1fa11f87f9e64e8771ec754dfb3da, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  iD: 1
 --- !u!212 &212000012516907728
 SpriteRenderer:
   m_ObjectHideFlags: 1
