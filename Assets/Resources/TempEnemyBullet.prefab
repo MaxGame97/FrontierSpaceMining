@@ -22,6 +22,7 @@ GameObject:
   - 212: {fileID: 212000011763888308}
   - 50: {fileID: 50000013499281660}
   - 60: {fileID: 60000010630086920}
+  - 114: {fileID: 114000010939672034}
   m_Layer: 0
   m_Name: TempEnemyBullet
   m_TagString: Untagged
@@ -89,6 +90,19 @@ PolygonCollider2D:
       - {x: -0.095, y: -0.14999999}
       - {x: -0.085, y: -0.08}
       - {x: -0.085, y: 0.089999996}
+--- !u!114 &114000010939672034
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000011634733356}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49b4b19e3a7fd9645a904e465335ef01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletSpeed: 301
+  bulletDamage: 10
 --- !u!212 &212000011763888308
 SpriteRenderer:
   m_ObjectHideFlags: 1
