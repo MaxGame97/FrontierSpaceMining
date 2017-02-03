@@ -35,14 +35,5 @@ public class ShieldPowerup : MonoBehaviour {
 
         Destroy(go);
     }
-
-
-    void OnTriggerEnter2D(Collider2D col)
-    {
-        if (col.tag == "Bullet")
-        {
-            Destroy(col);
-        }
-    }
-
+    
 }
