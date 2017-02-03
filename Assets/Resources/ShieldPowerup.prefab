@@ -21,7 +21,7 @@ GameObject:
   - 4: {fileID: 4000011123623222}
   - 212: {fileID: 212000011231870564}
   - 58: {fileID: 58000011299588244}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: ShieldPowerup
   m_TagString: Shield
   m_Icon: {fileID: 0}
@@ -36,7 +36,7 @@ Transform:
   m_GameObject: {fileID: 1000010368988036}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -12.77, y: 2.76, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalScale: {x: 0.7, y: 0.7, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
@@ -50,11 +50,11 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 100000
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 9.545455
+  m_Radius: 5
 --- !u!212 &212000011231870564
 SpriteRenderer:
   m_ObjectHideFlags: 1
