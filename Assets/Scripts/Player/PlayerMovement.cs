@@ -13,6 +13,7 @@ public class PlayerMovement : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        GetComponent<Rigidbody2D>().inertia = (1);
         // Get the player's rigidbody
         player = GetComponent<Rigidbody2D>();
         

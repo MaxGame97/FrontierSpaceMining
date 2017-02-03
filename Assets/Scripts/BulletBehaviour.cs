@@ -21,4 +21,11 @@ public class BulletBehaviour : MonoBehaviour {
         Destroy(gameObject);
     }
 
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.tag == "Shield")
+        {
+            Destroy(gameObject);
+        }
+    }
 }
