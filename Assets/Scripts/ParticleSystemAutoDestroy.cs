@@ -9,6 +9,12 @@ public class ParticleSystemAutoDestroy : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         particles = GetComponent<ParticleSystem>();
+
+        if (particles.loop)
+        {
+            Debug.LogError("The particle system is looping");
+            Destroy(gameObject);
+        }
 	}
 	
 	// Update is called once per frame

@@ -11,30 +11,65 @@ public class Inventory : MonoBehaviour {
 
     private ItemDatabase itemDatabase;                          // The item database
 
-    private GameObject inventoryPanel;                          // The inventory UI panel (unneccesary?)
+    private CanvasGroup canvas;                                 // Contains the inventory canvas's CanvasGroup
     private GameObject slotPanel;                               // The slot panel
+
+    private bool inventoryEnabled = false;                      // Specifies whether or not the inventory is enabled
 
     public List<Item> items = new List<Item>();                 // List containing all the items in the inventory
     public List<GameObject> slots = new List<GameObject>();     // List containing all the slots in the inventory
 
+    public bool InventoryEnabled { get { return inventoryEnabled; } }
+
 	// Use this for initialization
 	void Start () {
-        itemDatabase = GetComponent<ItemDatabase>();            // Get the item database component
-
-        inventoryPanel = GameObject.Find("Inventory Panel");    // Find the inventory panel (unneccesary?)
-        slotPanel = GameObject.Find("Slot Panel");              // Find the slot panel
-
-        for(int i = 0; i < inventorySlotCount; i++)             // Loops as many times as there are slots in the inventory
+        // If all inventory UI exists
+        if (GameObject.Find("Inventory System") != null && GameObject.Find("Slot Panel") != null)
         {
-            items.Add(new Item());                              // Add an empty item
+            canvas = GameObject.Find("Inventory System").GetComponent<CanvasGroup>();   // Get the canvas's CanvasGroup
+            slotPanel = GameObject.Find("Slot Panel");                                  // Find the slot panel
+        }
+        else
+        {
+            // Throw an error message to the debug log
+            Debug.LogError("Some or all of the inventory UI is missing, inventory system disabled");
+            // If the inventory is missing, delete the item pickup behaviour and exit this function
+            Destroy(this);
+            return;
+        }
 
-            slots.Add(Instantiate(inventorySlotPrefab));        // Instantiate a slot prefab
-            slots[i].transform.SetParent(slotPanel.transform);  // Parent the slot panel to the slot
-            slots[i].GetComponent<Slot>().SlotID = i;           // Assign the slot an ID
+        itemDatabase = GetComponent<ItemDatabase>();                                    // Get the item database component
+
+        for (int i = 0; i < inventorySlotCount; i++)                                    // Loops as many times as there are slots in the inventory
+        {
+            items.Add(new Item());                                                      // Add an empty item
+
+            slots.Add(Instantiate(inventorySlotPrefab));                                // Instantiate a slot prefab
+            slots[i].transform.SetParent(slotPanel.transform);                          // Parent the slot panel to the slot
+            slots[i].GetComponent<Slot>().SlotID = i;                                   // Assign the slot an ID
         }
 
         AddItem(0);
         AddItem(2);
+        AddItem(3);
+        AddItem(4);
+
+        DisableInventoryPanel();
+    }
+
+    void Update()
+    {
+        if (Input.GetButtonDown("Fire2"))
+        {
+            if (inventoryEnabled)
+            {
+                DisableInventoryPanel();
+            }
+            else
+            {
+                EnableInventoryPanel();
+            }
+        }
     }
 
     // Adds an item to the inventory
@@ -152,6 +187,20 @@ public class Inventory : MonoBehaviour {
 
         // If no item was removed, return false, removing the item(s) did not succeed
         return false;
+    }
+
+    // Displays the inventory panel
+    public void EnableInventoryPanel()
+    {
+        canvas.alpha = 1;
+        inventoryEnabled = true;
+    }
+
+    // Hides the inventory panel
+    public void DisableInventoryPanel()
+    {
+        canvas.alpha = 0;
+        inventoryEnabled = false;
     }
 
     // Returns true if a specified item already exists in the inventory

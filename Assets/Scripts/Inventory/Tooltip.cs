@@ -15,14 +15,27 @@ public class Tooltip : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        tooltipPanel = GameObject.Find("Tooltip Panel");                         // Find the tooltip panel object
+        // If all inventory and tooltip UI exists
+        if (GameObject.Find("Tooltip Panel") != null && GameObject.Find("Inventory System") != null)
+        {
+            tooltipPanel = GameObject.Find("Tooltip Panel");                        // Find the tooltip panel object
+        
+            tooltipText = tooltipPanel.transform.GetChild(0).GetComponent<Text>();  // Get the text component from the tooltip panel's child object
+            tooltipRect = tooltipPanel.GetComponent<RectTransform>().rect;          // Get the rectangle object from the tooltip panel
 
-        tooltipText = tooltipPanel.transform.GetChild(0).GetComponent<Text>();  // Get the text component from the tooltip panel's child object
-        tooltipRect = tooltipPanel.GetComponent<RectTransform>().rect;          // Get the rectangle object from the tooltip panel
-        canvas = GameObject.Find("InventoryCanvas").GetComponent<Canvas>();              // Find the UI canvas and get its canvas component
+            canvas = GameObject.Find("Inventory System").GetComponent<Canvas>();    // Find the UI canvas and get its canvas component
 
-        // Hides the tooltip panel
-        tooltipPanel.SetActive(false);
+            // Hides the tooltip panel
+            tooltipPanel.SetActive(false);
+        }
+        else
+        {
+            // Throw an error message to the debug log
+            Debug.LogError("Some or all of the inventory UI is missing, inventory system disabled");
+            // If the inventory is missing, delete the item pickup behaviour and exit this function
+            Destroy(this);
+            return;
+        }
     }
 
     // Activates and updates the tooltip panel

@@ -15,7 +15,7 @@ public class Slot : MonoBehaviour, IDropHandler {
     void Start()
     {
         // Get the player's inventory
-        inventory = GameObject.Find("Inventory").GetComponent<Inventory>();
+        inventory = GameObject.Find("Inventory Controller").GetComponent<Inventory>();
     }
 
     // When an item is dropped on the slot

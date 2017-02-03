@@ -3,35 +3,22 @@ using System.Collections;
 
 public class BulletBehaviour : MonoBehaviour {
 
-    [SerializeField][Range(50, 3000)] private float bulletSpeed = 300;    // The Ai's speed of their bullets 
-    [SerializeField][Range(5, 300)] private float bulletDamage = 10;    // The Ai's damage of their bullets 
+    [SerializeField] [Range(0.01f, 0.5f)] private float bulletSpeed = 0.1f; // The bullet's initial speed
+    [SerializeField] [Range(0f, 100f)] private float bulletDamage = 10;     // The damage inflicted by the bullet
 
+    public float BulletDamage { get { return bulletDamage; } }
 
     // Use this for initialization
     void Start () {
-        //Constant moving of the bullet
+        // Increase the speed of the bullet
         gameObject.GetComponent<Rigidbody2D>().AddForce(transform.up * bulletSpeed);
     }
 
-    // Update is called once per frame
-    void Update () {
-
-        
-        
-
-    }
-
-     void OnTriggerEnter2D(Collider2D other)
+    // OnCollisionEnter2D is called on collision with another collider
+     void OnCollisionEnter2D()
     {
-        if (other.tag == "Player")
-        {
-            other.GetComponent<PlayerHealth>().TakeDamage(bulletDamage);
-            Destroy(this.gameObject);
-        }
-        if(other.gameObject.layer == 8)
-        {
-            Destroy(this.gameObject);
-        }
+        // Destroy the bullet on collision
+        Destroy(gameObject);
     }
 
 }

@@ -10,17 +10,6 @@ public class PlayerMovement : MonoBehaviour {
     [SerializeField] [Range(1f, 15f)] private float acceleration = 5;   // The player's acceleration speed
     [SerializeField] [Range(1f, 20f)] private float maxSpeed = 10;      // The player's max speed
     [SerializeField] [Range(1f, 20f)] private float rotationSpeed = 5;  // The player's rotation speed
-    [SerializeField] [Range(1f, 20f)] private float speedDamageLimit = 5;  // The player's required speed to take damage from collisions
-
-
-    [SerializeField] private PlayerHealth playerHealth;
-    [SerializeField] private ScrollingTextBehaviour ScrollText;
-
-    private float currentSpeed;
-    private float tempDamage;
-    private int damageToTake;
-
-    public Text speedtext;
 
     // Use this for initialization
     void Start () {
@@ -45,40 +34,5 @@ public class PlayerMovement : MonoBehaviour {
 
         // Clamp the player's velocity to the max speed
         player.velocity = Vector2.ClampMagnitude(player.velocity, maxSpeed);
-
-        currentSpeed = player.velocity.magnitude;
     }
-
-    void Update()
-    {
-        speedtext.text = currentSpeed.ToString();
-
-
-        if (Input.GetButtonDown("Fire2"))
-        {
-            string temp = "Resources found: ";
-            temp += Random.Range(100, 500) + " iron, ";
-            temp += Random.Range(100, 500) + " zinc, ";
-            temp += Random.Range(100, 500) + " nickel, ";
-            temp += Random.Range(100, 50000) + " ice";
-            ScrollText.setText(temp);
-        }
-
-    }
-
-    void OnCollisionEnter2D(Collision2D other)
-    {
-
-        if (other.gameObject.tag != "Item" && other.gameObject.layer == 8)
-        {
-            if(currentSpeed > speedDamageLimit)
-            {
-                tempDamage = currentSpeed - speedDamageLimit;
-                tempDamage = Mathf.Pow(tempDamage, 1.3f);
-
-                playerHealth.TakeDamage(tempDamage);
-            }
-        }
-    }
-
 }

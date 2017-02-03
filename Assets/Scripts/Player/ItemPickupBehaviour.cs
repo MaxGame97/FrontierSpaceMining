@@ -3,13 +3,42 @@ using System.Collections;
 
 public class ItemPickupBehaviour : MonoBehaviour {
 
-    private Inventory inventory; // The player's inventory
+    private Inventory inventory;    // The player's inventory
+
+    private HUD hUD;                // The HUD
 
     // Use this for initialization
     void Start()
     {
-        // Get the player's inventory
-        inventory = GameObject.Find("Inventory").GetComponent<Inventory>();
+        // If the inventory exists
+        if (GameObject.Find("Inventory Controller") != null)
+        {
+            // Get the player's inventory
+            inventory = GameObject.Find("Inventory Controller").GetComponent<Inventory>();
+        }
+        else
+        {
+            // Throw an error message to the debug log
+            Debug.LogError("The inventory is missing, item pickup disabled");
+            // If the inventory is missing, delete the item pickup behaviour and exit this function
+            Destroy(this);
+            return;
+        }
+
+        // If the inventory exists
+        if (GameObject.Find("HUD Controller") != null)
+        {
+            // Get the player's inventory
+            hUD = GameObject.Find("HUD Controller").GetComponent<HUD>();
+        }
+        else
+        {
+            // Throw an error message to the debug log
+            Debug.LogError("The HUD is missing, item pickup disabled");
+            // If the HUD is missing, delete the item pickup behaviour and exit this function
+            Destroy(this);
+            return;
+        }
     }
 
         void OnCollisionEnter2D(Collision2D collision)
@@ -32,5 +61,8 @@ public class ItemPickupBehaviour : MonoBehaviour {
 
         // Add the item to the inventory, by its ID
         inventory.AddItem(item.ID);
+
+        // Send a message to the HUD
+        hUD.AddNotificationString("'" + item.Name + "' Picked up");
     }
 }

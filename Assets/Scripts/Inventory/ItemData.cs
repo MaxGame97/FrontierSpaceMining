@@ -22,15 +22,15 @@ public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     // Use this for initialization
     void Start()
     {
-        inventory = GameObject.Find("Inventory").GetComponent<Inventory>(); // Get the player's inventory
-        tooltip = GameObject.Find("Inventory").GetComponent<Tooltip>();     // Get the tooltip component
+        inventory = GameObject.Find("Inventory Controller").GetComponent<Inventory>(); // Get the player's inventory
+        tooltip = GameObject.Find("Inventory Controller").GetComponent<Tooltip>();     // Get the tooltip component
     }
 
     // When the item is starting to be dragged
     public void OnBeginDrag(PointerEventData eventData)
     {
         // If the item is not an empty item
-        if(Item != null)
+        if(Item != null && inventory.InventoryEnabled)
         {
             // Get the drag offset based on the mouse's current position realtive to the item's position
             dragOffset = eventData.position - new Vector2(transform.position.x, transform.position.y);

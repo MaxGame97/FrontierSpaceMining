@@ -5,53 +5,50 @@ using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour {
 
-    [SerializeField] private float maxHealth; //The Player's maximum health
-    [SerializeField] private float currentHealth; //The Player's current health
+    [SerializeField] private float maxHealth = 100f;                        // The Player's maximum health
+    [SerializeField] [Range(1f, 5f)] private float velocityThreshold = 3f;   // The velocity needed to take damage on collision
 
-    [SerializeField] private Slider healthSlider;  //Reference to the UI healthbar
+    private float currentHealth;                                            // The Player's current health
 
-    [SerializeField] private PlayerMovement playerMovement;    //Reference 
-    [SerializeField] private MiningLaser playerMining;
-    [SerializeField] private ItemPickupBehaviour playerPickup;
+    public float MaxHealth { get { return maxHealth; } }
+    public float CurrentHealth { get { return currentHealth; } }
 
-
-    private bool isDead;
-
-	void Awake () {
-
-        
-        currentHealth = maxHealth;  //Starting health of the player
-        healthSlider.maxValue = maxHealth;  //Maximum health on the healthbar set
-        healthSlider.value = maxHealth;     //Starting health of the player on the healthbar
+	void Start ()
+    {
+        // Set the player's current health to the max health
+        currentHealth = maxHealth;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.tag == "Bullet")
+        {
+            BulletBehaviour bullet = collision.gameObject.GetComponent<BulletBehaviour>();
+
+            TakeDamage(bullet.BulletDamage);
+        }
+        else
+        {
+            if(collision.rigidbody != null)
+            {
+                if (collision.relativeVelocity.magnitude > velocityThreshold)
+                    TakeDamage(collision.relativeVelocity.magnitude * 2);
+            }
+        }
+    }
 
     public void TakeDamage(float amount)
     {
-
-        currentHealth -= amount;    //Reduce current health with the amount of damage taken
-
-
-        healthSlider.value = currentHealth;     //Change the slider's position to match the health of the player
-
-
-        if(currentHealth <= 0 && !isDead) //If all health is lost and the isDead bool is not yet set to true, 
+        currentHealth -= amount;    // Reduce current health with the amount of damage taken
+        
+        if(currentHealth <= 0)      // If all health is lost and the isDead bool is not yet set to true, 
         {
-            Death();    //the player Dies
+            Death();                // The player Dies
         }
     }
 
     void Death()
     {
-
-        isDead = true;  //Sets isDead to true, so that the function won't be called again.
-
-        playerMovement.enabled = false; //Disables movement when dead
-        playerMining.enabled = false;   //Disables mining when dead
-        playerPickup.enabled = false;   //Disables pickups when dead
+        // TODO - Change this to affect the player's state instead of disabling components
     }
 }
