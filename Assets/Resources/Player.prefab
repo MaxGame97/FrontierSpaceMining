@@ -154,7 +154,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 150
-  velocityThreshold: 0
+  velocityThreshold: 3
+  ignoredCollisionTags:
+  - Item
 --- !u!114 &114000012890105420
 MonoBehaviour:
   m_ObjectHideFlags: 1

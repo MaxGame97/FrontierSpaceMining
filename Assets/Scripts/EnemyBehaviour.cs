@@ -251,6 +251,10 @@ public class EnemyBehaviour : MonoBehaviour {
             // If the enemy is in the idle state, enter the searching state
             if (currentState == idleState)
                 currentState.Exit(searchingState);
+
+            // If the enemy is in the searching state, run the entry function again
+            if (currentState == searchingState)
+                currentState.Entry();
         }
     }
 

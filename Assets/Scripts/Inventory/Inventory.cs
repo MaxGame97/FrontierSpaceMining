@@ -43,7 +43,7 @@ public class Inventory : MonoBehaviour {
         for (int i = 0; i < inventorySlotCount; i++)                                    // Loops as many times as there are slots in the inventory
         {
             items.Add(new Item());                                                      // Add an empty item
-
+            
             slots.Add(Instantiate(inventorySlotPrefab));                                // Instantiate a slot prefab
             slots[i].transform.SetParent(slotPanel.transform);                          // Parent the slot panel to the slot
             slots[i].GetComponent<Slot>().SlotID = i;                                   // Assign the slot an ID

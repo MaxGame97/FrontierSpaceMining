@@ -6,7 +6,9 @@ using UnityEngine.UI;
 public class PlayerHealth : MonoBehaviour {
 
     [SerializeField] private float maxHealth = 100f;                        // The Player's maximum health
-    [SerializeField] [Range(1f, 5f)] private float velocityThreshold = 3f;   // The velocity needed to take damage on collision
+    [SerializeField] [Range(1f, 5f)] private float velocityThreshold = 3f;  // The velocity needed to take damage on collision
+
+    [SerializeField] private string[] ignoredCollisionTags;                 // The tags that the player will ignore on collision with
 
     private float currentHealth;                                            // The Player's current health
 
@@ -21,18 +23,42 @@ public class PlayerHealth : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D collision)
     {
+        // Check through all ignored collision tags
+        for(int i = 0; i < ignoredCollisionTags.Length; i++)
+        {
+            // If the collided tag matched any of the ignored tags
+            if (collision.gameObject.tag == ignoredCollisionTags[i])
+                // Exit the function
+                return;
+        }
+
+        // If not, continue
+
+        // If the player is hit by a bullet
         if(collision.gameObject.tag == "Bullet")
         {
+            // Get the bullet behaviour
             BulletBehaviour bullet = collision.gameObject.GetComponent<BulletBehaviour>();
-
+            // Deal the bullet's damage to the player
             TakeDamage(bullet.BulletDamage);
         }
         else
         {
+            // If the collided object has a rigidbody
             if(collision.rigidbody != null)
             {
+                // If the relative velocity between the player and the collided object is greater than the velocity threshold
                 if (collision.relativeVelocity.magnitude > velocityThreshold)
-                    TakeDamage(collision.relativeVelocity.magnitude * 2);
+                {
+                    Rigidbody2D playerRigidbody = GetComponent<Rigidbody2D>();  // Get the player's rigidbody
+                    Rigidbody2D collisionRigidbody = collision.rigidbody;       // Get the collision's rigidbody
+
+                    // Get the damage multiplier, clamped to max 5
+                    float damageMultiplier = Mathf.Clamp(collisionRigidbody.mass / playerRigidbody.mass, 0f, 5f);
+
+                    // Deal damage to the player, based on the relative speed multiplied by the damage multiplier
+                    TakeDamage((collision.relativeVelocity.magnitude - velocityThreshold) * damageMultiplier);
+                }
             }
         }
     }
