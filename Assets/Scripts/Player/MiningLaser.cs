@@ -13,6 +13,10 @@ public class MiningLaser : MonoBehaviour
     private LayerMask environmentLayerMask;                         // A layermask containing the environment layer
     private LineRenderer miningLaser;                               // The linerenderer of the mining laser
 
+    [SerializeField] private bool isEnabled = true;
+
+    public bool IsEnabled { get { return isEnabled; } set { isEnabled = value; } }
+
     void Start()
     {
         miningLaser = gameObject.GetComponent<LineRenderer>();      // Get the linerenderer component
@@ -39,7 +43,7 @@ public class MiningLaser : MonoBehaviour
         miningLaser.enabled = true;
 
         // As long as button is pressed we continously create the laser
-        while (Input.GetButton("Fire1"))
+        while (Input.GetButton("Fire1") && isEnabled)
         {
             // Initial setup for laser
             Ray2D ray = new Ray2D(transform.position, transform.up);

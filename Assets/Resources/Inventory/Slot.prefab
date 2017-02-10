@@ -9,19 +9,19 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1000014084500482}
+  m_RootGameObject: {fileID: 1000011941890762}
   m_IsPrefabParent: 1
---- !u!1 &1000014084500482
+--- !u!1 &1000011941890762
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 224: {fileID: 224000010983471894}
-  - 222: {fileID: 222000011825223980}
-  - 114: {fileID: 114000013753096634}
-  - 114: {fileID: 114000011007321048}
+  - 224: {fileID: 224000010743821766}
+  - 222: {fileID: 222000014218421434}
+  - 114: {fileID: 114000013626581294}
+  - 114: {fileID: 114000010494377404}
   m_Layer: 5
   m_Name: Slot
   m_TagString: Untagged
@@ -29,23 +29,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &114000011007321048
+--- !u!114 &114000010494377404
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000014084500482}
+  m_GameObject: {fileID: 1000011941890762}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bd0bec3e8202f244dba91b44e65ce3f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114000013753096634
+--- !u!114 &114000013626581294
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000014084500482}
+  m_GameObject: {fileID: 1000011941890762}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
@@ -67,18 +67,18 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!222 &222000011825223980
+--- !u!222 &222000014218421434
 CanvasRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000014084500482}
---- !u!224 &224000010983471894
+  m_GameObject: {fileID: 1000011941890762}
+--- !u!224 &224000010743821766
 RectTransform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000014084500482}
+  m_GameObject: {fileID: 1000011941890762}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -89,5 +89,5 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 57, y: 57}
   m_Pivot: {x: 0.5, y: 0.5}

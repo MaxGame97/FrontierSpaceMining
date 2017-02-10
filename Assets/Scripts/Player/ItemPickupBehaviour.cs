@@ -7,6 +7,10 @@ public class ItemPickupBehaviour : MonoBehaviour {
 
     private HUD hUD;                // The HUD
 
+    [SerializeField] private bool isEnabled = true;
+
+    public bool IsEnabled { get { return isEnabled; } set { isEnabled = value; } }
+
     // Use this for initialization
     void Start()
     {
@@ -44,7 +48,7 @@ public class ItemPickupBehaviour : MonoBehaviour {
         void OnCollisionEnter2D(Collision2D collision)
     {
         // If the player is colliding with an item
-        if (collision.gameObject.tag == "Item")
+        if (collision.gameObject.tag == "Item" && isEnabled)
         {
             // Send the item to the inventory
             ItemPickup(collision.gameObject);

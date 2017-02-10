@@ -5,7 +5,9 @@ public class ParallaxScript : MonoBehaviour {
 
     private Material material; // Contains the background's material
 
-    [SerializeField] [Range(0.1f, 1f)]private float scrollSpeed = 0.5f; // Defines the parallax effect's speed
+    [SerializeField] [Range(0.1f, 1f)] private float scrollSpeed = 0.5f; // Defines the parallax effect's speed
+
+    [SerializeField] private Vector2 parallaxOffset; // The offset of the parallax background (its origin position)
     
     [SerializeField] private bool usesCustomScale = true; // Whether or not the background should be stretched or correctly tiled
 
@@ -38,8 +40,8 @@ public class ParallaxScript : MonoBehaviour {
         Vector2 offset = material.mainTextureOffset;
 
         // Offset the material based on it's position and the parallax scroll speed
-        offset.x = transform.position.x / transform.localScale.x * scrollSpeed;
-        offset.y = transform.position.y / transform.localScale.y * scrollSpeed;
+        offset.x = (transform.position.x / transform.localScale.x * scrollSpeed) + parallaxOffset.x;
+        offset.y = (transform.position.y / transform.localScale.y * scrollSpeed) + parallaxOffset.y;
 
         // Update the material's offset
         material.mainTextureOffset = offset;

@@ -11,6 +11,13 @@ public class PlayerMovement : MonoBehaviour {
     [SerializeField] [Range(1f, 20f)] private float maxSpeed = 10;      // The player's max speed
     [SerializeField] [Range(1f, 20f)] private float rotationSpeed = 5;  // The player's rotation speed
 
+    private float thrustAmount;
+
+    [SerializeField] private bool isEnabled = true;
+
+    public float ThrustAmount { get { return thrustAmount; } }
+    public bool IsEnabled { get { return isEnabled; } set { isEnabled = value; } }
+
     // Use this for initialization
     void Start () {
         GetComponent<Rigidbody2D>().inertia = (1);
@@ -22,18 +29,26 @@ public class PlayerMovement : MonoBehaviour {
     // Takes care of movement by the player
     void FixedUpdate()
     {
-        // In order for the player object to work properly, it is important
-        // that the player's rigidbody has a reasonably large value in
-        // "Angular Drag", otherwise the player will not stop spinning by
-        // itself after a collision or rotation
+        if (isEnabled)
+        {
+            // In order for the player object to work properly, it is important
+            // that the player's rigidbody has a reasonably large value in
+            // "Angular Drag", otherwise the player will not stop spinning by
+            // itself after a collision or rotation
 
-        // Increase the torque based on the virtual horizontal axis input
-        player.AddTorque(-Input.GetAxis("Horizontal") * rotationSpeed);
+            // Increase the torque based on the virtual horizontal axis input
+            player.AddTorque(-Input.GetAxis("Horizontal") * rotationSpeed);
 
-        // Increase velocity in the forward direction based on the virtual vertical axis input
-        player.AddForce(Input.GetAxis("Vertical") * transform.up * acceleration);
+            // Increase velocity in the forward direction based on the virtual vertical axis input
+            player.AddForce(Input.GetAxis("Vertical") * transform.up * acceleration);
+            thrustAmount = Mathf.Abs(Input.GetAxis("Vertical"));
 
-        // Clamp the player's velocity to the max speed
-        player.velocity = Vector2.ClampMagnitude(player.velocity, maxSpeed);
+            // Clamp the player's velocity to the max speed
+            player.velocity = Vector2.ClampMagnitude(player.velocity, maxSpeed);
+        }
+        else
+        {
+            thrustAmount = 0f;
+        }
     }
 }
