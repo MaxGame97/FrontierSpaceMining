@@ -15,6 +15,11 @@ public class EnemyBehaviour : MonoBehaviour {
     [SerializeField] GameObject viewCone;                                   // The prefab object used for the view cone
     [SerializeField] GameObject bullet;                                     // The prefab object used for the bullet
 
+    [SerializeField] GameObject soundFXPrefab;                              // The sound FX prefab
+
+    [SerializeField] AudioClip alertSoundClip;                              // The alert sound clip
+    [SerializeField] AudioClip bulletSoundClip;                             // The bullet sound clip
+
     private float range;                                                    // The AI's range towards the player
     private Quaternion newRotation;                                         // The AI's rotation angle
 
@@ -84,6 +89,13 @@ public class EnemyBehaviour : MonoBehaviour {
         {
             // Changes the color of the view cone to red
             enemy.viewConeSprite.color = new Color(255f / 255f, 40f / 255f, 0f / 255f);
+
+            GameObject alertSound = (GameObject)Instantiate(enemy.soundFXPrefab, enemy.transform);
+            AudioSource audioSource = alertSound.GetComponent<AudioSource>();
+
+            alertSound.transform.localPosition = Vector3.zero;
+
+            audioSource.clip = enemy.alertSoundClip;
         }
 
         public override void Update()
@@ -201,6 +213,11 @@ public class EnemyBehaviour : MonoBehaviour {
     void Shoot()
     {
         GameObject tempBullet = (GameObject)Instantiate(bullet, transform.position, transform.rotation);
+
+        GameObject bulletFX = (GameObject)Instantiate(soundFXPrefab, transform.position, new Quaternion());
+        AudioSource audioSource = bulletFX.GetComponent<AudioSource>();
+
+        audioSource.clip = bulletSoundClip;
 
         Destroy(tempBullet, bulletAliveTime);
     }

@@ -11,6 +11,10 @@ public class PlayerMovement : MonoBehaviour {
     [SerializeField] [Range(1f, 20f)] private float maxSpeed = 10;      // The player's max speed
     [SerializeField] [Range(1f, 20f)] private float rotationSpeed = 5;  // The player's rotation speed
 
+    private float thrustAmount;
+
+    public float ThrustAmount { get { return thrustAmount; } }
+
     // Use this for initialization
     void Start () {
         // Get the player's rigidbody
@@ -31,6 +35,7 @@ public class PlayerMovement : MonoBehaviour {
 
         // Increase velocity in the forward direction based on the virtual vertical axis input
         player.AddForce(Input.GetAxis("Vertical") * transform.up * acceleration);
+        thrustAmount = Mathf.Abs(Input.GetAxis("Vertical"));
 
         // Clamp the player's velocity to the max speed
         player.velocity = Vector2.ClampMagnitude(player.velocity, maxSpeed);
