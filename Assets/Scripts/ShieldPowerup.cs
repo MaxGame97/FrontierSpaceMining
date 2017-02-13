@@ -3,6 +3,7 @@ using System.Collections;
 
 public class ShieldPowerup : MonoBehaviour {
 
+    [SerializeField] [Range(0, 100)] private int maxShields = 10;       //Max amount of shields the player can have
     [SerializeField] [Range(0, 10)] private int nmbrOfShields = 1;      //Number of Shields the player starts with
     [SerializeField] [Range(1, 15)] private float shieldTime = 5;       //Duration time of the shield
                         
@@ -40,5 +41,18 @@ public class ShieldPowerup : MonoBehaviour {
 
         Destroy(go);
     }
-    
+
+    //Increases the amount of Shields the player has, is accessible outside of script
+    public void IncreaseNmbrOfShieldss(int nmbr)
+    {
+        if (nmbrOfShields < maxShields)
+        {
+            nmbrOfShields += nmbr;
+        }
+        else
+        {
+            Debug.Log("Max amount of Shields reached");
+        }
+    }
+
 }

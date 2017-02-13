@@ -8,6 +8,7 @@ public class EnemyBehaviour : MonoBehaviour {
     [SerializeField] [Range(0.01f, 0.1f)] private float rotationSpeed = 2;  // The AI's rotation speed
     [SerializeField] [Range(0.5f, 2.5f)] private float minDistance = 1f;    // The AI's minimum distance to the player
     [SerializeField] [Range(1f, 5)] private float bulletAliveTime = 5f;     // The Ai's speed of their bullets 
+    [SerializeField] [Range(1f, 10)] private float EMPduration = 5f;        // The Ai's speed of their bullets 
 
 
     [SerializeField] [Range(10f, 180f)] private float fieldOfView;          // The enemy's field of view
@@ -37,6 +38,7 @@ public class EnemyBehaviour : MonoBehaviour {
     private IdleState idleState;                                            // An idlestate instance
     private AlertState alertState;                                          // An alertstate instance
     private SearchingState searchingState;                                  // A searchingstate instance
+    private DisabledState disabledState;                                    // A disabledstate instance
 
     // When the enemy is in the idle state, it is waiting for the player to enter it's line of sight
     private class IdleState : State
@@ -210,6 +212,51 @@ public class EnemyBehaviour : MonoBehaviour {
         }
     }
 
+    // When the enemy is hit by an EMP it becomes stunned/disabled for a set amount of time
+    private class DisabledState : State
+    {
+        // The current enemybehaviour instance
+        EnemyBehaviour enemy;
+
+        float empduration;
+
+        public DisabledState(EnemyBehaviour enemy)
+        {
+            this.enemy = enemy;
+        }
+
+        public override void Entry()
+        {
+            // Change the view cone color to blue
+            enemy.viewConeSprite.color = new Color(255f / 255f, 255f / 255f, 255f / 255f);
+            // Increase the drag so that the enemy will stop
+            enemy.enemyRigidbody.drag = 0.75f; // TODO - Make this solution better
+
+            empduration = enemy.EMPduration;
+        }
+
+        public override void Update()
+        {
+            if (enemy.IsInvoking("Shoot"))
+            {
+                enemy.CancelInvoke("Shoot");
+            }
+            empduration -= Time.deltaTime;
+            if (empduration <= 0)
+                Exit(enemy.idleState);
+
+        }
+
+        public override void Exit(State exitState)
+        {
+            // Remove the drag so that the enemy feels more "spacey"
+            enemy.enemyRigidbody.drag = 0f; // TODO - Make this solution better
+
+            enemy.currentState = exitState;
+            exitState.Entry();
+        }
+    }
+
     void Shoot()
     {
         GameObject tempBullet = (GameObject)Instantiate(bullet, transform.position, transform.rotation);
@@ -227,6 +274,7 @@ public class EnemyBehaviour : MonoBehaviour {
         idleState = new IdleState(this);            // Instantiates the idle state
         alertState = new AlertState(this);          // Instantiates the alert state
         searchingState = new SearchingState(this);  // Instantiates the searching state
+        disabledState = new DisabledState(this);    // Instantiates the disabled state
     }
 
     // Use this for initialization
@@ -272,6 +320,15 @@ public class EnemyBehaviour : MonoBehaviour {
             // If the enemy is in the searching state, run the entry function again
             if (currentState == searchingState)
                 currentState.Entry();
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.tag == "EMP")
+        {
+            currentState = disabledState;
+            currentState.Entry();
         }
     }
 

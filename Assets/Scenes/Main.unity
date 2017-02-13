@@ -90,6 +90,63 @@ NavMeshSettings:
     cellSize: 0.16666667
     manualCellSize: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &36270318
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4000013220180394, guid: 7593bb0c0f46312439c0e75d62f94704, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000013220180394, guid: 7593bb0c0f46312439c0e75d62f94704, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000013220180394, guid: 7593bb0c0f46312439c0e75d62f94704, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000013220180394, guid: 7593bb0c0f46312439c0e75d62f94704, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000013220180394, guid: 7593bb0c0f46312439c0e75d62f94704, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000013220180394, guid: 7593bb0c0f46312439c0e75d62f94704, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000013220180394, guid: 7593bb0c0f46312439c0e75d62f94704, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4000013220180394, guid: 7593bb0c0f46312439c0e75d62f94704, type: 2}
+      propertyPath: m_RootOrder
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000011836095202, guid: 7593bb0c0f46312439c0e75d62f94704,
+        type: 2}
+      propertyPath: maxEMPs
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000011836095202, guid: 7593bb0c0f46312439c0e75d62f94704,
+        type: 2}
+      propertyPath: nmbrOfEMPs
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114000011836095202, guid: 7593bb0c0f46312439c0e75d62f94704,
+        type: 2}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 396162618}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 7593bb0c0f46312439c0e75d62f94704, type: 2}
+  m_IsPrefabParent: 0
 --- !u!4 &52086962 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4000014154828192, guid: ebc21654346e9a54d8c575afd1cce0d6,
@@ -679,7 +736,7 @@ Prefab:
     - target: {fileID: 224000011137425746, guid: f7e322087f7b22c4f9316cce7a6403bd,
         type: 2}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: -476
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: f7e322087f7b22c4f9316cce7a6403bd, type: 2}
@@ -918,49 +975,6 @@ Transform:
   - {fileID: 1997219727}
   m_Father: {fileID: 0}
   m_RootOrder: 5
---- !u!1 &1615192182
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 1615192184}
-  - 114: {fileID: 1615192183}
-  m_Layer: 0
-  m_Name: Powerup Manager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1615192183
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1615192182}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3f6e0799be5efb04eabbf75481a9a222, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  nmbrOfShields: 1
-  shieldTime: 5
-  Shield: {fileID: 1000010368988036, guid: 8b96352e31fba32449e9b788c1807c52, type: 2}
---- !u!4 &1615192184
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1615192182}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.3114407, y: 0.917717, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
 --- !u!4 &1681234586 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4000013579164952, guid: 1757ff85f7347f8459b432291680d04a,
