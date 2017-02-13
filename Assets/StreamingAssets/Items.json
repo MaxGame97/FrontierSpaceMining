@@ -5,7 +5,6 @@
 		"description": "A common green crystal.",
 		"value": 10,
 		"weight": 2,
-		"stackable": true,
 		"slug": "common_crystal"
 	},
 	{
@@ -14,7 +13,6 @@
 		"description": "A clump of slightly corroded metals.",
 		"value": 2,
 		"weight": 1,
-		"stackable": true,
 		"slug": "scrap_metal"
 	},
 	{
@@ -23,7 +21,6 @@
 		"description": "Stolen from an Imperical cruiser, can print spare parts if supplied with materials and a blueprint.",
 		"value": 3500,
 		"weight": 25,
-		"stackable": false,
 		"slug": "spare_part_printer"
 	},
 	{
@@ -32,7 +29,6 @@
 		"description": "Not scrap metal, i promise",
 		"value": 112,
 		"weight": 60,
-		"stackable": true,
 		"slug": "scrap_metal_not"
 	},
 	{
@@ -41,7 +37,6 @@
 		"description": "Placeholder description",
 		"value": -50,
 		"weight": -100,
-		"stackable": true,
 		"slug": "placeholder"
 	}
 ]

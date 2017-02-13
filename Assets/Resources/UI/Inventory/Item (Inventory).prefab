@@ -25,7 +25,7 @@ GameObject:
   - 225: {fileID: 225000013940367080}
   - 114: {fileID: 114000014169244486}
   m_Layer: 5
-  m_Name: Item
+  m_Name: Item (Inventory)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

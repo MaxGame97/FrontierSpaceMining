@@ -23,7 +23,7 @@ GameObject:
   - 114: {fileID: 114000013626581294}
   - 114: {fileID: 114000010494377404}
   m_Layer: 5
-  m_Name: Slot
+  m_Name: Slot (Inventory)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

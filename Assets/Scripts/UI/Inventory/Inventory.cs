@@ -14,7 +14,7 @@ public class Inventory : MonoBehaviour {
     private CanvasGroup canvas;                                 // Contains the inventory canvas's CanvasGroup
     private GameObject slotPanel;                               // The slot panel
 
-    private bool inventoryEnabled = false;                      // Specifies whether or not the inventory is enabled
+    private bool inventoryEnabled = true;                       // Specifies whether or not the inventory is enabled
 
     public List<Item> items = new List<Item>();                 // List containing all the items in the inventory
     public List<GameObject> slots = new List<GameObject>();     // List containing all the slots in the inventory
@@ -33,7 +33,6 @@ public class Inventory : MonoBehaviour {
         {
             // Throw an error message to the debug log
             Debug.LogError("Some or all of the inventory UI is missing, inventory system disabled");
-            // If the inventory is missing, delete the item pickup behaviour and exit this function
             Destroy(this);
             return;
         }
@@ -49,27 +48,7 @@ public class Inventory : MonoBehaviour {
             slots[i].GetComponent<Slot>().SlotID = i;                                   // Assign the slot an ID
         }
 
-        AddItem(0);
-        AddItem(2);
-        AddItem(3);
-        AddItem(4);
-
-        DisableInventoryPanel();
-    }
-
-    void Update()
-    {
-        if (Input.GetButtonDown("Fire2"))
-        {
-            if (inventoryEnabled)
-            {
-                DisableInventoryPanel();
-            }
-            else
-            {
-                EnableInventoryPanel();
-            }
-        }
+        ToggleInventoryPanel();
     }
 
     // Adds an item to the inventory
@@ -78,8 +57,8 @@ public class Inventory : MonoBehaviour {
         // Fetches the item by its ID and places it in a temporary item variable
         Item tempItem = itemDatabase.FetchItemFromID(iD);
 
-        // If the item to be added is stackable, and if it exists in the inventory
-        if (tempItem.Stackable && IfItemExistsInInventory(tempItem))
+        // If the item exists in the inventory
+        if (CheckItemCount(tempItem) > 0)
         {
             // Loop through the item list
             for (int i = 0; i < items.Count; i++)
@@ -98,7 +77,7 @@ public class Inventory : MonoBehaviour {
                 }
             }
         }
-        // Else, if either the item to be added isn't stackable, or if the item doesn't exist in the inventory
+        // If it doesn't
         else
         {
             // Loop through the item list
@@ -121,11 +100,9 @@ public class Inventory : MonoBehaviour {
                     itemData.Item = tempItem;   // Assign the item to the item data
                     itemData.SlotID = i;        // Assign the slot ID to the item data
                     itemData.Count++;           // Increase the item count in the item data
-
-                    // If the item is stackable
-                    if (tempItem.Stackable)
-                        // Update and show the item count text
-                        itemData.transform.GetChild(0).GetComponent<Text>().text = itemData.Count.ToString();
+                    
+                    // Update and show the item count text
+                    itemData.transform.GetChild(0).GetComponent<Text>().text = itemData.Count.ToString();
 
                     // Change the item object's name in the inspector
                     tempItemObject.name = tempItem.Name + " (Item)";
@@ -144,7 +121,7 @@ public class Inventory : MonoBehaviour {
         Item tempItem = itemDatabase.FetchItemFromID(iD);
 
         // If the item exists in the inventory
-        if (IfItemExistsInInventory(tempItem))
+        if (CheckItemCount(tempItem) > 0)
         {
             // Loop through the item list
             for (int i = 0; i < items.Count; i++)
@@ -158,8 +135,8 @@ public class Inventory : MonoBehaviour {
                     // If there is enough of the specified item to be removed
                     if (itemData.Count >= amount)
                     {
-                        // If the item is stackable and there will be more than one of them left after being removed
-                        if (tempItem.Stackable && itemData.Count - amount > 0)
+                        // If there will be more than one of them left after being removed
+                        if (itemData.Count - amount > 0)
                         {
                             // Decrease the item count by the specified amount
                             itemData.Count -= amount;
@@ -189,22 +166,25 @@ public class Inventory : MonoBehaviour {
         return false;
     }
 
-    // Displays the inventory panel
-    public void EnableInventoryPanel()
+    // Toggles the inventory panel
+    public void ToggleInventoryPanel()
     {
-        canvas.alpha = 1;
-        inventoryEnabled = true;
+        if (inventoryEnabled)
+        {
+            canvas.alpha = 0;
+            canvas.blocksRaycasts = false;
+            inventoryEnabled = false;
+        }
+        else
+        {
+            canvas.alpha = 1;
+            canvas.blocksRaycasts = true;
+            inventoryEnabled = true;
+        }
     }
 
-    // Hides the inventory panel
-    public void DisableInventoryPanel()
-    {
-        canvas.alpha = 0;
-        inventoryEnabled = false;
-    }
-
-    // Returns true if a specified item already exists in the inventory
-    bool IfItemExistsInInventory(Item item)
+    // Returns the amount of items in the inventory
+    int CheckItemCount(Item item)
     {
         // Loops through the item list
         for (int i = 0; i < items.Count; i++)
@@ -212,12 +192,15 @@ public class Inventory : MonoBehaviour {
             // If an item with the same ID exists
             if (items[i].ID == item.ID)
             {
-                // Return true, there is an item with the same ID in the inventory
-                return true;
+                // Get the item data from the item object
+                ItemData itemData = slots[i].transform.GetChild(0).GetComponent<ItemData>();
+
+                // Return the amount of items
+                return itemData.Count;
             }
         }
 
-        // If no item was found, return false
-        return false;
+        // If no item was found, return zero
+        return 0;
     }
 }

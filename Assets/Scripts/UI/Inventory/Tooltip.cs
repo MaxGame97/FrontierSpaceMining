@@ -16,9 +16,9 @@ public class Tooltip : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         // If all inventory and tooltip UI exists
-        if (GameObject.Find("Tooltip Panel") != null && GameObject.Find("Inventory System") != null)
+        if (GameObject.Find("Inventory Tooltip Panel") != null && GameObject.Find("Inventory System") != null)
         {
-            tooltipPanel = GameObject.Find("Tooltip Panel");                        // Find the tooltip panel object
+            tooltipPanel = GameObject.Find("Inventory Tooltip Panel");              // Find the tooltip panel object
         
             tooltipText = tooltipPanel.transform.GetChild(0).GetComponent<Text>();  // Get the text component from the tooltip panel's child object
             tooltipRect = tooltipPanel.GetComponent<RectTransform>().rect;          // Get the rectangle object from the tooltip panel

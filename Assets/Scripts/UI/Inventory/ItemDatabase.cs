@@ -31,14 +31,13 @@ public class ItemDatabase : MonoBehaviour {
                     (string)itemData[i]["description"],
                     (int)itemData[i]["value"],
                     (int)itemData[i]["weight"],
-                    (bool)itemData[i]["stackable"],
                     (string)itemData[i]["slug"]
                 )
             );
         }
     }
 
-    // Fetches an item from th database, from its ID
+    // Fetches an item from the database, from its ID
     public Item FetchItemFromID(int iD)
     {
         // Loop through the item database
@@ -64,7 +63,6 @@ public class Item
     private string description; // The item's description
     private int value;          // The item's value
     private int weight;         // The item's weight
-    private bool stackable;     // Specifies whether or not the item is stackable
     private string slug;        // The item's slug name (used for finding the item's sprite)
     private Sprite sprite;      // The item's sprite
 
@@ -73,23 +71,25 @@ public class Item
     public string Description { get { return description; } set { description = value; } }
     public int Value { get { return value; } set { this.value = value; } }
     public int Weight { get { return weight; } set { weight = value; } }
-    public bool Stackable { get { return stackable; } set { stackable = value; } }
     public string Slug { get { return slug ; } set { slug = value; } }
     public Sprite Sprite { get { return sprite; } set { sprite = value; } }
 
     // Constructor for a complete item
-    public Item(int iD, string name, string description, int value, int weight, bool stackable, string slug)
+    public Item(int iD, string name, string description, int value, int weight, string slug)
     {
         this.iD = iD;
         this.name = name;
         this.description = description;
         this.value = value;
         this.weight = weight;
-        this.stackable = stackable;
         this.slug = slug;
 
         // Gets the item's sprite from its slug name
-        sprite = Resources.Load<Sprite>("Inventory/Sprites/" + slug);
+        sprite = Resources.Load<Sprite>("UI/Inventory/Sprites/" + slug);
+
+        // If the sprite is null (missing), load a debug image instead
+        if (sprite == null)
+            sprite = Resources.Load<Sprite>("UI/Inventory/Sprites/missing_image");
     }
 
     // Constructor for an empty item
