@@ -5,15 +5,15 @@ using System;
 
 public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler {
 
-    private Inventory inventory;    // The player's inventory
-    private Tooltip tooltip;        // The tooltip component
+    private Inventory inventory;        // The player's inventory
+    private InventoryTooltip tooltip;   // The tooltip component
 
-    private Item item;              // The item stored in the item data
-    private int count;              // The amount of the stored item
+    private Item item;                  // The item stored in the item data
+    private int count;                  // The amount of the stored item
 
-    private int slotID;             // Which slot the item is on
+    private int slotID;                 // Which slot the item is on
 
-    private Vector2 dragOffset;     // The drag offset when the item is being dragged
+    private Vector2 dragOffset;         // The drag offset when the item is being dragged
 
 	public Item Item { get { return item; } set { item = value; } }
     public int Count { get { return count; } set { count = value; } }
@@ -21,9 +21,9 @@ public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
     // Use this for initialization
     void Start()
-    {
-        inventory = GameObject.Find("Inventory Controller").GetComponent<Inventory>(); // Get the player's inventory
-        tooltip = GameObject.Find("Inventory Controller").GetComponent<Tooltip>();     // Get the tooltip component
+    {   
+        inventory = GameObject.Find("Inventory Controller").GetComponent<Inventory>();      // Get the player's inventory
+        tooltip = GameObject.Find("Inventory Controller").GetComponent<InventoryTooltip>(); // Get the tooltip component
     }
 
     // When the item is starting to be dragged

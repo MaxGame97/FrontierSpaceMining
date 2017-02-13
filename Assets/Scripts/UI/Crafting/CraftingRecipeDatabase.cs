@@ -6,6 +6,8 @@ using System.IO;
 
 public class CraftingRecipeDatabase : MonoBehaviour {
 
+    private ItemDatabase itemDatabase;
+
     private List<CraftingRecipe> database = new List<CraftingRecipe>(); // Database of all crafting recipes
     private JsonData craftingRecipeData;                                // Json data of all crafting recipes
 
@@ -14,6 +16,8 @@ public class CraftingRecipeDatabase : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
+        itemDatabase = GameObject.Find("Inventory Controller").GetComponent<ItemDatabase>();
+
         // Get the crafting recipe data from the .json file
         craftingRecipeData = JsonMapper.ToObject(File.ReadAllText(Application.dataPath + "/StreamingAssets/CraftingRecipes.json"));
         // Create the crafting recipe database
@@ -26,12 +30,20 @@ public class CraftingRecipeDatabase : MonoBehaviour {
         // Check all crafting recipe entries in the Json data
         for (int i = 0; i < craftingRecipeData.Count; i++)
         {
+            List<CraftingIngredient> craftingIngredients = new List<CraftingIngredient>();
+
+            for (int j = 0; j < craftingRecipeData[i]["recipe"].Count; j++)
+            {
+                craftingIngredients.Add(new CraftingIngredient((int)craftingRecipeData[i]["recipe"][j]["iD"], (int)craftingRecipeData[i]["recipe"][j]["amount"]));
+            }
+
             // Add a new crafting recipe, the recipe data is taken from the Json data
             database.Add(
                 new CraftingRecipe(
+                    itemDatabase,
                     (int)craftingRecipeData[i]["iD"],
-                    (string)craftingRecipeData[i]["name"],
                     (int)craftingRecipeData[i]["itemID"],
+                    craftingIngredients.ToArray(),
                     (string)craftingRecipeData[i]["slug"]
                 )
             );
@@ -59,24 +71,24 @@ public class CraftingRecipeDatabase : MonoBehaviour {
 
 public class CraftingRecipe
 {
-    private int iD;             // The recipe's unique ID
-    private string name;        // The recipe's name
-    private int itemID;         // The recipe's result, or its contained item
-    private string slug;        // The recipe's slug name (used for finding the recipe's sprite)
-    private Sprite sprite;      // The recipe's sprite
+    private int iD;                                     // The recipe's unique ID
+    private Item resultItem;                            // The item that the recipe is creating
+    private CraftingIngredient[] craftingIngredients;   // An array containing the recipe's ingredients
+    private string slug;                                // The recipe's slug name (used for finding the recipe's sprite)
+    private Sprite sprite;                              // The recipe's sprite
 
-    public int ID { get { return iD; } set { iD = value; } }
-    public string Name { get { return name; } set { name = value; } }
-    public int ItemID { get { return itemID; } set { itemID = value; } }
-    public string Slug { get { return slug; } set { slug = value; } }
-    public Sprite Sprite { get { return sprite; } set { sprite = value; } }
+    public int ID { get { return iD; } }
+    public Item ResultItem { get { return resultItem; } }
+    public CraftingIngredient[] CraftingIngredients { get { return craftingIngredients; } }
+    public string Slug { get { return slug; } }
+    public Sprite Sprite { get { return sprite; } }
 
     // Constructor for a crafting recipe
-    public CraftingRecipe(int iD, string name, int itemID, string slug)
+    public CraftingRecipe(ItemDatabase itemDatabase, int iD, int itemID, CraftingIngredient[] craftingIngredients, string slug)
     {
         this.iD = iD;
-        this.name = name;
-        this.itemID = itemID;
+        this.resultItem = itemDatabase.FetchItemFromID(itemID);
+        this.craftingIngredients = craftingIngredients;
         this.slug = slug;
 
         // Gets the recipe's sprite from its slug name
@@ -85,5 +97,17 @@ public class CraftingRecipe
         // If the sprite is null (missing), load a debug image instead
         if (sprite == null)
             sprite = Resources.Load<Sprite>("UI/Crafting/Sprites/missing_image");
+    }
+}
+
+public struct CraftingIngredient
+{
+    public int iD;
+    public int amount;
+
+    public CraftingIngredient(int iD, int amount)
+    {
+        this.iD = iD;
+        this.amount = amount;
     }
 }

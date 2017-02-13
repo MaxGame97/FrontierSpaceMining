@@ -3,7 +3,7 @@ using System.Collections;
 using System;
 using UnityEngine.UI;
 
-public class Tooltip : MonoBehaviour {
+public class InventoryTooltip : MonoBehaviour {
 
     private GameObject tooltipPanel;    // The tooltip panel
 
