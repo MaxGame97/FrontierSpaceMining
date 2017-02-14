@@ -5,21 +5,21 @@ using System.Collections.Generic;
 
 public class HUD : MonoBehaviour {
 
-    [SerializeField] private GameObject notificationTextPrefab;
+    [SerializeField] private GameObject notificationTextPrefab; // The notification text prefab object
 
-    List<string> notificationTextQueue = new List<string>();
+    List<string> notificationTextQueue = new List<string>();    // List of strings (a queue of strings) that will be displayed as notifications
 
-    private float maxQueueTime;
-    private float currentQueueTime = 0;
+    private float maxQueueTime;                                 // The max queue time (in seconds)
+    private float currentQueueTime = 0f;                        // The current queue time (in seconds)
 
-    private Transform hUDTransform;
+    private Transform hUDTransform;                             // The transform of the HUD canvas
 
-    private Slider healthSlider;
-    private Text velocityText;
+    private Slider healthSlider;                                // The health slider UI
+    private Text velocityText;                                  // The velocity text UI
 
-    private Rigidbody2D playerRigidbody;
+    private Rigidbody2D playerRigidbody;                        // The player's rigidbody
 
-    private PlayerHealth playerHealth;
+    private PlayerHealth playerHealth;                          // The player's health component
 
 	// Use this for initialization
 	void Start () {
@@ -68,7 +68,7 @@ public class HUD : MonoBehaviour {
             float notificationTextHeight = notificationTextPrefab.GetComponent<RectTransform>().rect.size.y;
             float notificationTextSpeed = notificationTextPrefab.GetComponent<NotificationTextBehaviour>().ScrollSpeed;
             // Calculate the max time between notifications
-            maxQueueTime = (notificationTextSpeed / notificationTextHeight) / 2;
+            maxQueueTime = (notificationTextHeight / notificationTextSpeed);
         }
         else
         {
@@ -83,10 +83,16 @@ public class HUD : MonoBehaviour {
     void Update()
     {
         // Update the slider value based on the player's current health
-        healthSlider.value = playerHealth.CurrentHealth;
+        if (playerHealth != null)
+            healthSlider.value = playerHealth.CurrentHealth;
+        else
+            healthSlider.value = 0f;
 
         // Update the velocity text based on the player's current velocity
-        velocityText.text = Mathf.Round(playerRigidbody.velocity.magnitude).ToString();
+        if (playerRigidbody != null)
+            velocityText.text = Mathf.Round(playerRigidbody.velocity.magnitude).ToString();
+        else
+            velocityText.text = "0";
 
         // If the queue time has passed
         if (currentQueueTime <= 0)

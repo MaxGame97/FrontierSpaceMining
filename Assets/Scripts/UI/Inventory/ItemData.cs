@@ -56,9 +56,9 @@ public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     // When the item is let go
     public void OnEndDrag(PointerEventData eventData)
     {
-        transform.SetParent(inventory.slots[slotID].transform);             // Update the item's parent to the slot it's currently in
+        transform.SetParent(inventory.Slots[slotID].transform);             // Update the item's parent to the slot it's currently in
 
-        transform.position = inventory.slots[slotID].transform.position;    // Update the item's position to be relative zero
+        transform.position = inventory.Slots[slotID].transform.position;    // Update the item's position to be relative zero
 
         GetComponent<CanvasGroup>().blocksRaycasts = true;                  // Allows raycasts to detect the item again
     }

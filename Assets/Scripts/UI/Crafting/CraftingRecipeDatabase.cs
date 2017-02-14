@@ -93,14 +93,14 @@ public class CraftingRecipe
 
         // If the sprite is null (missing), load a debug image instead
         if (sprite == null)
-            sprite = Resources.Load<Sprite>("UI/Crafting/Sprites/missing_image");
+            sprite = Resources.Load<Sprite>("Items/Sprites/missing_image");
     }
 }
 
 public struct CraftingIngredient
 {
-    public int iD;
-    public int amount;
+    public int iD;      // The ID of the required item
+    public int amount;  // The amount of the required item
 
     public CraftingIngredient(int iD, int amount)
     {

@@ -21,10 +21,10 @@ GameObject:
   - 4: {fileID: 4000010193897880}
   - 212: {fileID: 212000012516907728}
   - 50: {fileID: 50000010625390988}
-  - 60: {fileID: 60000013908951450}
+  - 58: {fileID: 58000011449270842}
   - 114: {fileID: 114000012736212548}
   m_Layer: 0
-  m_Name: Item
+  m_Name: Common Crystal (Item)
   m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -60,8 +60,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!60 &60000013908951450
-PolygonCollider2D:
+--- !u!58 &58000011449270842
+CircleCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -72,43 +72,8 @@ PolygonCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
-  m_Points:
-    m_Paths:
-    - - {x: 0.71, y: -0.94}
-      - {x: 0.89, y: -0.76}
-      - {x: 0.97999996, y: -0.64}
-      - {x: 1.03, y: -0.53999996}
-      - {x: 1.0699999, y: -0.44}
-      - {x: 1.1, y: -0.34}
-      - {x: 1.13, y: -0.19}
-      - {x: 1.13, y: 0.07}
-      - {x: 1.1, y: 0.25}
-      - {x: 1.04, y: 0.41}
-      - {x: 0.9, y: 0.63}
-      - {x: 0.68, y: 0.84}
-      - {x: 0.47, y: 0.96}
-      - {x: 0.28, y: 1.02}
-      - {x: 0.17999999, y: 1.04}
-      - {x: -0.14, y: 1.04}
-      - {x: -0.31, y: 0.98999995}
-      - {x: -0.48999998, y: 0.91999996}
-      - {x: -0.62, y: 0.84}
-      - {x: -0.71, y: 0.77}
-      - {x: -0.87, y: 0.59999996}
-      - {x: -0.94, y: 0.51}
-      - {x: -1.02, y: 0.35}
-      - {x: -1.0799999, y: 0.11}
-      - {x: -1.0799999, y: -0.28}
-      - {x: -1.02, y: -0.48999998}
-      - {x: -0.91999996, y: -0.68}
-      - {x: -0.71999997, y: -0.90999997}
-      - {x: -0.53999996, y: -1.04}
-      - {x: -0.28, y: -1.15}
-      - {x: -0.13, y: -1.17}
-      - {x: 0.19, y: -1.17}
-      - {x: 0.35999998, y: -1.13}
-      - {x: 0.47, y: -1.1}
-      - {x: 0.62, y: -1.01}
+  serializedVersion: 2
+  m_Radius: 1.2599999
 --- !u!114 &114000012736212548
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -120,7 +85,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cf1fa11f87f9e64e8771ec754dfb3da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iD: 1
+  iD: 0
 --- !u!212 &212000012516907728
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -150,7 +115,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 92a8f29190cbd6a4da9b62b00dcf0a35, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 2b2e272624fe90146949ce172607c04d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

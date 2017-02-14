@@ -5,12 +5,12 @@ using UnityEngine.UI;
 
 public class Crafting : MonoBehaviour {
 
-    [SerializeField] private GameObject craftingRecipePrefab;
+    [SerializeField] private GameObject craftingSlotPrefab; // The crafting slot prefab object
 
-    private CraftingRecipeDatabase craftingRecipeDatabase;
+    private CraftingRecipeDatabase craftingRecipeDatabase;  // The crafting recipe database
 
-    private CanvasGroup canvas;
-    private GameObject craftingRecipePanel;
+    private CanvasGroup canvasGroup;                        // The crafting system's canvas group
+    private GameObject craftingSlotPanel;                   // The crafting slot panel object
 
     private bool craftingEnabled = true;
 
@@ -21,10 +21,10 @@ public class Crafting : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         // If all crafting UI exists
-        if (GameObject.Find("Crafting System") != null && GameObject.Find("Crafting Recipe Panel") != null)
+        if (GameObject.Find("Crafting System") != null && GameObject.Find("Crafting Slot Panel") != null)
         {
-            canvas = GameObject.Find("Crafting System").GetComponent<CanvasGroup>();    // Get the canvas's CanvasGroup
-            craftingRecipePanel = GameObject.Find("Crafting Recipe Panel");             // Get the crafting recipe panel
+            canvasGroup = GameObject.Find("Crafting System").GetComponent<CanvasGroup>();   // Get the canvas's canvas group
+            craftingSlotPanel = GameObject.Find("Crafting Slot Panel");                     // Get the crafting slot panel
         }
         else
         {
@@ -34,26 +34,33 @@ public class Crafting : MonoBehaviour {
             return;
         }
 
+        // Get the crafting recipe database component
         craftingRecipeDatabase = GetComponent<CraftingRecipeDatabase>();
 
+        // Add each of the crafting recipes from the crafting recipe database
         for(int i = 0; i < craftingRecipeDatabase.Database.Count; i++)
         {
             AddCraftingRecipe(i);
         }
 
+        // Toggle (hide) the crafting panel as default
         ToggleCraftingPanel();
     }
 
+    // Add a crafting recipe to the crafting slot panel, by its ID
     public void AddCraftingRecipe(int iD)
     {
+        // Fetch the crafting recipe from the ID
         CraftingRecipe recipe = craftingRecipeDatabase.FetchCraftingRecipeFromID(iD);
         
-        GameObject craftingRecipe = (GameObject)Instantiate(craftingRecipePrefab, craftingRecipePanel.transform);
-        craftingRecipe.GetComponent<CraftingSlot>().CraftingIngredients = recipe.CraftingIngredients;
-        craftingRecipe.GetComponent<CraftingSlot>().ResultItem = recipe.ResultItem;
-        craftingRecipe.transform.GetChild(0).GetComponent<Image>().sprite = recipe.Sprite;
-        craftingRecipe.transform.GetChild(1).GetComponent<Text>().text = recipe.ResultItem.Name;
-        craftingRecipe.transform.localPosition = Vector2.zero;
+        GameObject craftingSlot = (GameObject)Instantiate(craftingSlotPrefab, craftingSlotPanel.transform); // Instantiate a crafting slot object, parent it to the crafting slot panel
+        craftingSlot.GetComponent<CraftingSlot>().CraftingIngredients = recipe.CraftingIngredients;         // Set the crafting slot's crafting ingredients value to the recipe's
+        craftingSlot.GetComponent<CraftingSlot>().ResultItem = recipe.ResultItem;                           // Set the crafting slot's resulting item to the recipe's
+        craftingSlot.transform.GetChild(0).GetComponent<Image>().sprite = recipe.Sprite;                    // Set the sprite of the crafting slot to the resulting item's
+        craftingSlot.transform.GetChild(1).GetComponent<Text>().text = recipe.ResultItem.Name;              // Set the text UI of the crafting slot to the resulting item's
+
+        // Set the crafting slot's local position to zero
+        craftingSlot.transform.localPosition = Vector2.zero;
     }
 
     // Toggles the crafting panel
@@ -61,14 +68,14 @@ public class Crafting : MonoBehaviour {
     {
         if (craftingEnabled)
         {
-            canvas.alpha = 0;
-            canvas.blocksRaycasts = false;
+            canvasGroup.alpha = 0;
+            canvasGroup.blocksRaycasts = false;
             craftingEnabled = false;
         }
         else
         {
-            canvas.alpha = 1;
-            canvas.blocksRaycasts = true;
+            canvasGroup.alpha = 1;
+            canvasGroup.blocksRaycasts = true;
             craftingEnabled = true;
         }
     }

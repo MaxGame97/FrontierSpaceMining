@@ -27,7 +27,7 @@ public class MiningLaser : MonoBehaviour
     void FixedUpdate()
     {
         // If the fire button is pressed, the laser coroutine is started
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButton("Fire1"))
         {
             StopCoroutine("FireLaser");
             StartCoroutine("FireLaser");
@@ -37,6 +37,7 @@ public class MiningLaser : MonoBehaviour
         if(spawnDelay > 0)
             spawnDelay -= Time.deltaTime;
     }
+
     IEnumerator FireLaser()
     {
         // Enables line so the lineRenderer is active while button is pressed

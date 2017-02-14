@@ -85,11 +85,11 @@ public class Item
         this.slug = slug;
 
         // Gets the item's sprite from its slug name
-        sprite = Resources.Load<Sprite>("UI/Inventory/Sprites/" + slug);
+        sprite = Resources.Load<Sprite>("Items/Sprites/" + slug);
 
         // If the sprite is null (missing), load a debug image instead
         if (sprite == null)
-            sprite = Resources.Load<Sprite>("UI/Inventory/Sprites/missing_image");
+            sprite = Resources.Load<Sprite>("Items/Sprites/missing_image");
     }
 
     // Constructor for an empty item

@@ -16,8 +16,11 @@ public class Inventory : MonoBehaviour {
 
     private bool inventoryEnabled = true;                       // Specifies whether or not the inventory is enabled
 
-    public List<Item> items = new List<Item>();                 // List containing all the items in the inventory
-    public List<GameObject> slots = new List<GameObject>();     // List containing all the slots in the inventory
+    private List<Item> items = new List<Item>();                // List containing all the items in the inventory
+    private List<GameObject> slots = new List<GameObject>();    // List containing all the slots in the inventory
+
+    public List<Item> Items { get { return items; } set { items = value; } }
+    public List<GameObject> Slots { get { return slots; } set { slots = value; } }
 
     public bool InventoryEnabled { get { return inventoryEnabled; } }
 
@@ -115,7 +118,7 @@ public class Inventory : MonoBehaviour {
     }
 
     // Removes a specified amount of an item from the inventory
-    public bool RemoveItem(int iD, int amount)
+    public void RemoveItem(int iD, int amount)
     {
         // Fetches the item by its ID and places it in a temporary item variable
         Item tempItem = itemDatabase.FetchItemFromID(iD);
@@ -143,8 +146,8 @@ public class Inventory : MonoBehaviour {
                             // Update the item count text
                             itemData.transform.GetChild(0).GetComponent<Text>().text = itemData.Count.ToString();
 
-                            // Return true, removing the items succeeded
-                            return true;
+                            // Exit the loop
+                            break;
                         }
                         else
                         {
@@ -154,16 +157,13 @@ public class Inventory : MonoBehaviour {
                             // Destroy the item object
                             Destroy(slots[i].transform.GetChild(0).gameObject);
 
-                            // Return true, removing the item(s) succeeded
-                            return true;
+                            // Exit the loop
+                            break;
                         }
                     }
                 }
             }
         }
-
-        // If no item was removed, return false, removing the item(s) did not succeed
-        return false;
     }
 
     // Toggles the inventory panel

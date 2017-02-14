@@ -3,6 +3,8 @@ using System.Collections;
 
 public class ItemPickupBehaviour : MonoBehaviour {
 
+    private ItemDatabase database;  // The item database
+
     private Inventory inventory;    // The player's inventory
 
     private HUD hUD;                // The HUD
@@ -17,6 +19,8 @@ public class ItemPickupBehaviour : MonoBehaviour {
         // If the inventory exists
         if (GameObject.Find("Inventory Controller") != null)
         {
+            database = GameObject.Find("Inventory Controller").GetComponent<ItemDatabase>();
+
             // Get the player's inventory
             inventory = GameObject.Find("Inventory Controller").GetComponent<Inventory>();
         }
@@ -66,7 +70,7 @@ public class ItemPickupBehaviour : MonoBehaviour {
             inventory.AddItem(item.ID);
 
             // Send a message to the HUD
-            hUD.AddNotificationString("'" + item.Name + "' Picked up");
+            hUD.AddNotificationString("'" + database.FetchItemFromID(item.ID).Name + "' Picked up");
 
             // Destory the item instance
             Destroy(itemObject);
@@ -77,7 +81,7 @@ public class ItemPickupBehaviour : MonoBehaviour {
             inventory.AddItem(item.ID);
 
             // Send a message to the HUD
-            hUD.AddNotificationString("'" + item.Name + "' Picked up");
+            hUD.AddNotificationString("'" + database.FetchItemFromID(item.ID).Name + "' Picked up");
 
             // Destory the item instance
             Destroy(itemObject);
