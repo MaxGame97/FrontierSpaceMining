@@ -8,6 +8,9 @@ TagManager:
   - Mineable
   - Bullet
   - Shield
+  - Prefab Spawner
+  - EMP
+  - Blue
   layers:
   - Default
   - TransparentFX
@@ -21,8 +24,8 @@ TagManager:
   - Player
   - Pirate
   - Powerup
-  - 
-  - 
+  - Blue
+  - Red
   - 
   - 
   - 
