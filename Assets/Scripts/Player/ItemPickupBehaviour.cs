@@ -52,9 +52,6 @@ public class ItemPickupBehaviour : MonoBehaviour {
         {
             // Send the item to the inventory
             ItemPickup(collision.gameObject);
-
-            // Destory the item instance
-            Destroy(collision.gameObject);
         }
     }
 
@@ -63,10 +60,28 @@ public class ItemPickupBehaviour : MonoBehaviour {
         // Get the item behaviour from the collided item
         ItemBehaviour item = itemObject.GetComponent<ItemBehaviour>();
 
-        // Add the item to the inventory, by its ID
-        inventory.AddItem(item.ID);
+        if(inventory.CheckItemCount(item.ID) > 0)
+        {
+            // Add the item to the inventory, by its ID
+            inventory.AddItem(item.ID);
 
-        // Send a message to the HUD
-        hUD.AddNotificationString("'" + item.Name + "' Picked up");
+            // Send a message to the HUD
+            hUD.AddNotificationString("'" + item.Name + "' Picked up");
+
+            // Destory the item instance
+            Destroy(itemObject);
+        }
+        else if (inventory.CheckIfEmptySlot())
+        {
+            // Add the item to the inventory, by its ID
+            inventory.AddItem(item.ID);
+
+            // Send a message to the HUD
+            hUD.AddNotificationString("'" + item.Name + "' Picked up");
+
+            // Destory the item instance
+            Destroy(itemObject);
+        }
+        
     }
 }

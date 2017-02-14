@@ -49,7 +49,8 @@ public class Crafting : MonoBehaviour {
         CraftingRecipe recipe = craftingRecipeDatabase.FetchCraftingRecipeFromID(iD);
         
         GameObject craftingRecipe = (GameObject)Instantiate(craftingRecipePrefab, craftingRecipePanel.transform);
-        craftingRecipe.GetComponent<CraftingSlot>().craftingIngredients = recipe.CraftingIngredients;
+        craftingRecipe.GetComponent<CraftingSlot>().CraftingIngredients = recipe.CraftingIngredients;
+        craftingRecipe.GetComponent<CraftingSlot>().ResultItem = recipe.ResultItem;
         craftingRecipe.transform.GetChild(0).GetComponent<Image>().sprite = recipe.Sprite;
         craftingRecipe.transform.GetChild(1).GetComponent<Text>().text = recipe.ResultItem.Name;
         craftingRecipe.transform.localPosition = Vector2.zero;

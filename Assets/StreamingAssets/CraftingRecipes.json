@@ -1,9 +1,7 @@
 [
 	{
 		"iD": 0,
-		"name": "Scarp Mtela",
 		"itemID": 2,
-		"slug": "scrap_metal_not",
 		"recipe":
 		[
 			{
@@ -12,6 +10,17 @@
 			},
 			{
 				"iD": 0,
+				"amount": 1
+			}
+		]
+	},
+	{
+		"iD": 1,
+		"itemID": 4,
+		"recipe":
+		[
+			{
+				"iD": 1,
 				"amount": 1
 			}
 		]

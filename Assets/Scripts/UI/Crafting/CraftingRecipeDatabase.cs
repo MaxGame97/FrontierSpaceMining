@@ -43,8 +43,7 @@ public class CraftingRecipeDatabase : MonoBehaviour {
                     itemDatabase,
                     (int)craftingRecipeData[i]["iD"],
                     (int)craftingRecipeData[i]["itemID"],
-                    craftingIngredients.ToArray(),
-                    (string)craftingRecipeData[i]["slug"]
+                    craftingIngredients.ToArray()
                 )
             );
         }
@@ -80,19 +79,17 @@ public class CraftingRecipe
     public int ID { get { return iD; } }
     public Item ResultItem { get { return resultItem; } }
     public CraftingIngredient[] CraftingIngredients { get { return craftingIngredients; } }
-    public string Slug { get { return slug; } }
     public Sprite Sprite { get { return sprite; } }
 
     // Constructor for a crafting recipe
-    public CraftingRecipe(ItemDatabase itemDatabase, int iD, int itemID, CraftingIngredient[] craftingIngredients, string slug)
+    public CraftingRecipe(ItemDatabase itemDatabase, int iD, int itemID, CraftingIngredient[] craftingIngredients)
     {
         this.iD = iD;
         this.resultItem = itemDatabase.FetchItemFromID(itemID);
         this.craftingIngredients = craftingIngredients;
-        this.slug = slug;
 
         // Gets the recipe's sprite from its slug name
-        sprite = Resources.Load<Sprite>("UI/Crafting/Sprites/" + slug);
+        sprite = resultItem.Sprite;
 
         // If the sprite is null (missing), load a debug image instead
         if (sprite == null)

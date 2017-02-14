@@ -43,13 +43,13 @@ public class CraftingTooltip : MonoBehaviour {
     }
 
     // Activates and updates the tooltip panel
-    public void Activate(CraftingIngredient[] craftingIngredients)
+    public void Activate(CraftingIngredient[] craftingIngredients, Inventory inventory)
     {
         tooltipPanel.SetActive(true);   // Shows the tooltip panel
 
         this.craftingIngredients = craftingIngredients;               
 
-        ConstructTooltipString();       
+        ConstructTooltipString(inventory);       
 
         // Move the tooltip panel to be slightly to the left of the cursor
         tooltipPanel.transform.position = new Vector3(Input.mousePosition.x - ((tooltipRect.width * canvas.scaleFactor) / 1.5f), Input.mousePosition.y, 0f);
@@ -62,15 +62,28 @@ public class CraftingTooltip : MonoBehaviour {
         tooltipPanel.SetActive(false);
     }
 
+    // Updates the tooltip panel (Doesn't move it from where it was)
+    public void UpdateText(CraftingIngredient[] craftingIngredients, Inventory inventory)
+    {
+        this.craftingIngredients = craftingIngredients;
+
+        ConstructTooltipString(inventory);
+    }
+
     // Updates the text component's string
-    void ConstructTooltipString()
+    void ConstructTooltipString(Inventory inventory)
     {
         // Update the text component's string based on
         tooltipText.text = "";
 
         for(int i = 0; i < craftingIngredients.Length; i++)
         {
-            tooltipText.text += "<color=red>0/" + craftingIngredients[i].amount + "</color> - " + itemDatabase.FetchItemFromID(craftingIngredients[i].iD).Name;
+            if (inventory.CheckItemCount(craftingIngredients[i].iD) >= craftingIngredients[i].amount)
+                tooltipText.text += "<color=green>";
+            else
+                tooltipText.text += "<color=red>";
+
+            tooltipText.text += inventory.CheckItemCount(craftingIngredients[i].iD) + "/" + craftingIngredients[i].amount + "</color> - " + itemDatabase.FetchItemFromID(craftingIngredients[i].iD).Name;
 
             if (craftingIngredients.Length - i != 1)
                 tooltipText.text += "\n";

@@ -58,7 +58,7 @@ public class Inventory : MonoBehaviour {
         Item tempItem = itemDatabase.FetchItemFromID(iD);
 
         // If the item exists in the inventory
-        if (CheckItemCount(tempItem) > 0)
+        if (CheckItemCount(tempItem.ID) > 0)
         {
             // Loop through the item list
             for (int i = 0; i < items.Count; i++)
@@ -121,7 +121,7 @@ public class Inventory : MonoBehaviour {
         Item tempItem = itemDatabase.FetchItemFromID(iD);
 
         // If the item exists in the inventory
-        if (CheckItemCount(tempItem) > 0)
+        if (CheckItemCount(tempItem.ID) > 0)
         {
             // Loop through the item list
             for (int i = 0; i < items.Count; i++)
@@ -184,13 +184,13 @@ public class Inventory : MonoBehaviour {
     }
 
     // Returns the amount of items in the inventory
-    int CheckItemCount(Item item)
+    public int CheckItemCount(int iD)
     {
         // Loops through the item list
         for (int i = 0; i < items.Count; i++)
         {
             // If an item with the same ID exists
-            if (items[i].ID == item.ID)
+            if (items[i].ID == iD)
             {
                 // Get the item data from the item object
                 ItemData itemData = slots[i].transform.GetChild(0).GetComponent<ItemData>();
@@ -202,5 +202,23 @@ public class Inventory : MonoBehaviour {
 
         // If no item was found, return zero
         return 0;
+    }
+
+    // Returns true if there is an empty slot in the inventory
+    public bool CheckIfEmptySlot()
+    {
+        // Loops through the item list
+        for (int i = 0; i < items.Count; i++)
+        {
+            // If the item is an empty item (ID = -1)
+            if (items[i].ID == -1)
+            {
+                // There is an empty slot in the inventory
+                return true;
+            }
+        }
+
+        // There are no empty slots in the inventory
+        return false;
     }
 }
