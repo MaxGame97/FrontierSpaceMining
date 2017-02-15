@@ -41,8 +41,8 @@ GameObject:
   - 50: {fileID: 50358953760153562}
   - 60: {fileID: 60000011878341058}
   m_Layer: 10
-  m_Name: Enemy
-  m_TagString: Untagged
+  m_Name: Pirate Drone
+  m_TagString: Pirate
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

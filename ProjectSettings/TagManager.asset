@@ -8,6 +8,8 @@ TagManager:
   - Mineable
   - Bullet
   - Shield
+  - Prefab Spawner
+  - Pirate
   layers:
   - Default
   - TransparentFX
@@ -19,7 +21,7 @@ TagManager:
   - 
   - Environment
   - Player
-  - Pirate
+  - Enemy
   - Powerup
   - 
   - 

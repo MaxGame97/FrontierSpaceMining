@@ -24,7 +24,7 @@ GameObject:
   - 50: {fileID: 50000012172551086}
   m_Layer: 8
   m_Name: Asteroid
-  m_TagString: Mineable
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
