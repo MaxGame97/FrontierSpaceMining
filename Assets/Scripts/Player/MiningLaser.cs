@@ -27,7 +27,7 @@ public class MiningLaser : MonoBehaviour
     void FixedUpdate()
     {
         // If the fire button is pressed, the laser coroutine is started
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButton("Fire1"))
         {
             StopCoroutine("FireLaser");
             StartCoroutine("FireLaser");
@@ -37,6 +37,7 @@ public class MiningLaser : MonoBehaviour
         if(spawnDelay > 0)
             spawnDelay -= Time.deltaTime;
     }
+
     IEnumerator FireLaser()
     {
         // Enables line so the lineRenderer is active while button is pressed
@@ -49,29 +50,23 @@ public class MiningLaser : MonoBehaviour
             Ray2D ray = new Ray2D(transform.position, transform.up);
             RaycastHit2D hit = Physics2D.Raycast(ray.origin, transform.up, maxRange, environmentLayerMask);
 
-            // If the laser would hit an object in the layer "Environment" then we create a laser 
-            if (hit.collider != null)
+            // If the raycast hits an "Environment" object with the "Mineable" tag, start the mining laser
+            if (hit.collider != null && hit.collider.tag == "Mineable")
             {
                 // Setting start and end position of the laser
                 miningLaser.SetPosition(0, ray.origin);
                 miningLaser.SetPosition(1, hit.point);
 
-                // If we hit an object with the tag "Mineable" then we do something
-                if (hit.transform.tag == "Mineable")
+                // If the spawn delay has passed
+                if (spawnDelay <= 0)
                 {
-                    //TODO: Switch to minable script
-                    //This is temp until better solution is created
-                    
-                    // If the spawn delay has passed
-                    if (spawnDelay <= 0)
-                    {
-                        Instantiate(tempItem, hit.point, Quaternion.identity);      // Instantiate the temp item prefab
+                    // Cause the mineable object to be mined
+                    hit.collider.gameObject.GetComponent<MineableBehaviour>().Mine(transform.localRotation, hit.point);
 
-                        GameObject tempParticles = Instantiate(miningParticles);    // Instantiate the mining particles prefab
-                        tempParticles.transform.position = hit.point;               // Move the mining particles to the mining point
+                    GameObject tempParticles = Instantiate(miningParticles);    // Instantiate the mining particles prefab
+                    tempParticles.transform.position = hit.point;               // Move the mining particles to the mining point
 
-                        spawnDelay = maxSpawnDelay;                                 // Reset the spawn delay
-                    }
+                    spawnDelay = maxSpawnDelay;                                 // Reset the spawn delay
                 }
             }
             // Resetting laser and miningObjects position so it doesn't show

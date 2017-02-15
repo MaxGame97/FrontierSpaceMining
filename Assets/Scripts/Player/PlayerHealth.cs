@@ -7,15 +7,15 @@ public class PlayerHealth : MonoBehaviour {
 
     private PlayerBehaviour playerBehaviour;
 
-    [SerializeField] private float maxHealth = 100f;                        // The Player's maximum health
-    [SerializeField] [Range(1f, 5f)] private float velocityThreshold = 3f;  // The velocity needed to take damage on collision
+    [SerializeField] private float maxHealth = 500f;                            // The Player's maximum health
+    [SerializeField] [Range(1f, 15f)] private float velocityThreshold = 10f;    // The velocity needed to take damage on collision
 
-    [SerializeField] private string[] ignoredCollisionTags;                 // The tags that the player will ignore on collision with
+    [SerializeField] private string[] ignoredCollisionTags;                     // The tags that the player will ignore on collision with
 
     [SerializeField] private GameObject soundFXPrefab;
     [SerializeField] private AudioClip impactSoundClip;
 
-    private float currentHealth;                                            // The Player's current health
+    private float currentHealth;                                                // The Player's current health
 
     [SerializeField] private bool isEnabled = true;
 

@@ -1,0 +1,28 @@
+[
+	{
+		"iD": 0,
+		"itemID": 2,
+		"recipe":
+		[
+			{
+				"iD": 1,
+				"amount": 11
+			},
+			{
+				"iD": 0,
+				"amount": 1
+			}
+		]
+	},
+	{
+		"iD": 1,
+		"itemID": 4,
+		"recipe":
+		[
+			{
+				"iD": 1,
+				"amount": 1
+			}
+		]
+	}
+]

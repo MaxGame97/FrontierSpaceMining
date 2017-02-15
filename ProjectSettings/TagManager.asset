@@ -11,6 +11,7 @@ TagManager:
   - Prefab Spawner
   - EMP
   - Blue
+  - Pirate
   layers:
   - Default
   - TransparentFX
@@ -22,7 +23,7 @@ TagManager:
   - 
   - Environment
   - Player
-  - Pirate
+  - Enemy
   - Powerup
   - Blue
   - Red

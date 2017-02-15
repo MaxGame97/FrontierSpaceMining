@@ -3,6 +3,8 @@ using System.Collections;
 
 public class ItemPickupBehaviour : MonoBehaviour {
 
+    private ItemDatabase database;  // The item database
+
     private Inventory inventory;    // The player's inventory
 
     private HUD hUD;                // The HUD
@@ -17,6 +19,8 @@ public class ItemPickupBehaviour : MonoBehaviour {
         // If the inventory exists
         if (GameObject.Find("Inventory Controller") != null)
         {
+            database = GameObject.Find("Inventory Controller").GetComponent<ItemDatabase>();
+
             // Get the player's inventory
             inventory = GameObject.Find("Inventory Controller").GetComponent<Inventory>();
         }
@@ -52,9 +56,6 @@ public class ItemPickupBehaviour : MonoBehaviour {
         {
             // Send the item to the inventory
             ItemPickup(collision.gameObject);
-
-            // Destory the item instance
-            Destroy(collision.gameObject);
         }
     }
 
@@ -63,10 +64,28 @@ public class ItemPickupBehaviour : MonoBehaviour {
         // Get the item behaviour from the collided item
         ItemBehaviour item = itemObject.GetComponent<ItemBehaviour>();
 
-        // Add the item to the inventory, by its ID
-        inventory.AddItem(item.ID);
+        if(inventory.CheckItemCount(item.ID) > 0)
+        {
+            // Add the item to the inventory, by its ID
+            inventory.AddItem(item.ID);
 
-        // Send a message to the HUD
-        hUD.AddNotificationString("'" + item.Name + "' Picked up");
+            // Send a message to the HUD
+            hUD.AddNotificationString("'" + database.FetchItemFromID(item.ID).Name + "' Picked up");
+
+            // Destory the item instance
+            Destroy(itemObject);
+        }
+        else if (inventory.CheckIfEmptySlot())
+        {
+            // Add the item to the inventory, by its ID
+            inventory.AddItem(item.ID);
+
+            // Send a message to the HUD
+            hUD.AddNotificationString("'" + database.FetchItemFromID(item.ID).Name + "' Picked up");
+
+            // Destory the item instance
+            Destroy(itemObject);
+        }
+        
     }
 }

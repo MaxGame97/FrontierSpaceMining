@@ -5,13 +5,13 @@ using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour {
 
-    private Rigidbody2D player;                                         // The player's rigidbody
+    private Rigidbody2D player;                                             // The player's rigidbody
 
-    [SerializeField] [Range(1f, 15f)] private float acceleration = 5;   // The player's acceleration speed
-    [SerializeField] [Range(1f, 20f)] private float maxSpeed = 10;      // The player's max speed
-    [SerializeField] [Range(1f, 20f)] private float rotationSpeed = 5;  // The player's rotation speed
+    [SerializeField] [Range(1f, 40f)] private float acceleration = 30f;     // The player's acceleration speed
+    [SerializeField] [Range(1f, 30f)] private float maxSpeed = 12;          // The player's max speed
+    [SerializeField] [Range(1f, 150f)] private float rotationSpeed = 100f;  // The player's rotation speed
 
-    private float thrustAmount;
+    private float thrustAmount;                                             // The player's current thrust amount
 
     [SerializeField] private bool isEnabled = true;
 
@@ -29,6 +29,8 @@ public class PlayerMovement : MonoBehaviour {
     // Takes care of movement by the player
     void FixedUpdate()
     {
+        // If the playermovement is enabled
+        // TODO - Add this to a movement behaviour in Playerbehaviour instead
         if (isEnabled)
         {
             // In order for the player object to work properly, it is important
@@ -39,12 +41,24 @@ public class PlayerMovement : MonoBehaviour {
             // Increase the torque based on the virtual horizontal axis input
             player.AddTorque(-Input.GetAxis("Horizontal") * rotationSpeed);
 
-            // Increase velocity in the forward direction based on the virtual vertical axis input
-            player.AddForce(Input.GetAxis("Vertical") * transform.up * acceleration);
-            thrustAmount = Mathf.Abs(Input.GetAxis("Vertical"));
+            // Get the thrust force based on the player input and the player's acceleration
+            float thrustForce = Input.GetAxis("Vertical") * acceleration;
 
-            // Clamp the player's velocity to the max speed
-            player.velocity = Vector2.ClampMagnitude(player.velocity, maxSpeed);
+            // Add the thrust force in the forward direction
+            player.AddForce(thrustForce * transform.up);
+
+            // If the player is moving faster than the max speed
+            if (player.velocity.magnitude > maxSpeed)
+            {
+                // Calculate how much force is neccesary to counter (neutralize) the thrust force
+                float counterForce = Mathf.Abs(thrustForce) - (maxSpeed / player.velocity.magnitude);
+
+                // Add the counter force in the opposite direction of travel
+                player.AddForce(counterForce * -player.velocity.normalized);
+            }
+            
+            // Get the thrust amount based on player input
+            thrustAmount = Mathf.Abs(Input.GetAxis("Vertical"));
         }
         else
         {
