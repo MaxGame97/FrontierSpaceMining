@@ -10,7 +10,9 @@ public class EnemyBehaviour : MonoBehaviour {
     [SerializeField] [Range(1f, 5)] private float bulletAliveTime = 5f;     // The Ai's speed of their bullets 
     [SerializeField] [Range(1f, 10)] private float EMPduration = 5f;        // The Ai's speed of their bullets 
 
-
+    [SerializeField] [Range(5f, 25f)] private float hearingValue = 10f;     // The AI's hearing value, the lower it is the faster the AI will detect the player 
+    [SerializeField] [Range(0f, 5f)] private float enemyIntelligence = 0;   // The AI's intelligence, the higher this value is the faster the AI will detect the player
+    [SerializeField] [Range(5f, 25f)] private float hearingRadius = 15f;    // The AI's hearing radius
     [SerializeField] [Range(10f, 180f)] private float fieldOfView;          // The enemy's field of view
     [SerializeField] [Range(5f, 25f)] private float viewDistance;           // The enemy's view distance
     [SerializeField] GameObject viewCone;                                   // The prefab object used for the view cone
@@ -61,6 +63,9 @@ public class EnemyBehaviour : MonoBehaviour {
 
         public override void Update()
         {
+            // If the enemy can hear the player, enter alert state
+            if(enemy.CanHearPlayer())
+                Exit(enemy.searchingState);
             // If the enemy can see the player, enter the alert state
             if (enemy.CanSeePlayer())
                 Exit(enemy.alertState);
@@ -200,8 +205,11 @@ public class EnemyBehaviour : MonoBehaviour {
                 Exit(enemy.idleState);
             }
 
+            // If the enemy can hear the player, enter alert state
+            if (enemy.CanHearPlayer())
+                Exit(enemy.searchingState);
             // If the enemy can see the player, exit to the alert state
-            if(enemy.CanSeePlayer())
+            if (enemy.CanSeePlayer())
                 Exit(enemy.alertState);
         }
 
@@ -359,6 +367,23 @@ public class EnemyBehaviour : MonoBehaviour {
         }
 
         // If any of the above statements were false, return false, the enemy can't see the player object
+        return false;
+    }
+
+    //Check whether or not the enemy can hear the player
+    bool CanHearPlayer()
+    {
+        float thrustAmount;
+        PlayerEngineSoundBehaviour playerEngine;
+        playerEngine = GameObject.Find("Player").GetComponent<PlayerEngineSoundBehaviour>();
+        thrustAmount = playerEngine.GetSpeedSound();
+
+        range = Vector2.Distance(transform.position, target.position);
+
+        if ((((hearingRadius - range) + thrustAmount + enemyIntelligence) * (thrustAmount / thrustAmount)) > hearingValue){
+            return true;
+        }
+        
         return false;
     }
 }

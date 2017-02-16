@@ -25,4 +25,9 @@ public class PlayerEngineSoundBehaviour : MonoBehaviour {
     {
         playerThrustAmount = thrustAmount;
     }
+
+    public float GetSpeedSound()
+    {
+        return playerThrustAmount;
+    }
 }
