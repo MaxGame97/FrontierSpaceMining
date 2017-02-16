@@ -372,6 +372,9 @@ MonoBehaviour:
   minDistance: 1
   bulletAliveTime: 5
   EMPduration: 5
+  hearingValue: 5
+  enemyIntelligence: 0
+  radius: 15
   fieldOfView: 90
   viewDistance: 20
   viewCone: {fileID: 1000011559680186, guid: 49e8b6e7842439346b0b571a9040f164, type: 2}
