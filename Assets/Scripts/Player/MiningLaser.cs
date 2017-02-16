@@ -3,7 +3,6 @@ using System.Collections;
 
 public class MiningLaser : MonoBehaviour
 {
-    [SerializeField] private GameObject tempItem;                   // Temporary item object
     [SerializeField] private GameObject miningParticles;            // Mining particle system
     [SerializeField] [Range(1f, 15f)] private float maxRange = 5;   // Max range of the mining laser
     [SerializeField] [Range(0.1f, 5f)] private float maxSpawnDelay; // Max mining delay (in seconds)

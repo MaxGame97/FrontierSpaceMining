@@ -38,12 +38,10 @@ GameObject:
   - 4: {fileID: 4000012739608356}
   - 212: {fileID: 212000012462386750}
   - 114: {fileID: 114000014046064296}
-  - 114: {fileID: 114000012890105420}
+  - 114: {fileID: 114000011932078952}
   - 114: {fileID: 114000013048414704}
-  - 114: {fileID: 114000013744109730}
-  - 114: {fileID: 114000013269480234}
-  - 114: {fileID: 114000012747595990}
   - 114: {fileID: 114000013334035786}
+  - 114: {fileID: 114000013744109730}
   - 50: {fileID: 50000011094050456}
   - 60: {fileID: 60000010346797458}
   - 120: {fileID: 120000010039154508}
@@ -241,7 +239,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isLooping: 1
   randomStartTime: 0
---- !u!114 &114000012747595990
+--- !u!114 &114000011932078952
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -249,31 +247,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1000013032522566}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6bfe00099bd88c44a855efb31d64417b, type: 3}
+  m_Script: {fileID: 11500000, guid: 49a1db5787ad25641a6a4292923f0015, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 500
-  velocityThreshold: 10
-  ignoredCollisionTags:
-  - Item
-  soundFXPrefab: {fileID: 1000012480550896, guid: 1dcb1effd7c035344ab8251aa54b28f6,
+  miningParticles: {fileID: 1000011481895062, guid: a4c1682058a248a4995719ab1251dd5b,
     type: 2}
-  impactSoundClip: {fileID: 8300000, guid: 2b6bd7f11f9b3d949bfad3ccbb1fe6a0, type: 3}
-  isEnabled: 1
---- !u!114 &114000012890105420
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000013032522566}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8590c6c3fba4fcd49b507e6990e344bc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  acceleration: 30
-  maxSpeed: 12
-  rotationSpeed: 80
+  maxRange: 10
+  maxSpawnDelay: 0.4
   isEnabled: 1
 --- !u!114 &114000013048414704
 MonoBehaviour:
@@ -286,23 +266,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c0fb8e1124a9ee4d82af51ff6994c9f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isEnabled: 1
---- !u!114 &114000013269480234
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000013032522566}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49a1db5787ad25641a6a4292923f0015, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tempItem: {fileID: 1000012310755678, guid: 67a7826e2266eba4ab09f517bd76ea09, type: 2}
-  miningParticles: {fileID: 1000011481895062, guid: a4c1682058a248a4995719ab1251dd5b,
-    type: 2}
-  maxRange: 10
-  maxSpawnDelay: 0.4
   isEnabled: 1
 --- !u!114 &114000013334035786
 MonoBehaviour:
@@ -337,7 +300,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84b0c4f5d13a3ce47b931cfc3b58ec78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stunDuration: 5
+  acceleration: 30
+  maxSpeed: 14
+  rotationSpeed: 50
+  maxHealth: 500
+  velocityThreshold: 12
+  ignoredCollisionTags:
+  - Item
+  soundFXPrefab: {fileID: 1000012480550896, guid: 1dcb1effd7c035344ab8251aa54b28f6,
+    type: 2}
+  impactSoundClip: {fileID: 8300000, guid: 2b6bd7f11f9b3d949bfad3ccbb1fe6a0, type: 3}
 --- !u!120 &120000010039154508
 LineRenderer:
   m_ObjectHideFlags: 1
@@ -351,7 +323,7 @@ LineRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: e2bffb9afd6a5e74d9390d69a56a5b5e, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_ProbeAnchor: {fileID: 0}
@@ -371,8 +343,8 @@ LineRenderer:
   - {x: 0, y: 0, z: 0}
   - {x: 0, y: 0, z: 1}
   m_Parameters:
-    startWidth: 0.1
-    endWidth: 0.1
+    startWidth: 0.5
+    endWidth: 0.3
     m_StartColor:
       serializedVersion: 2
       rgba: 4294967295

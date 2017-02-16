@@ -2,22 +2,27 @@
 using System.Collections;
 
 public class PlayerEngineSoundBehaviour : MonoBehaviour {
-
-    private PlayerMovement player;
+    
     private SoundFXBehaviour engine;
 
-    private float thrustAmount;
+    private float currentThrustAmount = 0f;
+    private float playerThrustAmount = 0f;
 
 	// Use this for initialization
 	void Start () {
-        player = GetComponent<PlayerMovement>();
         engine = transform.GetChild(0).GetComponent<SoundFXBehaviour>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        thrustAmount = Mathf.Lerp(thrustAmount, Mathf.Abs(player.ThrustAmount), 0.2f);
+        currentThrustAmount = Mathf.Lerp(currentThrustAmount, Mathf.Abs(playerThrustAmount), 0.2f);
 
-        engine.SetVolume(thrustAmount);
+        engine.SetVolume(currentThrustAmount);
 	}
+
+    // Sets the thrust amount
+    public void SetThrustAmount(float thrustAmount)
+    {
+        playerThrustAmount = thrustAmount;
+    }
 }

@@ -19,7 +19,7 @@ public class HUD : MonoBehaviour {
 
     private Rigidbody2D playerRigidbody;                        // The player's rigidbody
 
-    private PlayerHealth playerHealth;                          // The player's health component
+    private PlayerBehaviour playerBehaviour;                    // The player's health component
 
 	// Use this for initialization
 	void Start () {
@@ -27,7 +27,7 @@ public class HUD : MonoBehaviour {
         if (GameObject.Find("Player") != null)
         {
             // Get the player's health component
-            playerHealth = GameObject.Find("Player").GetComponent<PlayerHealth>();
+            playerBehaviour = GameObject.Find("Player").GetComponent<PlayerBehaviour>();
             // Get the player's rigidbody
             playerRigidbody = GameObject.Find("Player").GetComponent<Rigidbody2D>();
         }
@@ -48,7 +48,7 @@ public class HUD : MonoBehaviour {
             // Get the health slider
             healthSlider = GameObject.Find("Health Slider").GetComponent<Slider>();
             // Set the slider value to the player's max value
-            healthSlider.maxValue = playerHealth.MaxHealth;
+            healthSlider.maxValue = playerBehaviour.MaxHealth;
 
             // Get the velocity text
             velocityText = GameObject.Find("Velocity Text").GetComponent<Text>();
@@ -83,8 +83,8 @@ public class HUD : MonoBehaviour {
     void Update()
     {
         // Update the slider value based on the player's current health
-        if (playerHealth != null)
-            healthSlider.value = playerHealth.CurrentHealth;
+        if (playerBehaviour != null)
+            healthSlider.value = playerBehaviour.CurrentHealth;
         else
             healthSlider.value = 0f;
 

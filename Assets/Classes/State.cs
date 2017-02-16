@@ -10,6 +10,10 @@ public class State {
     {
     }
 
+    public virtual void OnCollisionEnter2D(Collision2D collision)
+    {
+    }
+
     public virtual void Exit(State exitState)
     {
     }
