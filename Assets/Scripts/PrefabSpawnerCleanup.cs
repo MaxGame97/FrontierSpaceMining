@@ -29,6 +29,7 @@ public class PrefabSpawnerCleanup : MonoBehaviour {
                 if(Physics2D.IsTouching(spawnedObjects[i].GetComponent<Collider2D>(), spawnedObjects[j].GetComponent<Collider2D>()))
                 {
                     Destroy(spawnedObjects[i]);
+                    break;
                 }
             }
         }

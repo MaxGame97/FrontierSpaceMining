@@ -174,9 +174,6 @@ public class MusicControllerBehaviour : MonoBehaviour {
 
         public override void Exit(State exitState)
         {
-            // Make the audio source stop looping audio clips
-            musicController.audioSource.loop = false;
-
             musicController.musicState = exitState;
             musicController.musicState.Entry();
         }
@@ -200,6 +197,9 @@ public class MusicControllerBehaviour : MonoBehaviour {
 
                 // Reset the volume to the defined battle music volume
                 musicController.audioSource.volume = musicController.battleMusicVolume;
+
+                // Set the cooldown time to the defined battle cooldown time
+                cooldownTime = musicController.battleCooldownTime;
             }
         }
 
@@ -212,7 +212,13 @@ public class MusicControllerBehaviour : MonoBehaviour {
                 musicController.audioSource.volume -= Time.unscaledDeltaTime / musicController.musicFadeTime;
             // If not, exit to the mute state
             else
+            {
+                // Make the audio source stop looping audio clips
+                musicController.audioSource.loop = false;
+
+                // Exit to the mute state
                 Exit(musicController.muteState);
+            }
         }
 
         // Checks if the audio clip is being played is a battle audio clip

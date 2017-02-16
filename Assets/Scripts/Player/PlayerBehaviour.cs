@@ -149,11 +149,6 @@ public class PlayerBehaviour : MonoBehaviour {
 
         Rigidbody2D playerRigidbody;
 
-        private float spawnDelay = 0f;          // Current mining delay (in seconds)
-
-        private LayerMask environmentLayerMask; // A layermask containing the environment layer
-        private LineRenderer miningLaser;       // The linerenderer of the mining laser
-
         public AliveState(PlayerBehaviour player)
         {
             this.player = player;
@@ -163,10 +158,6 @@ public class PlayerBehaviour : MonoBehaviour {
 
             // Set the player's current health to the max health
             player.currentHealth = player.maxHealth;
-
-            environmentLayerMask = LayerMask.NameToLayer("Environment");    // Get the environment layer maske
-            miningLaser = player.GetComponent<LineRenderer>();              // Get the linerenderer component
-            miningLaser.enabled = false;
         }
 
         public override void Entry()
