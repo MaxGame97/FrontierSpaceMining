@@ -10,7 +10,6 @@ TagManager:
   - Shield
   - Prefab Spawner
   - EMP
-  - Blue
   - Pirate
   layers:
   - Default
@@ -25,8 +24,8 @@ TagManager:
   - Player
   - Enemy
   - Powerup
-  - Blue
-  - Red
+  - Minimap
+  - 
   - 
   - 
   - 
