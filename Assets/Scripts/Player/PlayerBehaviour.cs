@@ -37,39 +37,6 @@ public class PlayerBehaviour : MonoBehaviour {
     private AliveState aliveState;
     private DeadState deadState;
 
-    /*
-    private class State : State
-    {
-        PlayerBehaviour player;
-
-        public State(PlayerBehaviour player)
-        {
-            this.player = player;
-        }
-
-        public override void Entry()
-        {
-
-        }
-
-        public override void Update()
-        {
-
-        }
-        
-        public override void OnCollisionEnter2D(Collision2D collision)
-        {
-            
-        }
-
-        public override void Exit(State exitState)
-        {
-            player.healthState = exitState;
-            player.healthState.Entry();
-        }
-    }
-    */
-
     private class ControlledState : State
     {
         PlayerBehaviour player;
@@ -112,7 +79,7 @@ public class PlayerBehaviour : MonoBehaviour {
             playerRigidbody.AddTorque(-Input.GetAxis("Horizontal") * player.rotationSpeed);
 
             // Get the thrust force based on the playerRigidbody input and the playerRigidbody's acceleration
-            float thrustForce = Input.GetAxis("Vertical") * player.acceleration;
+            float thrustForce = Mathf.Clamp(Input.GetAxis("Vertical"), -0.25f, 1f) * player.acceleration;
 
             // Get the max speed, multiply it by 2 if the boost button is pressed
             float maxSpeed = Input.GetButton("Boost") ? player.maxSpeed * 2 : player.maxSpeed;

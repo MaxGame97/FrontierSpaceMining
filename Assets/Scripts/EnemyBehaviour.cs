@@ -36,6 +36,8 @@ public class EnemyBehaviour : MonoBehaviour {
     private LayerMask environmentLayerMask;                                 // A layermask containing the environment layer
     private LayerMask playerLayerMask;                                      // A layermask containing the player layer
 
+    private MusicControllerBehaviour musicController;
+
     private State currentState;                                             // The enemy's current state
     private IdleState idleState;                                            // An idlestate instance
     private AlertState alertState;                                          // An alertstate instance
@@ -275,6 +277,8 @@ public class EnemyBehaviour : MonoBehaviour {
         audioSource.clip = bulletSoundClip;
 
         Destroy(tempBullet, bulletAliveTime);
+
+        musicController.TriggerBattleMusic();
     }
 
     void Awake()
@@ -294,6 +298,8 @@ public class EnemyBehaviour : MonoBehaviour {
 
         environmentLayerMask = LayerMask.GetMask("Environment");                // Get the environment layer
         playerLayerMask = LayerMask.GetMask("Player");                          // Get the player layer
+
+        musicController = GameObject.Find("Music Controller").GetComponent<MusicControllerBehaviour>();
 
         GameObject tempCone = Instantiate(viewCone);                            // Create a view cone
         viewConeTransform = tempCone.transform;                                 // Get the view cone's transform component
