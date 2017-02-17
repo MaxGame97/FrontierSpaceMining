@@ -101,8 +101,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49b4b19e3a7fd9645a904e465335ef01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletSpeed: 0.1
-  bulletDamage: 10
+  bulletSpeed: 0.2
+  bulletDamage: 30
 --- !u!212 &212000011763888308
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -1607,8 +1607,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddac031d1257f8f4fb924a9545c0636e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  toggleInventoryInput: Fire2
-  toggleCraftingInput: Fire3
+  toggleInventoryInput: Inventory
+  toggleCraftingInput: Crafting
 --- !u!114 &114000013678052088
 MonoBehaviour:
   m_ObjectHideFlags: 1

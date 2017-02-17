@@ -95,8 +95,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1119883603129434}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.79812, y: 0.97476685, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 80.8, y: -4.6, z: 0}
   m_LocalScale: {x: 0.4, y: 0.4, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -113,7 +113,7 @@ Rigidbody2D:
   m_GameObject: {fileID: 1119883603129434}
   m_UseAutoMass: 0
   m_Mass: 0.5
-  m_LinearDrag: 0
+  m_LinearDrag: 2
   m_AngularDrag: 15
   m_GravityScale: 0
   m_IsKinematic: 0
@@ -366,19 +366,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb70d1843866e5448845da68e566961c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  acceleration: 2
-  maxSpeed: 8.5
-  rotationSpeed: 0.085
-  minDistance: 1
-  bulletAliveTime: 5
-  EMPduration: 5
-  hearingValue: 5
-  enemyIntelligence: 0
-  radius: 15
+  acceleration: 12
+  maxSpeed: 8
+  rotationSpeed: 0.09
+  minDistance: 3
+  hearingValue: 7.5
+  enemyIntelligence: 1.5
+  hearingDistance: 20
   fieldOfView: 90
   viewDistance: 20
   viewCone: {fileID: 1000011559680186, guid: 49e8b6e7842439346b0b571a9040f164, type: 2}
-  bullet: {fileID: 1000011634733356, guid: b2a1d8d79e470134dafe8978acffaea5, type: 2}
+  weaponPrefab: {fileID: 1000011634733356, guid: b2a1d8d79e470134dafe8978acffaea5,
+    type: 2}
+  bulletAliveTime: 5
+  weaponCooldown: 0.75
+  startingBehaviour: 3
+  patrolLoops: 1
+  patrolNodes: []
+  roamingRadius: 30
+  searchingRadius: 10
+  searchingTime: 10
   soundFXPrefab: {fileID: 1000012480550896, guid: 1dcb1effd7c035344ab8251aa54b28f6,
     type: 2}
   alertSoundClip: {fileID: 8300000, guid: f9a1474fc773f9a4ea99ede8ac6c5966, type: 3}
