@@ -267,6 +267,8 @@ public class PlayerBehaviour : MonoBehaviour {
         {
             player.movementState.Exit(player.idleState);
 
+            Debug.Log("DISABLED");
+
             player.itemPickupBehaviour.enabled = false;
             player.miningLaser.enabled = false;
 

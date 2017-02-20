@@ -1,23 +1,38 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class MusicControllerBehaviour : MonoBehaviour {
 
+    [Header("Music clips")]
+
     [SerializeField] private AudioClip[] calmMusicClips;
-    [SerializeField] private AudioClip[] battleMusicClips;
+
+    [Space(6f)]
+
+    [SerializeField] private AudioClip battleMusicIntroClip;
+    [SerializeField] private AudioClip battleMusicLoopClip;
+    [SerializeField] private AudioClip battleMusicOutroClip;
+
+    [Header("Calm music parameters")]
 
     [SerializeField] private float minDurationBetweenCalmMusic = 60f;
     [SerializeField] private float randomDurationBetweenCalmMusic = 60f;
 
-    [Space(2f)]
+    [Space(6f)]
+
+    [Tooltip("(Recommended) If checked, the music controller will never play the same calm music clip twice in a row, unless there is only one calm music clip assigned.")]
+    [SerializeField] private bool alwaysDifferentCalmMusic = true;
+
+    [Header("General music parameters")]
 
     [SerializeField] private float musicFadeTime = 2f;
-    [SerializeField] private float battleCooldownTime = 15f;
+    [SerializeField] private float battleCooldownTime = 5f;
 
-    [Space(2f)]
+    [Space(6f)]
 
-    [SerializeField] private float calmMusicVolume = 0.4f;
-    [SerializeField] private float battleMusicVolume = 0.55f;
+    [SerializeField] private float calmMusicVolume = 0.75f;
+    [SerializeField] private float battleMusicVolume = 0.85f;
 
     private AudioSource audioSource;
 
@@ -72,6 +87,8 @@ public class MusicControllerBehaviour : MonoBehaviour {
     {
         MusicControllerBehaviour musicController;
 
+        AudioClip previousAudioClip;
+
         public CalmState(MusicControllerBehaviour musicController)
         {
             this.musicController = musicController;
@@ -79,12 +96,8 @@ public class MusicControllerBehaviour : MonoBehaviour {
 
         public override void Entry()
         {
-            // Set a random calm music clip and play it
-            musicController.audioSource.clip = musicController.calmMusicClips[Random.Range(0, musicController.calmMusicClips.Length)];
-            musicController.audioSource.Play();
-
-            // Reset the audio source volume to the defined calm music volume
-            musicController.audioSource.volume = musicController.calmMusicVolume;
+            // Play calm music
+            PlayCalmMusic(musicController.alwaysDifferentCalmMusic);
         }
 
         public override void Update()
@@ -101,14 +114,45 @@ public class MusicControllerBehaviour : MonoBehaviour {
             musicController.musicState = exitState;
             musicController.musicState.Entry();
         }
+
+        // Plays a new calm music clip
+        void PlayCalmMusic(bool alwaysDifferentMusicClips)
+        {
+            // If the same music clip is allowed to be played twice (or more) in a row, or if no calm music has yet been played
+            if (!alwaysDifferentMusicClips || previousAudioClip == null)
+            {
+                // Set a random calm music clip
+                musicController.audioSource.clip = musicController.calmMusicClips[Random.Range(0, musicController.calmMusicClips.Length)];
+            }
+            else
+            {
+                List<AudioClip> tempCalmMusicClips = new List<AudioClip>();
+
+                // Add all music clips but the previously played one to the list
+                for(int i = 0; i < musicController.calmMusicClips.Length; i++)
+                {
+                    if (musicController.calmMusicClips[i] != previousAudioClip)
+                        tempCalmMusicClips.Add(musicController.calmMusicClips[i]);
+                }
+
+                // Set a random calm music clip
+                musicController.audioSource.clip = tempCalmMusicClips[Random.Range(0, tempCalmMusicClips.Count)];
+            }
+
+            // Play the calm music clip
+            musicController.audioSource.Play();
+
+            // Reset the audio source volume to the defined calm music volume
+            musicController.audioSource.volume = musicController.calmMusicVolume;
+
+            // Update the previous audio clip
+            previousAudioClip = musicController.audioSource.clip;
+        }
     }
 
     private class BattleState : State
     {
         MusicControllerBehaviour musicController;
-
-        // The queued audio clip (the clip that plays after 
-        AudioClip queuedAudioClip;
 
         float cooldownTime;
 
@@ -119,56 +163,81 @@ public class MusicControllerBehaviour : MonoBehaviour {
 
         public override void Entry()
         {
-            // Randomly assign a queued audio clip
-            queuedAudioClip = musicController.battleMusicClips[Random.Range(0, musicController.battleMusicClips.Length)];
-
             // If there is no audio being played
             if(!musicController.audioSource.isPlaying)
             {
-                // Set and play the queued audio clip
-                musicController.audioSource.clip = queuedAudioClip;
-                musicController.audioSource.Play();
-
-                // Set the audio source to loop the battle music
-                musicController.audioSource.loop = true;
-
-                // Reset the volume to the defined battle music volume
-                musicController.audioSource.volume = musicController.battleMusicVolume;
-
-                // Set the cooldown time to the defined battle cooldown time
-                cooldownTime = musicController.battleCooldownTime;
+                PlayBattleMusic(musicController.alwaysDifferentCalmMusic);
             }
             // If there is already battle music being played
-            else if (CheckIfBattleMusicIsPlaying())
+            else if (CheckIfBattleMusic())
             {
-                // Reset the volume to the defined battle music volume
-                musicController.audioSource.volume = musicController.battleMusicVolume;
-
-                // Set the cooldown time to the defined battle cooldown time
-                cooldownTime = musicController.battleCooldownTime;
+                // Reset the battle music (if needed)
+                ResetBattleMusic();
             }
         }
 
         public override void Update()
         {
-            // If battle music isn't being played
-            if (!CheckIfBattleMusicIsPlaying())
+            // If battle music isn't the current music clip
+            if (!CheckIfBattleMusic())
             {
                 // Fade out the other music
                 FadeOutOtherMusic();
             }
-            // If battle music is being played
+            // If battle music is the current music clip
             else
             {
-                // If the cooldown time has expired
-                if (cooldownTime <= 0)
+                // If the audio source is currently stopped
+                if (!musicController.audioSource.isPlaying)
                 {
-                    // Fade out the battle music
-                    FadeOutBattleMusic();
+                    // If the current music clip is the battle intro clip
+                    if (musicController.audioSource.clip == musicController.battleMusicIntroClip)
+                    {
+                        // Change to the battle loop clip and play it
+                        musicController.audioSource.clip = musicController.battleMusicLoopClip;
+                        musicController.audioSource.Play();
+
+                        // Set the music to loop
+                        musicController.audioSource.loop = true;
+                    }
+                    // If the current music clip is the battle loop clip
+                    else if (musicController.audioSource.clip == musicController.battleMusicLoopClip)
+                    {
+                        // If the cooldown time has expired
+                        if (cooldownTime <= 0)
+                        {
+                            // Change to the battle outro clip and play it
+                            musicController.audioSource.clip = musicController.battleMusicOutroClip;
+                            musicController.audioSource.Play();
+                        }
+                        // If not, decrease the cooldown time
+                        else
+                            cooldownTime -= Time.unscaledDeltaTime;
+                    }
+                    // If the current music clip is the battle outro clip
+                    else
+                    {
+                        // Exit to the mute state
+                        Exit(musicController.muteState);
+                    }
                 }
-                // If not, decrease the cooldown time
+                // If audio source is currently playing
                 else
-                    cooldownTime -= Time.unscaledDeltaTime;
+                {
+                    // If the current music clip is the battle loop clip
+                    if (musicController.audioSource.clip == musicController.battleMusicLoopClip)
+                    {
+                        // If the cooldown time has expired
+                        if (cooldownTime <= 0)
+                        {
+                            // Stop looping the battle loop clip
+                            musicController.audioSource.loop = false;
+                        }
+                        // If not, decrease the cooldown time
+                        else
+                            cooldownTime -= Time.unscaledDeltaTime;
+                    }
+                }
             }
         }
 
@@ -176,6 +245,31 @@ public class MusicControllerBehaviour : MonoBehaviour {
         {
             musicController.musicState = exitState;
             musicController.musicState.Entry();
+        }
+
+        // Plays a new battle music clip
+        void PlayBattleMusic(bool allowSameMusicClipTwice)
+        {
+            // Play the battle music clip intro clip
+            musicController.audioSource.clip = musicController.battleMusicIntroClip;
+            musicController.audioSource.Play();
+
+            // Reset the audio source volume to the defined battle music volume
+            musicController.audioSource.volume = musicController.battleMusicVolume;
+        }
+
+        // Resets the battle music (if needed)
+        void ResetBattleMusic()
+        {
+            // If the current music clip is the battle loop clip
+            if(musicController.audioSource.clip == musicController.battleMusicLoopClip)
+            {
+                // Set the cooldown time to the defined battle cooldown time
+                cooldownTime = musicController.battleCooldownTime;
+
+                // Keep looping the audio source
+                musicController.audioSource.loop = true;
+            }
         }
 
         // Fades out the other music and then starts playing the battle music
@@ -188,49 +282,20 @@ public class MusicControllerBehaviour : MonoBehaviour {
             // If not, start playing the battle music clip
             else
             {
-                // Set and play the queued audio clip
-                musicController.audioSource.clip = queuedAudioClip;
-                musicController.audioSource.Play();
-
-                // Set the audio source to loop the battle music
-                musicController.audioSource.loop = true;
-
-                // Reset the volume to the defined battle music volume
-                musicController.audioSource.volume = musicController.battleMusicVolume;
-
-                // Set the cooldown time to the defined battle cooldown time
-                cooldownTime = musicController.battleCooldownTime;
-            }
-        }
-
-        // Fades out the battle music and exits to the mute state
-        void FadeOutBattleMusic()
-        {
-            // If the audio source's volume is above 0
-            if (musicController.audioSource.volume > 0)
-                // Decrease it based on the defined music fade time
-                musicController.audioSource.volume -= Time.unscaledDeltaTime / musicController.musicFadeTime;
-            // If not, exit to the mute state
-            else
-            {
-                // Make the audio source stop looping audio clips
-                musicController.audioSource.loop = false;
-
-                // Exit to the mute state
-                Exit(musicController.muteState);
+                PlayBattleMusic(musicController.alwaysDifferentCalmMusic);
             }
         }
 
         // Checks if the audio clip is being played is a battle audio clip
-        bool CheckIfBattleMusicIsPlaying()
+        bool CheckIfBattleMusic()
         {
-            // Check all battle audio clips
-            for(int i = 0; i < musicController.battleMusicClips.Length; i++)
-            {
-                // If the current track matches the current audio clip, return true
-                if (musicController.audioSource.clip == musicController.battleMusicClips[i])
-                    return true;
-            }
+            // If the current track matches any of the battle music clips, return true
+            if (musicController.audioSource.clip == musicController.battleMusicIntroClip)
+                return true;
+            if (musicController.audioSource.clip == musicController.battleMusicLoopClip)
+                return true;
+            if (musicController.audioSource.clip == musicController.battleMusicOutroClip)
+                return true;
 
             // If no match was found, return false
             return false;
@@ -247,6 +312,17 @@ public class MusicControllerBehaviour : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
+        // If either the calm or battle music clip arrays are empty
+        if(calmMusicClips.Length == 0)
+        {
+            // Throw an error
+            Debug.LogError("There are either no calm music clips assigned, music controller disabled");
+
+            // Destroy the music controller and exit this function
+            Destroy(this);
+            return;
+        }
+
         audioSource = GetComponent<AudioSource>();
 
         musicState = muteState;

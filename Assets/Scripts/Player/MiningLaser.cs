@@ -52,9 +52,11 @@ public class MiningLaser : MonoBehaviour
             // If the raycast hits an "Environment" object with the "Mineable" tag, start the mining laser
             if (hit.collider != null && hit.collider.tag == "Mineable")
             {
+                Vector3[] laserPosition = { new Vector3(ray.origin.x, ray.origin.y, transform.position.z + 5), new Vector3(hit.point.x, hit.point.y, transform.position.z + 5) };
+
                 // Setting start and end position of the laser
-                miningLaser.SetPosition(0, ray.origin);
-                miningLaser.SetPosition(1, hit.point);
+                miningLaser.SetPosition(0, laserPosition[0]);
+                miningLaser.SetPosition(1, laserPosition[1]);
 
                 // If the spawn delay has passed
                 if (spawnDelay <= 0)
@@ -64,6 +66,7 @@ public class MiningLaser : MonoBehaviour
 
                     GameObject tempParticles = Instantiate(miningParticles);    // Instantiate the mining particles prefab
                     tempParticles.transform.position = hit.point;               // Move the mining particles to the mining point
+                    tempParticles.transform.Translate(0f, 0f, -5f);
 
                     spawnDelay = maxSpawnDelay;                                 // Reset the spawn delay
                 }

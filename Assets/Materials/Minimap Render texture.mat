@@ -18,7 +18,7 @@ Material:
     - first:
         name: _Alpha
       second:
-        m_Texture: {fileID: 2800000, guid: 301513b5e27932f4c91f8139ce0218da, type: 3}
+        m_Texture: {fileID: 2800000, guid: 140d4ef0560ecca4f915f09ef4bf937c, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - first:

@@ -40,8 +40,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000010985576340}
   - 82: {fileID: 82000010249498954}
+  - 114: {fileID: 114000011139002408}
   m_Layer: 0
-  m_Name: Music
+  m_Name: Music Controller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -83,7 +84,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010508037784}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: -130, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
@@ -124,11 +125,11 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 15
+  orthographic size: 20
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4294955007
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -154,11 +155,11 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: db931dff0b0de204c896b138c2c9a419, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 0.4
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   Priority: 128
@@ -207,7 +208,7 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
-    m_RotationOrder: 4
+    m_RotationOrder: 0
   reverbZoneMixCustomCurve:
     serializedVersion: 2
     m_Curve:
@@ -300,6 +301,32 @@ Behaviour:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010508037784}
   m_Enabled: 1
+--- !u!114 &114000011139002408
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013069241656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 243b857c5aca60d4ea01a01cac9d7555, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  calmMusicClips:
+  - {fileID: 8300000, guid: b0134a4631bf5564ca5d5c79f245866b, type: 3}
+  - {fileID: 8300000, guid: 8df79d2eeb4c5fd49b83bba468ca908c, type: 3}
+  battleMusicIntroClip: {fileID: 8300000, guid: 79fb9b963bd6843478656cfa103a3e2c,
+    type: 3}
+  battleMusicLoopClip: {fileID: 8300000, guid: d0f21f4e791bb8f46ac01f73a734daab, type: 3}
+  battleMusicOutroClip: {fileID: 8300000, guid: 597ae203aa9d55e45bfea356eafae938,
+    type: 3}
+  minDurationBetweenCalmMusic: 30
+  randomDurationBetweenCalmMusic: 90
+  alwaysDifferentCalmMusic: 1
+  musicFadeTime: 2
+  battleCooldownTime: 3
+  calmMusicVolume: 0.75
+  battleMusicVolume: 0.9
 --- !u!114 &114000012302796492
 MonoBehaviour:
   m_ObjectHideFlags: 1
