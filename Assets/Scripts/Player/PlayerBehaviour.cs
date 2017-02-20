@@ -212,7 +212,7 @@ public class PlayerBehaviour : MonoBehaviour {
                 // Get the bullet behaviour
                 BulletBehaviour bullet = collision.gameObject.GetComponent<BulletBehaviour>();
                 // Deal the bullet's damage to the player
-                DealDamage(bullet.BulletDamage);
+                player.DealDamage(bullet.BulletDamage);
             }
             else
             {
@@ -229,7 +229,7 @@ public class PlayerBehaviour : MonoBehaviour {
                         float damageMultiplier = Mathf.Clamp(collisionRigidbody.mass / playerRigidbody.mass, 0f, 5f);
 
                         // Deal damage to the player, based on the relative speed multiplied by the damage multiplier
-                        DealDamage((collision.relativeVelocity.magnitude - player.velocityThreshold) * damageMultiplier);
+                        player.DealDamage((collision.relativeVelocity.magnitude - player.velocityThreshold) * damageMultiplier);
 
                         GameObject impactSound = (GameObject)Instantiate(player.soundFXPrefab);
                         AudioSource audioSource = impactSound.GetComponent<AudioSource>();
@@ -239,17 +239,6 @@ public class PlayerBehaviour : MonoBehaviour {
                         audioSource.clip = player.impactSoundClip;
                     }
                 }
-            }
-        }
-
-        // Deals damage to the player
-        void DealDamage(float amount)
-        {
-            player.currentHealth -= amount; // Reduce current health with the amount of damage taken
-
-            if (player.currentHealth <= 0)  // If all health is lost and the isDead bool is not yet set to true, 
-            {
-                Exit(player.deadState);     // Kills the player
             }
         }
     }
@@ -266,8 +255,6 @@ public class PlayerBehaviour : MonoBehaviour {
         public override void Entry()
         {
             player.movementState.Exit(player.idleState);
-
-            Debug.Log("DISABLED");
 
             player.itemPickupBehaviour.enabled = false;
             player.miningLaser.enabled = false;
@@ -325,5 +312,24 @@ public class PlayerBehaviour : MonoBehaviour {
     {
         if (healthState != deadState)
             healthState.Exit(deadState);
+    }
+
+    // Deals damage to the player
+    public void DealDamage(float amount)
+    {
+        // If the player is alive
+        if (healthState == aliveState)
+        {
+            // Reduce current health with the amount of damage taken
+            currentHealth -= amount;
+
+            // If all health has depleted
+            if (currentHealth <= 0)
+            {
+                currentHealth = 0;              // Reset the player's current health
+
+                healthState.Exit(deadState);    // Kills the player
+            }
+        }
     }
 }
