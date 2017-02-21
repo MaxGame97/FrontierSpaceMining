@@ -14,6 +14,8 @@ public class DrawWireDisc : MonoBehaviour
         if (GetComponent<PrefabSpawner>() != null)
             // Update the wire disc radius based on the spawn radius
             discRadius = GetComponent<PrefabSpawner>().SpawnRadius;
+        else if (GetComponent<LevelBoundsBehaviour>() != null)
+            discRadius = GetComponent<LevelBoundsBehaviour>().BoundsRadius;
         else
             Destroy(this);
     }

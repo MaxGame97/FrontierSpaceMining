@@ -25,8 +25,9 @@ public class GameControllerBehaviour : MonoBehaviour
             invScript = GameObject.Find("Inventory Controller").GetComponent<Inventory>();
             saveLoadScript = GameObject.Find("GlobalGameController").GetComponent<SaveLoadGame>();
         }
+
         pauseMenu.CloseMenu();
-        UnPause();
+        Time.timeScale = 1f;
 
         if (saveLoadScript.isLoadingGame)
             saveLoadScript.Load(saveLoadScript.currentSaveID);
@@ -65,12 +66,6 @@ public class GameControllerBehaviour : MonoBehaviour
             //...and change the state of the "paused" bool to true
             isPaused = !isPaused;
         }
-    }
-
-    //Temporary solution to bug
-    void UnPause()
-    {
-        Time.timeScale = 1f;
     }
 
     //Function that quits the game

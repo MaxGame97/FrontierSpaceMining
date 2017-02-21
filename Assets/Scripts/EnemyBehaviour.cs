@@ -721,14 +721,28 @@ public class EnemyBehaviour : MonoBehaviour {
             // Rotate the enemy linearly towards the target rotation
             transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed);
 
-            // Calculate the correctional angle
-            float correctionalAngle = Vector3.Angle(enemyRigidbody.velocity.normalized, transform.up);
+            // Correctional thrust vector, used for more precise steering as well as avoiding obstacles
+            Vector3 correctedThrust = transform.up;
 
-            // Add the correctional angle to a vector
-            Vector3 correctionalVector = new Vector3(0f, 0f, Mathf.Clamp(correctionalAngle, -25f, 25f));
+            // If there is an obstacle in front of the enemy
+            if (Physics2D.Raycast(transform.position, transform.up, 6f, environmentLayerMask))
+            {
+                float correctionalAngle = 0;
+
+                // Check if the path is clear to the left
+                if (!Physics2D.Raycast(transform.position, Quaternion.Euler(0, 0, 35f) * transform.up, 4f, environmentLayerMask))
+                    // If so, set the correctional angle to go left and slightly backwards
+                    correctionalAngle = 100;
+                else
+                    // If not, set the correctional angle to go right and slightly backwards
+                    correctionalAngle = -100;
+
+                // Update the correctional vector
+                correctedThrust = Quaternion.Euler(0, 0, correctionalAngle) * transform.up;
+            }
 
             // Add force in the direction of travel, this is corrected by the correctional angle
-            enemyRigidbody.AddForce((transform.up - correctionalVector) * (acceleration * amount));
+            enemyRigidbody.AddForce(correctedThrust * (acceleration * amount));
 
             // If the enemy is moving faster than the max speed
             if (enemyRigidbody.velocity.magnitude > maxSpeed)
