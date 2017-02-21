@@ -20,7 +20,7 @@ public class PlayerHealth : MonoBehaviour {
     [SerializeField] private bool isEnabled = true;
 
     public float MaxHealth { get { return maxHealth; } }
-    public float CurrentHealth { get { return currentHealth; } }
+    public float CurrentHealth { get { return currentHealth; } set { currentHealth = value; } }
     public bool IsEnabled { get { return isEnabled; } set { isEnabled = value; } }
 
     void Start ()

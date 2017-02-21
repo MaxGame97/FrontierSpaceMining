@@ -24,7 +24,7 @@ public class PlayerBehaviour : MonoBehaviour {
     private float currentHealth;                                                // The player's current health
 
     public float MaxHealth { get { return maxHealth; } }
-    public float CurrentHealth { get { return currentHealth; } }
+    public float CurrentHealth { get { return currentHealth; } set { currentHealth = value; } }
 
     private ItemPickupBehaviour itemPickupBehaviour;
     private MiningLaser miningLaser;
