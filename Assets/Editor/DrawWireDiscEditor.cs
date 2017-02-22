@@ -11,6 +11,7 @@ public class DrawWireDiscEditor : Editor
         
         // Sets the color to white with a slight transparency
         Handles.color = new Color(1, 1, 1, 0.8f);
+        
         // Draw a wire disc on the target's position, facing backwards
         Handles.DrawWireDisc(t.transform.position, Vector3.back, t.DiscRadius);
 

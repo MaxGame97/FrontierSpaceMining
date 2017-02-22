@@ -12,9 +12,7 @@ public class Crafting : MonoBehaviour {
     private CanvasGroup canvasGroup;                        // The crafting system's canvas group
     private GameObject craftingSlotPanel;                   // The crafting slot panel object
 
-    private bool craftingEnabled = true;
-
-    //private List<CraftingRecipe> craftingRecipies = new List<CraftingRecipe>();
+    private bool craftingEnabled = true;                    // Specifies whether or not the crafting system is enabled
 
     public bool CraftingEnabled { get { return craftingEnabled; } }
 

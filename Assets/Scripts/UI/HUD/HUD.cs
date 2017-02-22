@@ -23,6 +23,9 @@ public class HUD : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+        // Get the HUD transform
+        hUDTransform = GameObject.Find("HUD System").transform;
+
         // If the player object exists
         if (GameObject.Find("Player") != null)
         {
@@ -31,20 +34,10 @@ public class HUD : MonoBehaviour {
             // Get the player's rigidbody
             playerRigidbody = GameObject.Find("Player").GetComponent<Rigidbody2D>();
         }
-        else
-        {
-            // Throw an error message to the debug log
-            Debug.LogError("The player object is missing, HUD disabled");
-            // If the inventory is missing, delete the item pickup behaviour and exit this function
-            Destroy(this);
-            return;
-        }
 
         // If all of the HUD UI exists
-        if (GameObject.Find("HUD System") != null && GameObject.Find("Health Slider") != null && GameObject.Find("Velocity Text") != null)
+        if (GameObject.Find("Health Slider") != null && GameObject.Find("Velocity Text") != null)
         {
-            // Get the HUD transform
-            hUDTransform = GameObject.Find("HUD System").transform;
             // Get the health slider
             healthSlider = GameObject.Find("Health Slider").GetComponent<Slider>();
             // Set the slider value to the player's max value
@@ -52,13 +45,6 @@ public class HUD : MonoBehaviour {
 
             // Get the velocity text
             velocityText = GameObject.Find("Velocity Text").GetComponent<Text>();
-        }
-        else
-        {
-            // Throw an error message to the debug log
-            Debug.LogError("The HUD UI is missing, HUD disabled");
-            Destroy(this);
-            return;
         }
 
         // If the notification object is assigned
@@ -82,17 +68,25 @@ public class HUD : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        // Update the slider value based on the player's current health
-        if (playerBehaviour != null)
-            healthSlider.value = playerBehaviour.CurrentHealth;
-        else
-            healthSlider.value = 0f;
+        // If the health slider exists
+        if(healthSlider != null)
+        {
+            // Update the slider value based on the player's current health
+            if (playerBehaviour != null)
+                healthSlider.value = playerBehaviour.CurrentHealth;
+            else
+                healthSlider.value = 0f;
+        }
 
-        // Update the velocity text based on the player's current velocity
-        if (playerRigidbody != null)
-            velocityText.text = Mathf.Round(playerRigidbody.velocity.magnitude).ToString();
-        else
-            velocityText.text = "0";
+        // If the velocity text exists
+        if(velocityText != null)
+        {
+            // Update the velocity text based on the player's current velocity
+            if (playerRigidbody != null)
+                velocityText.text = Mathf.Round(playerRigidbody.velocity.magnitude).ToString();
+            else
+                velocityText.text = "0";
+        }
 
         // If the queue time has passed
         if (currentQueueTime <= 0)

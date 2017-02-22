@@ -8,7 +8,7 @@ public class DrawWireDisc : MonoBehaviour
     public float DiscRadius { get { return discRadius; } }
 
     // Is called when the object is updated (in the editor)
-    void Update()
+    void OnRenderObject()
     {
         // If the prefabspawner exists on the object
         if (GetComponent<PrefabSpawner>() != null)
