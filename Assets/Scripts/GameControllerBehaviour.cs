@@ -36,10 +36,6 @@ public class GameControllerBehaviour : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Mouse1))
-        {
-            invScript.ToggleInventoryPanel();
-        }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             PauseToggle();
