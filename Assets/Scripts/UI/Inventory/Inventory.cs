@@ -51,6 +51,24 @@ public class Inventory : MonoBehaviour {
             slots[i].GetComponent<Slot>().SlotID = i;                                   // Assign the slot an ID
         }
 
+        // If a transition into the Hub exist, then we save the inventory
+        if (GameObject.Find("HubTransition(Clone)") != null)
+        {
+            LevelTransition existingInventory;                                          // Get the leveltransition component
+            GameObject go = GameObject.Find("HubTransition(Clone)");                    // Find the gameobject which indicates a transition into the Hub
+            existingInventory = go.GetComponent<LevelTransition>();                     // Get the existing HubInventory 
+
+            for (int i = 0; i < existingInventory.HubInventory.Count; i++)              // For every item in the hubInventory, we...
+            {
+                for (int j = 0; j < existingInventory.HubInventory[i].amount; j++)      // For every unit of every item in the hubInventory, we...
+                {
+                    AddItem(existingInventory.HubInventory[i].iD);                      // We add to the new player inventory
+                }
+            }
+
+            Destroy(GameObject.Find("HubTransition(Clone)"));                           // Destroy the hubTransition prefab
+        }
+
         ToggleInventoryPanel();
     }
 
@@ -220,5 +238,11 @@ public class Inventory : MonoBehaviour {
 
         // There are no empty slots in the inventory
         return false;
+    }
+    // Struct needed for the transition into the Hub
+    public struct HubItems
+    {
+        public int iD;
+        public int amount;
     }
 }
