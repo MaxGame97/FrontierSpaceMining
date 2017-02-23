@@ -11,6 +11,8 @@ TagManager:
   - Prefab Spawner
   - EMP
   - Pirate
+  - Hub Transition
+  - Global Game Controller
   layers:
   - Default
   - TransparentFX

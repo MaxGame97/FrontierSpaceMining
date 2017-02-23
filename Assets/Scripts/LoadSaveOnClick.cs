@@ -7,7 +7,7 @@ public class LoadSaveOnClick : MonoBehaviour {
 
     void Start()
     {
-        globalController = GameObject.Find("GlobalGameController").GetComponent<SaveLoadGame>();
+        globalController = GameObject.FindGameObjectWithTag("Global Game Controller").GetComponent<SaveLoadGame>();
     }
 
     public void LoadSave(int saveID)

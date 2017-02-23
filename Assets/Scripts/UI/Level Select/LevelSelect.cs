@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class LevelSelect : MonoBehaviour {
 
@@ -76,9 +77,7 @@ public class LevelSelect : MonoBehaviour {
         // If a level is currently selected
         if (currentSelectedLevel != null)
         {
-            // TODO - Load the new scene, use this string variable to load the correct scene
-            //
-            // currentSelectedLevel.Scene <----------
+            SceneManager.LoadScene(currentSelectedLevel.Scene);
         }
     }
 

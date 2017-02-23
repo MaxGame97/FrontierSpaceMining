@@ -18,19 +18,17 @@ public class GameControllerBehaviour : MonoBehaviour
 
     void Start()
     {
+        if (GameObject.FindGameObjectWithTag("Global Game Controller") != null)
+            saveLoadScript = GameObject.FindGameObjectWithTag("Global Game Controller").GetComponent<SaveLoadGame>();
 
-        if (GameObject.Find("Inventory Controller") != null && GameObject.Find("Menu Controller") != null && GameObject.Find("GlobalGameController") != null)
+        if (GameObject.Find("Inventory Controller") != null && GameObject.Find("Menu Controller") != null)
         {
             pauseMenu = GameObject.Find("Menu Controller").GetComponent<MenuBehaviour>();
             invScript = GameObject.Find("Inventory Controller").GetComponent<Inventory>();
-            saveLoadScript = GameObject.Find("GlobalGameController").GetComponent<SaveLoadGame>();
         }
 
         pauseMenu.CloseMenu();
         Time.timeScale = 1f;
-
-        if (saveLoadScript.isLoadingGame)
-            saveLoadScript.Load(saveLoadScript.currentSaveID);
     }
 
     // Update is called once per frame

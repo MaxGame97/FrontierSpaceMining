@@ -9,201 +9,198 @@ using UnityEngine.SceneManagement;
 
 public class SaveLoadGame : MonoBehaviour {
 
-    public static SaveLoadGame control;
+    private Inventory currentInventory;
 
-    private Inventory inventoryScript;
-    private PlayerBehaviour playerScript;
-
-    private bool loadingGame = false;
-    private PlayerData loadData;
-
-    private static int saveIndex;
-
-    public bool isLoadingGame { get { return loadingGame; } }
-    public int currentSaveID { get { return saveIndex; } }
-
+    private static int currentSaveIndex = 0;
+    
+    public int CurrentSaveIndex { get { return currentSaveIndex; } }
+    
     void Awake()
     {
-
-        if (control == null)
+        // If this is the only global game controller
+        if (GameObject.FindGameObjectsWithTag("Global Game Controller").Length == 1)
         {
+            // Set this object to be persistent between scenes
             DontDestroyOnLoad(gameObject);
-            control = this;
         }
-        else if (control != this)
+        // If another one exists
+        else
         {
+            // Destroy this global game controller
             Destroy(gameObject);
         }
-
     }
 
-    void Start()
+    // Creates a new save on the specified index
+    public void NewGame(int index)
     {
-        if (GameObject.Find("Inventory Controller") != null && GameObject.Find("Player") != null)
+        // Update the current save index
+        currentSaveIndex = index;
+
+        // If there does not exist a file representing this save index
+        if (!File.Exists(Application.persistentDataPath + "/playerInfo" + currentSaveIndex + ".dat"))
         {
-            inventoryScript = GameObject.Find("Inventory Controller").GetComponent<Inventory>();
-            playerScript = GameObject.Find("Player").GetComponent<PlayerBehaviour>();
+            // Create it
+            File.Create(Application.persistentDataPath + "/playerInfo" + currentSaveIndex + ".dat");
         }
-
-    }
-
-
-    public void NewGame(int id)
-    {
-        saveIndex = id;
-        if (!File.Exists(Application.persistentDataPath + "/playerInfo" + saveIndex + ".dat"))
-        {
-            File.Create(Application.persistentDataPath + "/playerInfo" + saveIndex + ".dat");
-        }
+        // If there already is a file representing this save index
         else
         {
-            File.Delete(Application.persistentDataPath + "/playerInfo" + saveIndex + ".dat");
-            File.Create(Application.persistentDataPath + "/playerInfo" + saveIndex + ".dat");
-            Debug.Log("Last save on id: "+ saveIndex + " was overwritten.");
+            // Remove it and create a new one
+            File.Delete(Application.persistentDataPath + "/playerInfo" + currentSaveIndex + ".dat");
+            File.Create(Application.persistentDataPath + "/playerInfo" + currentSaveIndex + ".dat");
+
+            Debug.Log("Save file with index: " + currentSaveIndex + ", was overwritten.");
         }
-        Load(saveIndex, true);
-        //Save();
-        
+
+        // Load this new save game
+        Load(currentSaveIndex);
     }
 
+    // Saves the game to the active index
     public void Save()
     {
-        CheckScripts();
+        // Updates the current inventory
+        UpdateInventory();
+        
+        // Instantiate a new binary formatter and a new filestream
+        BinaryFormatter binaryFormatter = new BinaryFormatter();
+        FileStream fileStream;
 
-        if (playerScript.CurrentHealth > 0)
+        // If there does not exist a file representing the current save index
+        if (!File.Exists(Application.persistentDataPath + "/playerInfo" + currentSaveIndex + ".dat"))
         {
-            
-            BinaryFormatter bf = new BinaryFormatter();
-            FileStream file;
-            if (!File.Exists(Application.persistentDataPath + "/playerInfo"+saveIndex+".dat"))
-            {
-                file = File.Create(Application.persistentDataPath + "/playerInfo" + saveIndex + ".dat");
-            }
-            else
-            {
-                file = File.Open(Application.persistentDataPath + "/playerInfo" + saveIndex + ".dat", FileMode.Open);
-            }
+            // Create it
+            fileStream = File.Create(Application.persistentDataPath + "/playerInfo" + currentSaveIndex + ".dat");
+        }
+        // If there already is a file representing the current save index
+        else
+        {
+            // Load it
+            fileStream = File.Open(Application.persistentDataPath + "/playerInfo" + currentSaveIndex + ".dat", FileMode.Open);
+        }
 
-            PlayerData data = new PlayerData();
-            data.health = playerScript.CurrentHealth;
-            copyToStruct(data, inventoryScript.Items);
+        // Create a temporary save data representing the current save data
+        SaveData saveData = new SaveData();
+        UpdateSaveData(saveData, currentInventory);
 
-            bf.Serialize(file, data);
-            file.Close();
+        // Serialize the save data and unload the file
+        binaryFormatter.Serialize(fileStream, saveData);
+        fileStream.Close();
 
-            Debug.Log("Saved game on ID: "+saveIndex);
+        Debug.Log("Saved game on index: " + currentSaveIndex);
+    }
+
+    // Loads the game
+    public void Load(int index)
+    {
+        // Update the current save index
+        currentSaveIndex = index;
+
+        if (!File.Exists(Application.persistentDataPath + "/playerInfo" + currentSaveIndex + ".dat"))
+        {
+            NewGame(currentSaveIndex);
+
+            Debug.Log("No savegame found on ID: " + currentSaveIndex);
         }
         else
         {
-            Debug.Log("You can't save when you are dead!");
+            SceneManager.LoadScene("Hub");
+
+            Debug.Log("Loaded game on ID: " + currentSaveIndex);
         }
     }
 
-
-    public void Load(int id, bool newGame = false)
+    public void LoadCurrentSaveIndex()
     {
+        // Instantiate a new binaryformatter
+        BinaryFormatter binaryFormatter = new BinaryFormatter();
 
-        saveIndex = id;
-        if (loadingGame)
+        // Load the current save file
+        FileStream fileStream = File.Open(Application.persistentDataPath + "/playerInfo" + currentSaveIndex + ".dat", FileMode.Open);
+
+        // Get the save data from the save file
+        SaveData saveData = (SaveData)binaryFormatter.Deserialize(fileStream);
+
+        // Update the current inventory
+        UpdateInventory();
+
+        if (currentInventory != null)
         {
-            Debug.Log("Load step 2");
-            CheckScripts();
-
-            if (!File.Exists(Application.persistentDataPath + "/playerInfo" + saveIndex + ".dat"))
+            // Go through the item data in the save file
+            for (int i = 0; i < saveData.Items.Count; i++)
             {
-                Debug.Log("No savegame found on ID: " + saveIndex);
-            }
-            else
-            {
-                BinaryFormatter bf = new BinaryFormatter();
-                FileStream file = File.Open(Application.persistentDataPath + "/playerInfo" + saveIndex + ".dat", FileMode.Open);
-                PlayerData loadData = (PlayerData)bf.Deserialize(file);
-                file.Close();
+                // Get the current inventory data
+                InventoryData inventoryData = saveData.Items[i];
 
-                playerScript.CurrentHealth = loadData.health;
-                loadInvFromSave(loadData.items);
-
-                Debug.Log("Loaded game on ID: " + saveIndex);
+                // If the ID of the inventory data is not -1 (empty item)
+                if (inventoryData.ID != -1)
+                {
+                    // Loop as many times as the amount variable in the inventory data
+                    for (int j = 0; j < inventoryData.Amount; j++)
+                    {
+                        // Add an item with this ID to the inventory
+                        currentInventory.AddItem(inventoryData.ID);
+                    }
+                }
             }
-            loadingGame = false;
         }
         else
-        {
-            Debug.Log("Load step 1");
-            if(!newGame)
-                loadingGame = true;
-            else
-                loadingGame = false;
-            SceneManager.LoadScene("Main");
-        }
-    }
-
-
-
-
-    void loadInvFromSave(List<InventoryData> saveData)
-    {
-        foreach(InventoryData item in saveData)
-        {
-            for(int i = 0; i < item.amount; i++)
-            {
-                inventoryScript.AddItem(item.id);
-            }
-        }
+            Debug.LogError("Tried to load save data, but no inventory was found");
+        
         Debug.Log("Done loading items");
     }
 
-    void copyToStruct(PlayerData playerData, List<Item> items)
+    // Updates the save data to the current save
+    void UpdateSaveData(SaveData saveData, Inventory inventory)
     {
-        foreach(Item item in items)
+        // Clear all the item data from the save data
+        saveData.Items.Clear();
+
+        // Go through all of the items in the current inventory
+        for (int i = 0; i < inventory.Items.Count; i++)
         {
-            if(item.ID == -1)
+            // If the current item does not have the ID -1 (empty item)
+            if(inventory.Items[i].ID != -1)
             {
-                continue;
+                // Create a temporary inventorydata and add it to the save data
+                InventoryData data = new InventoryData(inventory.Items[i].ID, currentInventory.CheckItemCount(inventory.Items[i].ID));
+                saveData.Items.Add(data);
+                
+                Debug.Log("id: " + data.ID + "\t" + "Amount: " + data.Amount);
             }
-            else
-            {
-                InventoryData data = new InventoryData();
-                data.id = item.ID;
-                data.amount = inventoryScript.CheckItemCount(item.ID);
-                playerData.items.Add(data);
-
-
-                Debug.Log("id: " + data.id + "\t" + "Amount: " + data.amount);
-
-            }
-            
         }
     }
 
-    void CheckScripts()
+    // Updates the current inventory
+    void UpdateInventory()
     {
-        if (inventoryScript == null && playerScript == null)
-        {
-            inventoryScript = GameObject.Find("Inventory Controller").GetComponent<Inventory>();
-            playerScript = GameObject.Find("Player").GetComponent<PlayerBehaviour>();
-        }
+        // Finds the current inventory and sets it as the current one
+        currentInventory = GameObject.Find("Inventory Controller").GetComponent<Inventory>();
     }
 
 }
 [Serializable]
-class PlayerData
+class SaveData
 {
-    public float health;
-    public List<InventoryData> items = new List<InventoryData>();
+    private List<InventoryData> items = new List<InventoryData>();
 
-
+    public List<InventoryData> Items { get { return items; } set { items = value; } }
 }
 [Serializable]
 struct InventoryData
 {
-    public int id;
-    public int amount;
+    private int iD;     // The item ID
+    private int amount; // The amount of items
 
-    void AddItem(int idValue, int amountValue)
+    public int ID { get { return iD; } }
+    public int Amount { get { return amount; } }
+
+    // Contructs a new inventory data
+    public InventoryData(int iD, int amount)
     {
-        id = idValue;
-        amount = amountValue;
+        this.iD = iD;
+        this.amount = amount;
     }
 
 }
