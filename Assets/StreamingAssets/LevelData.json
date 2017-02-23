@@ -1,0 +1,14 @@
+[
+	{
+		"iD": 0,
+		"levelName": "Sector D-202 (Debug)",
+		"description": "Home sweet home...\n\nMy journey always seems to bring me back here...\n\nThis place comforts me, it feels like a guardian angel is watching me here, keeping me safe...",
+		"scene": "level_sector_d-202"
+	},
+	{
+		"iD": 1,
+		"levelName": "Sector 'Götasalen'",
+		"description": "Do you guys wanna get something to eat?\n\nI really need some coffee...",
+		"scene": "level_sector_gotasalen"
+	}
+]
