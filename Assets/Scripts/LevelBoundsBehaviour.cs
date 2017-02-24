@@ -112,17 +112,27 @@ public class LevelBoundsBehaviour : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        playerObject = GameObject.Find("Player").GetComponent<PlayerBehaviour>();
+        // If the player object exists
+        if (GameObject.Find("Player") != null)
+        {
+            // Get the player object's player behaviour component
+            playerObject = GameObject.Find("Player").GetComponent<PlayerBehaviour>();
 
-        boundsWarningPanel = GameObject.Find("Bounds Warning Panel").GetComponent<Image>();
-        boundsWarningText = GameObject.Find("Bounds Warning Text").GetComponent<Text>();
+            // Get the bounds warning objects
+            boundsWarningPanel = GameObject.Find("Bounds Warning Panel").GetComponent<Image>();
+            boundsWarningText = GameObject.Find("Bounds Warning Text").GetComponent<Text>();
 
-        currentState = normalState;
-        currentState.Entry();
+            // Enter the notmal state
+            currentState = normalState;
+            currentState.Entry();
+        }
+        else
+            gameObject.SetActive(false);
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
+        // If the player object extist, update the current state
         currentState.Update();
 	}
 }

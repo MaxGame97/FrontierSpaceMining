@@ -40,6 +40,11 @@ public class Slot : MonoBehaviour, IDropHandler {
 
             Transform itemTransform = transform.GetChild(0);                                // Get the item's transform from the slot dropped on
 
+            Debug.Log(inventory.Items[slotID].ID + " " + itemTransform.GetComponent<ItemData>().Count + " - " + inventory.Items[itemData.SlotID].ID + " " + itemData.Count);
+
+            int itemID1 = inventory.Items[slotID].ID;
+            int itemID2 = inventory.Items[itemData.SlotID].ID;
+
             itemTransform.GetComponent<ItemData>().SlotID = itemData.SlotID;                // Update the occupied item's slot ID to the previous slot
             itemTransform.SetParent(inventory.Slots[itemData.SlotID].transform);            // Update the occupied item's parent to the previous slot
             itemTransform.position = inventory.Slots[itemData.SlotID].transform.position;   // Resets the occupied item's position to relative zero
@@ -48,9 +53,15 @@ public class Slot : MonoBehaviour, IDropHandler {
             itemData.transform.SetParent(transform);                                        // Update the dropped item's parent to the occupied slot
             itemData.transform.position = transform.position;                               // Resets the drópped item's position to relative zero
 
+            
+
+            ItemData tempItemData = itemTransform.GetComponent<ItemData>();
+
             // Switch the item's position in the item list
-            inventory.Items[itemData.SlotID] = itemTransform.GetComponent<ItemData>().Item;
-            inventory.Items[SlotID] = itemData.Item;
+            inventory.Items[slotID] = inventory.GetComponent<ItemDatabase>().FetchItemFromID(itemID2);
+            inventory.Items[itemData.SlotID] = inventory.GetComponent<ItemDatabase>().FetchItemFromID(itemID2);
+
+            Debug.Log(inventory.Items[slotID].ID + " " + itemTransform.GetComponent<ItemData>().Count + " - " + inventory.Items[itemData.SlotID].ID + " " + itemData.Count);
         }
     }
 }

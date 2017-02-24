@@ -26,6 +26,12 @@ public class HUD : MonoBehaviour {
         // Get the HUD transform
         hUDTransform = GameObject.Find("HUD System").transform;
 
+        // Get the health slider
+        healthSlider = GameObject.Find("Health Slider").GetComponent<Slider>();
+
+        // Get the velocity text
+        velocityText = GameObject.Find("Velocity Text").GetComponent<Text>();
+
         // If the player object exists
         if (GameObject.Find("Player") != null)
         {
@@ -33,18 +39,18 @@ public class HUD : MonoBehaviour {
             playerBehaviour = GameObject.Find("Player").GetComponent<PlayerBehaviour>();
             // Get the player's rigidbody
             playerRigidbody = GameObject.Find("Player").GetComponent<Rigidbody2D>();
-        }
-
-        // If all of the HUD UI exists
-        if (GameObject.Find("Health Slider") != null && GameObject.Find("Velocity Text") != null)
-        {
-            // Get the health slider
-            healthSlider = GameObject.Find("Health Slider").GetComponent<Slider>();
+            
             // Set the slider value to the player's max value
             healthSlider.maxValue = playerBehaviour.MaxHealth;
+        }
+        else
+        {
+            healthSlider.gameObject.SetActive(false);
+            velocityText.gameObject.SetActive(false);
 
-            // Get the velocity text
-            velocityText = GameObject.Find("Velocity Text").GetComponent<Text>();
+            GameObject.Find("Minimap").SetActive(false);
+            GameObject.Find("MinimapCamera").SetActive(false);
+            GameObject.Find("Bounds Warning Panel").SetActive(false);
         }
 
         // If the notification object is assigned

@@ -4,29 +4,27 @@ using UnityEngine.UI;
 
 public class UI : MonoBehaviour {
 
-    private Inventory inventory;
-    private Crafting crafting;
-    private LevelSelect levelSelect;
+    private Inventory inventory;        // The current inventory system
+    private Crafting crafting;          // The current crafting system
+    private LevelSelect levelSelect;    // The current level select system
+    private PauseMenu pauseMenu;        // The current pause menu system
 
-    [SerializeField] private string toggleInventoryInput;
-    [SerializeField] private string toggleCraftingInput;
-    [SerializeField] private string toggleLevelSelectInput;
+    [SerializeField] private string toggleInventoryInput;   // String representing the input used to toggle the inventory system
+    [SerializeField] private string toggleCraftingInput;    // String representing the input used to toggle the crafting system
+    [SerializeField] private string toggleLevelSelectInput; // String representing the input used to toggle the level select system
+    [SerializeField] private string togglePauseMenuInput;   // String representing the input used to toggle the pause menu
 
-    private bool levelSelectEnabled = false;
+    [SerializeField] private bool levelSelectEnabled = false;
 
     // Use this for initialization
     void Start () {
-        if (GameObject.Find("Inventory Controller") != null && GameObject.Find("Crafting Controller") != null)
+        // If the required UI exists, get the UI components
+        if (GameObject.Find("Inventory Controller") != null && GameObject.Find("Crafting Controller") != null && GameObject.Find("Level Select Controller") != null && GameObject.Find("Pause Menu Controller") != null)
         {
             inventory = GameObject.Find("Inventory Controller").GetComponent<Inventory>();
             crafting = GameObject.Find("Crafting Controller").GetComponent<Crafting>();
-
-            if(GameObject.Find("Level Select Controller") != null)
-            {
-                levelSelectEnabled = true;
-
-                levelSelect = GameObject.Find("Level Select Controller").GetComponent<LevelSelect>();
-            }
+            levelSelect = GameObject.Find("Level Select Controller").GetComponent<LevelSelect>();
+            pauseMenu = GameObject.Find("Pause Menu Controller").GetComponent<PauseMenu>();
         }
         else
         {
@@ -39,43 +37,108 @@ public class UI : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetButtonDown(toggleInventoryInput))
+        // If the pause menu system is disabled
+        if (!pauseMenu.PauseMenuEnabled)
         {
-            inventory.ToggleInventoryPanel();
+            // If the inventory button is pressed, toggle the inventory system
+            if (Input.GetButtonDown(toggleInventoryInput))
+                ToggleInventorySystem();
 
-            if (crafting.CraftingEnabled)
-                crafting.ToggleCraftingPanel();
+            // If the crafting button is pressed, toggle the crafting system
+            if (Input.GetButtonDown(toggleCraftingInput))
+                ToggleCraftingSystem();
 
+            // If the level select button is pressed, toggle the level select system
             if (levelSelectEnabled)
-                if (levelSelect.LevelSelectEnabled)
-                    levelSelect.ToggleLevelSelectPanel();
-        }
+                if (Input.GetButtonDown(toggleLevelSelectInput))
+                    ToggleLevelSelectSystem();
 
-        if (Input.GetButtonDown(toggleCraftingInput))
-        {
+            // If the pause menu button is pressed, toggle the pause menu system
+            if (Input.GetButtonDown(togglePauseMenuInput))
+                TogglePauseMenuSystem();
+        }
+        else
+        // Else, if the pause button is pressed, toggle the pause menu system
+            if (Input.GetButtonDown(togglePauseMenuInput))
+            TogglePauseMenuSystem();
+    }
+
+    // Toggles the inventory system
+    public void ToggleInventorySystem()
+    {
+        // Toggle the inventory panel
+        inventory.ToggleInventoryPanel();
+
+        // If the crafting panel is enabled, toggle it
+        if (crafting.CraftingEnabled)
             crafting.ToggleCraftingPanel();
 
-            if (inventory.InventoryEnabled)
-                inventory.ToggleInventoryPanel(); ;
-
-
-            if (levelSelectEnabled)
-                if (levelSelect.LevelSelectEnabled)
-                    levelSelect.ToggleLevelSelectPanel();
-        }
-        if (Input.GetButtonDown(toggleLevelSelectInput))
-        {
-
-            if (levelSelectEnabled)
+        // If the level select system is enabled, toggle it
+        if (levelSelectEnabled)
+            if (levelSelect.LevelSelectEnabled)
                 levelSelect.ToggleLevelSelectPanel();
-            else
-                return;
 
-            if (crafting.CraftingEnabled)
-                crafting.ToggleCraftingPanel();
+        // If the pause menu panel is enabled, toggle it
+        if (pauseMenu.PauseMenuEnabled)
+            pauseMenu.TogglePauseMenuPanel();
+    }
 
-            if (inventory.InventoryEnabled)
-                inventory.ToggleInventoryPanel(); ;
-        }
+    // Toggles the crafting system
+    public void ToggleCraftingSystem()
+    {
+        // Toggle the crafting panel
+        crafting.ToggleCraftingPanel();
+
+        // If the inventory panel is enabled, toggle it
+        if (inventory.InventoryEnabled)
+            inventory.ToggleInventoryPanel(); ;
+
+        // If the level select panel is enabled, toggle it
+        if (levelSelectEnabled)
+            if (levelSelect.LevelSelectEnabled)
+                levelSelect.ToggleLevelSelectPanel();
+
+        // If the pause menu panel is enabled, toggle it
+        if (pauseMenu.PauseMenuEnabled)
+            pauseMenu.TogglePauseMenuPanel();
+    }
+
+    // Toggles the level select system
+    public void ToggleLevelSelectSystem()
+    {
+        // Toggle the level select panel
+        levelSelect.ToggleLevelSelectPanel();
+
+        // If the inventory panel is enabled, toggle it
+        if (inventory.InventoryEnabled)
+            inventory.ToggleInventoryPanel(); ;
+
+        // If the crafting panel is enabled, toggle it
+        if (crafting.CraftingEnabled)
+            crafting.ToggleCraftingPanel();
+
+        // If the pause menu panel is enabled, toggle it
+        if (pauseMenu.PauseMenuEnabled)
+            pauseMenu.TogglePauseMenuPanel();
+    }
+
+    // Toggles the pause menu system
+    public void TogglePauseMenuSystem()
+    {
+        // Toggle the pause menu panel
+        pauseMenu.TogglePauseMenuPanel();
+
+        // If the inventory panel is enabled, toggle it
+        if (inventory.InventoryEnabled)
+            inventory.ToggleInventoryPanel(); ;
+
+        // If the crafting panel is enabled, toggle it
+        if (crafting.CraftingEnabled)
+            crafting.ToggleCraftingPanel();
+
+        // If the level select panel is enabled, toggle it
+        if (levelSelectEnabled)
+            if (levelSelect.LevelSelectEnabled)
+                levelSelect.ToggleLevelSelectPanel();
     }
 }

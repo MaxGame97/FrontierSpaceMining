@@ -77,6 +77,13 @@ public class LevelSelect : MonoBehaviour {
         // If a level is currently selected
         if (currentSelectedLevel != null)
         {
+            if (GameObject.Find("Global Game Controller") != null)
+            {
+                SaveLoadGame globalGameController = GameObject.Find("Global Game Controller").GetComponent<SaveLoadGame>();
+
+                globalGameController.Save();
+            }
+
             SceneManager.LoadScene(currentSelectedLevel.Scene);
         }
     }

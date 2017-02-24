@@ -4,42 +4,10 @@ using System.Collections;
 public class GameControllerBehaviour : MonoBehaviour
 {
 
-    [SerializeField]
-    private bool isPaused = false;
-
-    private MenuBehaviour pauseMenu;
-    private Inventory invScript;
-    private SaveLoadGame saveLoadScript;
-
+    [SerializeField] private bool isPaused = false;
 
     public bool IsPaused { get { return isPaused; } }
     public bool IsRunning { get { return !isPaused; } }
-
-
-    void Start()
-    {
-        if (GameObject.FindGameObjectWithTag("Global Game Controller") != null)
-            saveLoadScript = GameObject.FindGameObjectWithTag("Global Game Controller").GetComponent<SaveLoadGame>();
-
-        if (GameObject.Find("Inventory Controller") != null && GameObject.Find("Menu Controller") != null)
-        {
-            pauseMenu = GameObject.Find("Menu Controller").GetComponent<MenuBehaviour>();
-            invScript = GameObject.Find("Inventory Controller").GetComponent<Inventory>();
-        }
-
-        pauseMenu.CloseMenu();
-        Time.timeScale = 1f;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            PauseToggle();
-        }
-
-    }
 
     //Toggle pause on and off
     public void PauseToggle()
@@ -47,18 +15,14 @@ public class GameControllerBehaviour : MonoBehaviour
         if (isPaused)
         {   //..."Start" the timer again...
             Time.timeScale = 1f;
-            //...close the menu...
-            pauseMenu.CloseMenu();
             //...and change the state of the "paused" bool to false
-            isPaused = !isPaused;
+            isPaused = false;
         }//if the game is NOT paused now...
         else
         {   //...stop the game(Timer)...
             Time.timeScale = 0f;
-            //...show the paused screen GUI...
-            pauseMenu.ShowMenu();
             //...and change the state of the "paused" bool to true
-            isPaused = !isPaused;
+            isPaused = true;
         }
     }
 
@@ -70,5 +34,4 @@ public class GameControllerBehaviour : MonoBehaviour
             Application.Quit();
         }
     }
-
 }

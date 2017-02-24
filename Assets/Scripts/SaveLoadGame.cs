@@ -15,7 +15,7 @@ public class SaveLoadGame : MonoBehaviour {
     
     public int CurrentSaveIndex { get { return currentSaveIndex; } }
     
-    void Awake()
+    void Start()
     {
         // If this is the only global game controller
         if (GameObject.FindGameObjectsWithTag("Global Game Controller").Length == 1)
@@ -37,24 +37,30 @@ public class SaveLoadGame : MonoBehaviour {
         // Update the current save index
         currentSaveIndex = index;
 
+        // Instantiate a new binary formatter and a new filestream
+        BinaryFormatter binaryFormatter = new BinaryFormatter();
+        FileStream fileStream;
+
         // If there does not exist a file representing this save index
         if (!File.Exists(Application.persistentDataPath + "/playerInfo" + currentSaveIndex + ".dat"))
         {
             // Create it
-            File.Create(Application.persistentDataPath + "/playerInfo" + currentSaveIndex + ".dat");
+            fileStream = File.Create(Application.persistentDataPath + "/playerInfo" + currentSaveIndex + ".dat");
         }
         // If there already is a file representing this save index
         else
         {
             // Remove it and create a new one
             File.Delete(Application.persistentDataPath + "/playerInfo" + currentSaveIndex + ".dat");
-            File.Create(Application.persistentDataPath + "/playerInfo" + currentSaveIndex + ".dat");
-
-            Debug.Log("Save file with index: " + currentSaveIndex + ", was overwritten.");
+            fileStream = File.Create(Application.persistentDataPath + "/playerInfo" + currentSaveIndex + ".dat");
         }
 
-        // Load this new save game
-        Load(currentSaveIndex);
+        // Create a temporary save data representing the current save data
+        SaveData saveData = new SaveData();
+
+        // Serialize the save data and unload the file
+        binaryFormatter.Serialize(fileStream, saveData);
+        fileStream.Close();
     }
 
     // Saves the game to the active index
@@ -87,8 +93,6 @@ public class SaveLoadGame : MonoBehaviour {
         // Serialize the save data and unload the file
         binaryFormatter.Serialize(fileStream, saveData);
         fileStream.Close();
-
-        Debug.Log("Saved game on index: " + currentSaveIndex);
     }
 
     // Loads the game
@@ -96,18 +100,14 @@ public class SaveLoadGame : MonoBehaviour {
     {
         // Update the current save index
         currentSaveIndex = index;
-
+        
         if (!File.Exists(Application.persistentDataPath + "/playerInfo" + currentSaveIndex + ".dat"))
         {
-            NewGame(currentSaveIndex);
-
-            Debug.Log("No savegame found on ID: " + currentSaveIndex);
+            Debug.LogError("No savegame found on index: " + currentSaveIndex);
         }
         else
         {
             SceneManager.LoadScene("Hub");
-
-            Debug.Log("Loaded game on ID: " + currentSaveIndex);
         }
     }
 
@@ -147,8 +147,9 @@ public class SaveLoadGame : MonoBehaviour {
         }
         else
             Debug.LogError("Tried to load save data, but no inventory was found");
-        
-        Debug.Log("Done loading items");
+
+        // Close the file stream
+        fileStream.Close();
     }
 
     // Updates the save data to the current save
@@ -166,8 +167,8 @@ public class SaveLoadGame : MonoBehaviour {
                 // Create a temporary inventorydata and add it to the save data
                 InventoryData data = new InventoryData(inventory.Items[i].ID, currentInventory.CheckItemCount(inventory.Items[i].ID));
                 saveData.Items.Add(data);
-                
-                Debug.Log("id: " + data.ID + "\t" + "Amount: " + data.Amount);
+
+                Debug.Log(data.ID + " " + data.Amount);
             }
         }
     }

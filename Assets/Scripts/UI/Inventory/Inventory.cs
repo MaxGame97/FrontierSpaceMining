@@ -50,7 +50,7 @@ public class Inventory : MonoBehaviour {
             slots[i].transform.SetParent(slotPanel.transform);                          // Parent the slot panel to the slot
             slots[i].GetComponent<Slot>().SlotID = i;                                   // Assign the slot an ID
         }
-        
+
         GameObject hubTransition = GameObject.FindGameObjectWithTag("Hub Transition");
 
         // If a transition into the Hub exist, then we save the inventory

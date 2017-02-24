@@ -5,8 +5,12 @@ public class tempLoadInventoryLmao : MonoBehaviour {
 
 	// Use this for initialization
 	void Start() {
-        GameObject.FindGameObjectWithTag("Global Game Controller").GetComponent<SaveLoadGame>().LoadCurrentSaveIndex();
-        GameObject.FindGameObjectWithTag("Global Game Controller").GetComponent<SaveLoadGame>().Save();
+        if (GameObject.Find("Global Game Controller") != null)
+        {
+            SaveLoadGame globalGameController = GameObject.Find("Global Game Controller").GetComponent<SaveLoadGame>();
+            
+            globalGameController.LoadCurrentSaveIndex();
+        }
 
         Destroy(gameObject);
 	}
