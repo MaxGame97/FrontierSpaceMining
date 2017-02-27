@@ -6,7 +6,7 @@ TagManager:
   tags:
   - Item
   - Mineable
-  - Bullet
+  - Projectile
   - Shield
   - Prefab Spawner
   - EMP

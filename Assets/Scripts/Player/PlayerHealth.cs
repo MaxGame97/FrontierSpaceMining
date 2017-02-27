@@ -51,16 +51,16 @@ public class PlayerHealth : MonoBehaviour {
         if(collision.gameObject.tag == "Bullet")
         {
             // Get the bullet behaviour
-            BulletBehaviour bullet = collision.gameObject.GetComponent<BulletBehaviour>();
+            ProjectileBehaviour bullet = collision.gameObject.GetComponent<ProjectileBehaviour>();
             // Deal the bullet's damage to the player
-            TakeDamage(bullet.BulletDamage);
+            //TakeDamage(bullet.BulletDamage);
         }
         else if (collision.gameObject.tag == "Missile")
         {
             // Get the bullet behaviour
-            MissileBehaviour missile = collision.gameObject.GetComponent<MissileBehaviour>();
+            ProjectileBehaviour missile = collision.gameObject.GetComponent<ProjectileBehaviour>();
             // Deal the bullet's damage to the player
-            TakeDamage(missile.MissileDamage);
+            //TakeDamage(missile.MissileDamage);
         }
         else
         {

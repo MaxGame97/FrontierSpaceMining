@@ -3,14 +3,13 @@ using System.Collections;
 
 public class MissileBehaviour : MonoBehaviour {
 
-    [SerializeField] [Range(0f, 1f)] private float acceleration = 0.2f;       // The Missile's acceleration speed
-    [SerializeField] [Range(0f, 3f)] private float missileSpeed = 0.2f;       // The Missile's max speed
-    [SerializeField] [Range(0.01f, 0.1f)] private float rotationSpeed = 2;  // The Missile's rotation speed
-    [SerializeField] [Range(0f, 100f)] private float missileDamage = 25;     // The damage inflicted by the bullet
+    [SerializeField] [Range(0f, 1f)] private float acceleration = 0.2f;         // The Missile's acceleration speed
+    [SerializeField] [Range(0f, 3f)] private float missileSpeed = 0.2f;         // The Missile's max speed
+    [SerializeField] [Range(0.01f, 0.1f)] private float rotationSpeed = 2;      // The Missile's rotation speed
+    [SerializeField] [Range(5f, 45f)] private float aliveTime = 30;             // Time until the missile is destroyed
 
     private Transform target;
     private Rigidbody2D missileRigidbody;
-    public float MissileDamage { get { return missileDamage; } }
 
     // Use this for initialization
     void Start () {
@@ -22,6 +21,10 @@ public class MissileBehaviour : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         MoveTowards(target.position, 1f);
+        aliveTime -= Time.deltaTime;
+        if(aliveTime <= 0) {
+            Destroy(gameObject);
+        }
 	}
 
     // OnCollisionEnter2D is called on collision with another collider

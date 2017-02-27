@@ -23,9 +23,10 @@ GameObject:
   - 50: {fileID: 50000013541475398}
   - 60: {fileID: 60000012794614896}
   - 114: {fileID: 114000013822684158}
+  - 114: {fileID: 114000011095655522}
   m_Layer: 0
   m_Name: enemyMissile
-  m_TagString: Untagged
+  m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -146,6 +147,18 @@ PolygonCollider2D:
       - {x: 0.11, y: -2.75}
       - {x: 0.22999999, y: -2.1299999}
       - {x: 0.29, y: -1.8399999}
+--- !u!114 &114000011095655522
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012372432268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c25b7512a8b4f2e46b1eabe95b536c46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 25
 --- !u!114 &114000013822684158
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -154,13 +167,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1000012372432268}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a8cc36fa741e334bb3b6c1f0704fc84, type: 3}
+  m_Script: {fileID: 11500000, guid: cfbe09d904263064fbc8d8fbf99a13cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   acceleration: 0.1
   missileSpeed: 1
-  rotationSpeed: 0.05
-  missileDamage: 25
+  rotationSpeed: 0.1
+  aliveTime: 30
 --- !u!212 &212000014130420284
 SpriteRenderer:
   m_ObjectHideFlags: 1
