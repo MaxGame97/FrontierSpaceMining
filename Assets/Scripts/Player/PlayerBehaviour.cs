@@ -207,12 +207,12 @@ public class PlayerBehaviour : MonoBehaviour {
             // If not, continue
 
             // If the player is hit by a bullet
-            if (collision.gameObject.tag == "Bullet")
+            if (collision.gameObject.tag == "Projectile")
             {
                 // Get the bullet behaviour
-                BulletBehaviour bullet = collision.gameObject.GetComponent<BulletBehaviour>();
+                ProjectileBehaviour projectile = collision.gameObject.GetComponent<ProjectileBehaviour>();
                 // Deal the bullet's damage to the player
-                player.DealDamage(bullet.BulletDamage);
+                player.DealDamage(projectile.Damage);
             }
             else
             {

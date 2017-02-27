@@ -4,9 +4,6 @@ using System.Collections;
 public class BulletBehaviour : MonoBehaviour {
 
     [SerializeField] [Range(0.01f, 0.5f)] private float bulletSpeed = 0.1f; // The bullet's initial speed
-    [SerializeField] [Range(0f, 100f)] private float bulletDamage = 10;     // The damage inflicted by the bullet
-
-    public float BulletDamage { get { return bulletDamage; } }
 
     // Use this for initialization
     void Start () {

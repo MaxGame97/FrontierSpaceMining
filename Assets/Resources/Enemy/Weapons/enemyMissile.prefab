@@ -1,0 +1,209 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1000012372432268}
+  m_IsPrefabParent: 1
+--- !u!1 &1000012372432268
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 4000012382825410}
+  - 212: {fileID: 212000014130420284}
+  - 50: {fileID: 50000013541475398}
+  - 60: {fileID: 60000012794614896}
+  - 114: {fileID: 114000013822684158}
+  - 114: {fileID: 114000011095655522}
+  m_Layer: 0
+  m_Name: enemyMissile
+  m_TagString: Projectile
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4000012382825410
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012372432268}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.48, y: -174.95, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+--- !u!50 &50000013541475398
+Rigidbody2D:
+  serializedVersion: 2
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012372432268}
+  m_UseAutoMass: 0
+  m_Mass: 0.001
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!60 &60000012794614896
+PolygonCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012372432268}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  m_Points:
+    m_Paths:
+    - - {x: 0.32, y: -1.6899999}
+      - {x: 0.37, y: -1.41}
+      - {x: 0.38, y: -1.3399999}
+      - {x: 0.38, y: -1.17}
+      - {x: 0.35, y: -1.03}
+      - {x: 0.32, y: -0.93}
+      - {x: 0.28, y: -0.82}
+      - {x: 0.28, y: -0.69}
+      - {x: 0.17999999, y: -0.53999996}
+      - {x: 0.28, y: -0.53999996}
+      - {x: 0.29999998, y: -0.52}
+      - {x: 0.31, y: -0.44}
+      - {x: 0.37, y: -0.45999998}
+      - {x: 0.5, y: -0.53999996}
+      - {x: 0.66999996, y: -0.59}
+      - {x: 0.81, y: -0.59}
+      - {x: 0.84999996, y: -0.55}
+      - {x: 0.84999996, y: -0.45999998}
+      - {x: 0.84, y: -0.39}
+      - {x: 0.74, y: -0.22}
+      - {x: 0.53, y: 0.089999996}
+      - {x: 0.32999998, y: 0.35}
+      - {x: 0.31, y: 0.35999998}
+      - {x: 0.31, y: 2.56}
+      - {x: 0.29999998, y: 2.6299999}
+      - {x: 0.29, y: 2.6599998}
+      - {x: 0.25, y: 2.79}
+      - {x: 0.17, y: 3}
+      - {x: 0.099999994, y: 3.1499999}
+      - {x: 0.04, y: 3.1999998}
+      - {x: -0.04, y: 3.1999998}
+      - {x: -0.08, y: 3.1699998}
+      - {x: -0.14999999, y: 3.04}
+      - {x: -0.19, y: 2.95}
+      - {x: -0.25, y: 2.82}
+      - {x: -0.29, y: 2.6799998}
+      - {x: -0.32, y: 2.58}
+      - {x: -0.32, y: 2.3999999}
+      - {x: -0.31, y: 2.3899999}
+      - {x: -0.31, y: 0.35999998}
+      - {x: -0.34, y: 0.34}
+      - {x: -0.52, y: 0.12}
+      - {x: -0.56, y: 0.049999997}
+      - {x: -0.68, y: -0.11}
+      - {x: -0.76, y: -0.25}
+      - {x: -0.84, y: -0.42}
+      - {x: -0.85999995, y: -0.48999998}
+      - {x: -0.85999995, y: -0.53999996}
+      - {x: -0.83, y: -0.59}
+      - {x: -0.71999997, y: -0.61}
+      - {x: -0.65999997, y: -0.59}
+      - {x: -0.62, y: -0.58}
+      - {x: -0.52, y: -0.55}
+      - {x: -0.32, y: -0.42999998}
+      - {x: -0.31, y: -0.51}
+      - {x: -0.29, y: -0.53}
+      - {x: -0.21, y: -0.59}
+      - {x: -0.26999998, y: -0.66999996}
+      - {x: -0.32, y: -0.95}
+      - {x: -0.34, y: -1.06}
+      - {x: -0.35999998, y: -1.1899999}
+      - {x: -0.35999998, y: -1.43}
+      - {x: -0.34, y: -1.5699999}
+      - {x: -0.26, y: -2.01}
+      - {x: -0.12, y: -2.6799998}
+      - {x: -0.06, y: -2.96}
+      - {x: -0.04, y: -3.04}
+      - {x: -0.01, y: -3.08}
+      - {x: 0.03, y: -3.07}
+      - {x: 0.11, y: -2.75}
+      - {x: 0.22999999, y: -2.1299999}
+      - {x: 0.29, y: -1.8399999}
+--- !u!114 &114000011095655522
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012372432268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c25b7512a8b4f2e46b1eabe95b536c46, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 25
+--- !u!114 &114000013822684158
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012372432268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfbe09d904263064fbc8d8fbf99a13cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  acceleration: 0.1
+  missileSpeed: 1
+  rotationSpeed: 0.1
+  aliveTime: 30
+--- !u!212 &212000014130420284
+SpriteRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012372432268}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_SelectedWireframeHidden: 1
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: 45d9a10d2acf0f848a714e54f1540d5a, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
