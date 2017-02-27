@@ -210,9 +210,9 @@ public class PlayerBehaviour : MonoBehaviour {
             if (collision.gameObject.tag == "Projectile")
             {
                 // Get the bullet behaviour
-                ProjectileBehaviour bullet = collision.gameObject.GetComponent<ProjectileBehaviour>();
+                ProjectileBehaviour projectile = collision.gameObject.GetComponent<ProjectileBehaviour>();
                 // Deal the bullet's damage to the player
-                player.DealDamage(bullet.Damage);
+                player.DealDamage(projectile.Damage);
             }
             else
             {
