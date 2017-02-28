@@ -7,12 +7,15 @@ using System.IO;
 using UnityEngine.SceneManagement;
 
 
-public class SaveLoadGame : MonoBehaviour {
+public class GlobalGameControllerBehaviour : MonoBehaviour {
+
+    private List<int> currentCompletedLevels = new List<int>();
 
     private Inventory currentInventory;
 
     private static int currentSaveIndex = 0;
     
+    public List<int> CurrentCompletedLevels { get { return currentCompletedLevels; } set { currentCompletedLevels = value; } }
     public int CurrentSaveIndex { get { return currentSaveIndex; } }
     
     void Start()
@@ -104,6 +107,10 @@ public class SaveLoadGame : MonoBehaviour {
         if (!File.Exists(Application.persistentDataPath + "/playerInfo" + currentSaveIndex + ".dat"))
         {
             Debug.LogError("No savegame found on index: " + currentSaveIndex);
+
+            NewGame(index);
+
+            SceneManager.LoadScene("Hub");
         }
         else
         {
@@ -148,6 +155,8 @@ public class SaveLoadGame : MonoBehaviour {
         else
             Debug.LogError("Tried to load save data, but no inventory was found");
 
+        currentCompletedLevels = saveData.CompletedLevels;
+
         // Close the file stream
         fileStream.Close();
     }
@@ -158,6 +167,8 @@ public class SaveLoadGame : MonoBehaviour {
         // Clear all the item data from the save data
         saveData.Items.Clear();
 
+        saveData.CompletedLevels.Clear();
+
         // Go through all of the items in the current inventory
         for (int i = 0; i < inventory.Items.Count; i++)
         {
@@ -167,10 +178,11 @@ public class SaveLoadGame : MonoBehaviour {
                 // Create a temporary inventorydata and add it to the save data
                 InventoryData data = new InventoryData(inventory.Items[i].ID, currentInventory.CheckItemCount(inventory.Items[i].ID));
                 saveData.Items.Add(data);
-
-                Debug.Log(data.ID + " " + data.Amount);
             }
         }
+
+        saveData.CompletedLevels = currentCompletedLevels;
+        
     }
 
     // Updates the current inventory
@@ -179,15 +191,18 @@ public class SaveLoadGame : MonoBehaviour {
         // Finds the current inventory and sets it as the current one
         currentInventory = GameObject.Find("Inventory Controller").GetComponent<Inventory>();
     }
-
 }
+
 [Serializable]
 class SaveData
 {
     private List<InventoryData> items = new List<InventoryData>();
+    private List<int> completedLevels = new List<int>();
 
     public List<InventoryData> Items { get { return items; } set { items = value; } }
+    public List<int> CompletedLevels { get { return completedLevels; } set { completedLevels = value; } }
 }
+
 [Serializable]
 struct InventoryData
 {
@@ -203,5 +218,4 @@ struct InventoryData
         this.iD = iD;
         this.amount = amount;
     }
-
 }

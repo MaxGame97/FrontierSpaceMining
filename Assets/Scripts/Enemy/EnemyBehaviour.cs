@@ -8,8 +8,8 @@ public class EnemyBehaviour : MonoBehaviour {
 
     [Header("Enemy movement values")]
 
-    [SerializeField] [Range(1f, 15f)] private float acceleration = 2;       // The AI's acceleration speed
-    [SerializeField] [Range(1f, 20f)]  private float maxSpeed = 2;          // The AI's max speed
+    [SerializeField] [Range(1f, 30f)] private float acceleration = 2;       // The AI's acceleration speed
+    [SerializeField] [Range(1f, 40f)]  private float maxSpeed = 2;          // The AI's max speed
     [SerializeField] [Range(0.01f, 0.1f)] private float rotationSpeed = 2;  // The AI's rotation speed
     [SerializeField] [Range(1.5f, 5f)] private float minDistance = 2f;      // The AI's minimum distance to the player
 
@@ -740,6 +740,21 @@ public class EnemyBehaviour : MonoBehaviour {
                 // Update the correctional vector
                 correctedThrust = Quaternion.Euler(0, 0, correctionalAngle) * transform.up;
             }
+            else
+            {
+                // If the enemy has a velocity
+                if(enemyRigidbody.velocity.magnitude > 0f)
+                {
+                    // If the angle between the enemy's direction and its normalized velocity is smaller than 90 degrees (180 degrees covered)
+                    if(Vector3.Angle(transform.up, enemyRigidbody.velocity.normalized) < 90f)
+                        // Set the correctional thrust to the normalized velocity, reflected along the right axis
+                        correctedThrust = Vector3.Reflect(enemyRigidbody.velocity.normalized, transform.right);
+                    else
+                    {
+                        correctedThrust = -enemyRigidbody.velocity.normalized;
+                    }
+                }
+            }
 
             // Add force in the direction of travel, this is corrected by the correctional angle
             enemyRigidbody.AddForce(correctedThrust * (acceleration * amount));
@@ -768,7 +783,7 @@ public class EnemyBehaviour : MonoBehaviour {
         // Create a bullet sound FX object
         GameObject bulletFX = (GameObject)Instantiate(soundFXPrefab, transform.position, new Quaternion());
         bulletFX.GetComponent<AudioSource>().clip = bulletSoundClip;
-        //bulletFX.GetComponent<AudioSource>().volume = 0.7f;
+        bulletFX.GetComponent<AudioSource>().volume = 0.7f;
 
         // Trigger battle music
         musicController.TriggerBattleMusic();

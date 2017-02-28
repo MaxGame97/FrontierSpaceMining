@@ -21,6 +21,9 @@ public class Slot : MonoBehaviour, IDropHandler {
     // When an item is dropped on the slot
     public void OnDrop(PointerEventData eventData)
     {
+        // DROPPING CURRENTLY DISABLED
+        return;
+
         // Get the item data from the dropped item
         ItemData itemData = eventData.pointerDrag.GetComponent<ItemData>();
 
@@ -58,8 +61,8 @@ public class Slot : MonoBehaviour, IDropHandler {
             ItemData tempItemData = itemTransform.GetComponent<ItemData>();
 
             // Switch the item's position in the item list
+            inventory.Items[itemData.SlotID] = inventory.GetComponent<ItemDatabase>().FetchItemFromID(itemID1);
             inventory.Items[slotID] = inventory.GetComponent<ItemDatabase>().FetchItemFromID(itemID2);
-            inventory.Items[itemData.SlotID] = inventory.GetComponent<ItemDatabase>().FetchItemFromID(itemID2);
 
             Debug.Log(inventory.Items[slotID].ID + " " + itemTransform.GetComponent<ItemData>().Count + " - " + inventory.Items[itemData.SlotID].ID + " " + itemData.Count);
         }

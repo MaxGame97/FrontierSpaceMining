@@ -124,7 +124,7 @@ public class PauseMenu : MonoBehaviour {
     {
         if (GameObject.Find("Global Game Controller") != null && saveAllowed)
         {
-            SaveLoadGame globalGameController = GameObject.Find("Global Game Controller").GetComponent<SaveLoadGame>();
+            GlobalGameControllerBehaviour globalGameController = GameObject.Find("Global Game Controller").GetComponent<GlobalGameControllerBehaviour>();
 
             globalGameController.Save();
         }
@@ -136,7 +136,7 @@ public class PauseMenu : MonoBehaviour {
     {
         if (GameObject.Find("Global Game Controller") != null && saveAllowed)
         {
-            SaveLoadGame globalGameController = GameObject.Find("Global Game Controller").GetComponent<SaveLoadGame>();
+            GlobalGameControllerBehaviour globalGameController = GameObject.Find("Global Game Controller").GetComponent<GlobalGameControllerBehaviour>();
 
             globalGameController.Save();
         }

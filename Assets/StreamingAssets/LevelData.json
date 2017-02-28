@@ -3,18 +3,30 @@
 		"iD": 0,
 		"levelName": "Sector D-202 (Debug)",
 		"description": "Home sweet home...\n\nMy journey always seems to bring me back here...\n\nThis place comforts me, it feels like a guardian angel is watching me here, keeping me safe...",
-		"scene": "level_sector_d-202"
+		"scene": "level_sector_d-202",
+		"requiredLevelsCompleted":
+		[
+			
+		]
 	},
 	{
 		"iD": 1,
 		"levelName": "Sector 'Götasalen'",
 		"description": "Do you guys wanna get something to eat?\n\nI really need some coffee...",
-		"scene": "level_sector_gotasalen"
+		"scene": "level_sector_gotasalen",
+		"requiredLevelsCompleted":
+		[
+			0
+		]
 	},
 	{
 		"iD": 2,
 		"levelName": "Sector DL-6",
 		"description": "I remember tossing the pistol, then I heard a loud bang, then the most gruesome screaming I've ever heard in my entire life...",
-		"scene": "level_sector_dl-6"
+		"scene": "level_sector_dl-6",
+		"requiredLevelsCompleted":
+		[
+			1
+		]
 	}
 ]

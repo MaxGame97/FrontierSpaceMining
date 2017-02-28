@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class tempLoadInventoryLmao : MonoBehaviour {
+public class LoadSavedInventory : MonoBehaviour {
 
 	// Use this for initialization
 	void Start() {
         if (GameObject.Find("Global Game Controller") != null)
         {
-            SaveLoadGame globalGameController = GameObject.Find("Global Game Controller").GetComponent<SaveLoadGame>();
+            GlobalGameControllerBehaviour globalGameController = GameObject.Find("Global Game Controller").GetComponent<GlobalGameControllerBehaviour>();
             
             globalGameController.LoadCurrentSaveIndex();
         }

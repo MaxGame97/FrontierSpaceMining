@@ -5,16 +5,17 @@ using UnityEngine.SceneManagement;
 
 public class LevelSelect : MonoBehaviour {
 
-    [SerializeField] private GameObject levelSlotPrefab;    // Prefab for the level slot object
+    [SerializeField] private GameObject levelSlotPrefab;        // Prefab for the level slot object
+    [SerializeField] private GameObject levelTransitionPrefab;  // Prefab for the level transition object
 
-    private LevelDatabase levelDatabase;                    // The level database
+    private LevelDatabase levelDatabase;                        // The level database
 
-    private CanvasGroup canvasGroup;                        // The level select system's canvas group
-    private GameObject levelSlotPanel;                      // The level slot panel
+    private CanvasGroup canvasGroup;                            // The level select system's canvas group
+    private GameObject levelSlotPanel;                          // The level slot panel
 
-    private LevelData currentSelectedLevel = null;          // The currently selected level
+    private LevelData currentSelectedLevel = null;              // The currently selected level
 
-    private bool levelSelectEnabled = true;                 // Specifies whether or not the level select system is enabled
+    private bool levelSelectEnabled = true;                     // Specifies whether or not the level select system is enabled
 
     public bool LevelSelectEnabled { get { return levelSelectEnabled; } }
 
@@ -57,6 +58,9 @@ public class LevelSelect : MonoBehaviour {
         LevelSlot levelSlot = levelSlotObject.GetComponent<LevelSlot>();
         levelSlot.Level = levelData;
 
+        if(levelData.Completed)
+            levelSlotObject.GetComponent<Image>().color = new Color(0.5f, 1f, 0.5f, 1f);
+
         // Updates the level slot object's text to show the level name
         levelSlotObject.transform.GetChild(0).GetComponent<Text>().text = levelData.Name;
     }
@@ -79,10 +83,14 @@ public class LevelSelect : MonoBehaviour {
         {
             if (GameObject.Find("Global Game Controller") != null)
             {
-                SaveLoadGame globalGameController = GameObject.Find("Global Game Controller").GetComponent<SaveLoadGame>();
+                GlobalGameControllerBehaviour globalGameController = GameObject.Find("Global Game Controller").GetComponent<GlobalGameControllerBehaviour>();
 
                 globalGameController.Save();
             }
+
+            GameObject levelTransition = (GameObject)Instantiate(levelTransitionPrefab);
+
+            levelTransition.GetComponent<LevelInfo>().LevelID = currentSelectedLevel.ID;
 
             SceneManager.LoadScene(currentSelectedLevel.Scene);
         }

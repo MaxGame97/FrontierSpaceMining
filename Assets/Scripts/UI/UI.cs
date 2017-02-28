@@ -14,7 +14,7 @@ public class UI : MonoBehaviour {
     [SerializeField] private string toggleLevelSelectInput; // String representing the input used to toggle the level select system
     [SerializeField] private string togglePauseMenuInput;   // String representing the input used to toggle the pause menu
 
-    [SerializeField] private bool levelSelectEnabled = false;
+    [SerializeField] private bool advancedOptionsEnabled = false;
 
     // Use this for initialization
     void Start () {
@@ -45,11 +45,12 @@ public class UI : MonoBehaviour {
                 ToggleInventorySystem();
 
             // If the crafting button is pressed, toggle the crafting system
-            if (Input.GetButtonDown(toggleCraftingInput))
-                ToggleCraftingSystem();
+            if (advancedOptionsEnabled)
+                if (Input.GetButtonDown(toggleCraftingInput))
+                    ToggleCraftingSystem();
 
             // If the level select button is pressed, toggle the level select system
-            if (levelSelectEnabled)
+            if (advancedOptionsEnabled)
                 if (Input.GetButtonDown(toggleLevelSelectInput))
                     ToggleLevelSelectSystem();
 
@@ -70,11 +71,12 @@ public class UI : MonoBehaviour {
         inventory.ToggleInventoryPanel();
 
         // If the crafting panel is enabled, toggle it
-        if (crafting.CraftingEnabled)
-            crafting.ToggleCraftingPanel();
+        if (advancedOptionsEnabled)
+            if (crafting.CraftingEnabled)
+                crafting.ToggleCraftingPanel();
 
         // If the level select system is enabled, toggle it
-        if (levelSelectEnabled)
+        if (advancedOptionsEnabled)
             if (levelSelect.LevelSelectEnabled)
                 levelSelect.ToggleLevelSelectPanel();
 
@@ -94,7 +96,7 @@ public class UI : MonoBehaviour {
             inventory.ToggleInventoryPanel(); ;
 
         // If the level select panel is enabled, toggle it
-        if (levelSelectEnabled)
+        if (advancedOptionsEnabled)
             if (levelSelect.LevelSelectEnabled)
                 levelSelect.ToggleLevelSelectPanel();
 
@@ -114,8 +116,9 @@ public class UI : MonoBehaviour {
             inventory.ToggleInventoryPanel(); ;
 
         // If the crafting panel is enabled, toggle it
-        if (crafting.CraftingEnabled)
-            crafting.ToggleCraftingPanel();
+        if (advancedOptionsEnabled)
+            if (crafting.CraftingEnabled)
+                crafting.ToggleCraftingPanel();
 
         // If the pause menu panel is enabled, toggle it
         if (pauseMenu.PauseMenuEnabled)
@@ -133,11 +136,12 @@ public class UI : MonoBehaviour {
             inventory.ToggleInventoryPanel(); ;
 
         // If the crafting panel is enabled, toggle it
-        if (crafting.CraftingEnabled)
-            crafting.ToggleCraftingPanel();
+        if (advancedOptionsEnabled)
+            if (crafting.CraftingEnabled)
+                crafting.ToggleCraftingPanel();
 
         // If the level select panel is enabled, toggle it
-        if (levelSelectEnabled)
+        if (advancedOptionsEnabled)
             if (levelSelect.LevelSelectEnabled)
                 levelSelect.ToggleLevelSelectPanel();
     }

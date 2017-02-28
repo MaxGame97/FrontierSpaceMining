@@ -21,7 +21,7 @@ GameObject:
   - 4: {fileID: 4000013197701480}
   - 212: {fileID: 212000011763888308}
   - 50: {fileID: 50000013499281660}
-  - 60: {fileID: 60000010630086920}
+  - 58: {fileID: 58000011807466540}
   - 114: {fileID: 114000010939672034}
   m_Layer: 10
   m_Name: TempEnemyBullet
@@ -60,8 +60,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!60 &60000010630086920
-PolygonCollider2D:
+--- !u!58 &58000011807466540
+CircleCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -72,24 +72,8 @@ PolygonCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
-  m_Points:
-    m_Paths:
-    - - {x: -0.175, y: 0.22}
-      - {x: -0.355, y: 0.29999998}
-      - {x: -0.48499998, y: 0.29999998}
-      - {x: -0.825, y: 0.19999999}
-      - {x: -0.97499996, y: 0.08}
-      - {x: -1.1949999, y: 0.08}
-      - {x: -1.3149999, y: 0.03}
-      - {x: -1.3149999, y: -0.02}
-      - {x: -1.295, y: -0.049999997}
-      - {x: -1.105, y: -0.07}
-      - {x: -0.79499996, y: -0.21}
-      - {x: -0.49499997, y: -0.29999998}
-      - {x: -0.325, y: -0.29999998}
-      - {x: -0.095, y: -0.14999999}
-      - {x: -0.085, y: -0.08}
-      - {x: -0.085, y: 0.089999996}
+  serializedVersion: 2
+  m_Radius: 2.085
 --- !u!114 &114000010939672034
 MonoBehaviour:
   m_ObjectHideFlags: 1
