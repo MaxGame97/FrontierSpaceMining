@@ -3,15 +3,25 @@ using System.Collections;
 
 public class MainMenuBehaviour : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
+    private AudioMaster audioScript;
 
+    void Start () {
         Time.timeScale = 1.0f;
 
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+        audioScript = GameObject.Find("GlobalGameController").GetComponent<AudioMaster>();
+
+        audioScript.UpdateSliders();
+    }
+    public void ChangeMasterVolume(float volume)
+    {
+        audioScript.ChangeVolume(volume, "master");
+    }
+    public void ChangeMusicVolume(float volume)
+    {
+        audioScript.ChangeVolume(volume, "music");
+    }
+    public void ChangeSFXVolume(float volume)
+    {
+        audioScript.ChangeVolume(volume, "sfx");
+    }
 }
