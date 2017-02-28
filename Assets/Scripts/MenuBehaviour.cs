@@ -6,22 +6,14 @@ public class MenuBehaviour : MonoBehaviour {
     public static Canvas control;
 
     private Canvas menuCanvas;
+    private AudioMaster audioScript;
 
 	// Use this for initialization
-	void Awake () {
+	void Start () {
         menuCanvas = gameObject.GetComponentInParent<Canvas>();
+        audioScript = GameObject.Find("GlobalGameController").GetComponent<AudioMaster>();
 
-  /*      if (control == null)
-        {
-            DontDestroyOnLoad(menuCanvas.gameObject);
-            control = menuCanvas;
-        }
-        else if (control != menuCanvas)
-        {
-            Destroy(menuCanvas.gameObject);
-        }
-
-*/
+        audioScript.UpdateSliders();
     }
 
 
@@ -34,6 +26,17 @@ public class MenuBehaviour : MonoBehaviour {
         menuCanvas.enabled = false;
     }
 
-
+    public void ChangeMasterVolume(float volume)
+    {   
+        audioScript.ChangeVolume(volume, "master");   
+    }
+    public void ChangeMusicVolume(float volume)
+    {
+        audioScript.ChangeVolume(volume, "music");
+    }
+    public void ChangeSFXVolume(float volume)
+    {
+        audioScript.ChangeVolume(volume, "sfx");
+    }
 
 }
