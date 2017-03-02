@@ -8,7 +8,7 @@ public class MainMenuBehaviour : MonoBehaviour {
     void Start () {
         Time.timeScale = 1.0f;
 
-        audioScript = GameObject.Find("GlobalGameController").GetComponent<AudioMaster>();
+        audioScript = GameObject.Find("Global Game Controller").GetComponent<AudioMaster>();
 
         audioScript.UpdateSliders();
     }

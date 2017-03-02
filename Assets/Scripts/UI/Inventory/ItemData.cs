@@ -29,6 +29,9 @@ public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     // When the item is starting to be dragged
     public void OnBeginDrag(PointerEventData eventData)
     {
+        // DRAGGING CURRENTLY DISABLED
+        return;
+
         // If the item is not an empty item
         if(Item != null && inventory.InventoryEnabled)
         {
@@ -45,6 +48,9 @@ public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     // When the item is being dragged
     public void OnDrag(PointerEventData eventData)
     {
+        // DRAGGING CURRENTLY DISABLED
+        return;
+
         // If the item is not an empty item
         if (Item != null)
         {
@@ -56,6 +62,9 @@ public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     // When the item is let go
     public void OnEndDrag(PointerEventData eventData)
     {
+        // DRAGGING CURRENTLY DISABLED
+        return;
+
         transform.SetParent(inventory.Slots[slotID].transform);             // Update the item's parent to the slot it's currently in
 
         transform.position = inventory.Slots[slotID].transform.position;    // Update the item's position to be relative zero

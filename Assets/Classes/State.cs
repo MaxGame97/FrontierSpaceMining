@@ -18,6 +18,10 @@ public class State {
     {
     }
 
+    public virtual void OnTriggerExit2D(Collider2D collision)
+    {
+    }
+
     public virtual void Exit(State exitState)
     {
     }

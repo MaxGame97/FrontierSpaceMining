@@ -11,27 +11,32 @@ public class AudioMaster : MonoBehaviour {
     private Slider musicVol;
     private Slider sfxVol;
 
-    private float currentMasterVolume = 1;
-    private float currentMusicVolume = 1;
-    private float currentSFXVolume = 1;
+    private float currentMasterVolume;
+    private float currentMusicVolume;
+    private float currentSFXVolume;
 
-    private float currentMasterValue = 1;
-    private float currentMusicValue = 1;
-    private float currentSFXValue = 1;
+    private float currentMasterValue;
+    private float currentMusicValue;
+    private float currentSFXValue;
 
     private int soundValue = 40;
 
     // Use this for initialization
     void Start () {
+        // Update the current volume values based on the audio mixer's values
+        masterMixer.GetFloat("MasterVolume", out currentMasterVolume);
+        masterMixer.GetFloat("MusicVolume", out currentMusicVolume);
+        masterMixer.GetFloat("SFXVolume", out currentSFXVolume);
 
-        Debug.Log(masterMixer);
+        // Convert the current volume values to a linear scale between 0 and 1, this is used to reset the volume slider values
+        currentMasterValue = Mathf.Pow(10f, currentMasterVolume / 80f);
+        currentMusicValue = Mathf.Pow(10f, currentMusicVolume / 80f);
+        currentSFXValue = Mathf.Pow(10f, currentSFXVolume / 80f);
 
+        // Important, these values need to be saved somewhere, while this works fine in the game, it does not carry over between sessions
+        // In other words, the sound values need to be saved and restored, this should be made when the audio mixer is instantiated
+        // For example, in this script or in the global game controller's script
 	}
-	
-    void Update()
-    {
-
-    }
 
 
     public void ChangeVolume(float volume, string volumeType)

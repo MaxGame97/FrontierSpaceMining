@@ -113,7 +113,7 @@ Rigidbody2D:
   m_GameObject: {fileID: 1119883603129434}
   m_UseAutoMass: 0
   m_Mass: 0.5
-  m_LinearDrag: 1
+  m_LinearDrag: 0.35
   m_AngularDrag: 15
   m_GravityScale: 0
   m_IsKinematic: 0
@@ -276,7 +276,8 @@ AudioSource:
   m_GameObject: {fileID: 1000013184225224}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 243000010042255532, guid: 7ee190f2e651deb42bfbba681fbc1e0a,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: ebdef5cfa90d72940a6ab05b5aad6061, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -366,9 +367,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb70d1843866e5448845da68e566961c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  acceleration: 8
+  acceleration: 10
   maxSpeed: 15
-  rotationSpeed: 0.06
+  rotationSpeed: 0.075
   minDistance: 4
   hearingValue: 7.5
   enemyIntelligence: 2

@@ -68,3 +68,4 @@ MonoBehaviour:
   sizeFactorMin: 0.8
   sizeFactorMax: 1.2
   spawnRadius: 25
+  cleanup: 1

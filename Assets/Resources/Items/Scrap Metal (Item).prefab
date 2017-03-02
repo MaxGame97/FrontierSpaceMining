@@ -23,7 +23,7 @@ GameObject:
   - 50: {fileID: 50000010625390988}
   - 58: {fileID: 58000010180003016}
   - 114: {fileID: 114000012736212548}
-  m_Layer: 0
+  m_Layer: 13
   m_Name: Scrap Metal (Item)
   m_TagString: Item
   m_Icon: {fileID: 0}

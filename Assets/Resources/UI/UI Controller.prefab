@@ -53,3 +53,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   toggleInventoryInput: Inventory
   toggleCraftingInput: Crafting
+  toggleLevelSelectInput: Level Select
+  togglePauseMenuInput: Pause
+  advancedOptionsEnabled: 0

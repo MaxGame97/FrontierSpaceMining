@@ -1,42 +1,95 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class MenuBehaviour : MonoBehaviour {
 
-    public static Canvas control;
+    [SerializeField] private bool saveAllowed = false;
 
-    private Canvas menuCanvas;
+    private GameControllerBehaviour gameController;
+
+    private CanvasGroup canvas;
+    
     private AudioMaster audioScript;
+
+    private bool pauseMenuEnabled = true;
+
+    public bool PauseMenuEnabled { get { return pauseMenuEnabled; } }
 
 	// Use this for initialization
 	void Start () {
-        menuCanvas = gameObject.GetComponentInParent<Canvas>();
-        audioScript = GameObject.Find("GlobalGameController").GetComponent<AudioMaster>();
+        canvas = GameObject.Find("Pause Menu System").GetComponent<CanvasGroup>();
 
-        audioScript.UpdateSliders();
+        gameController = GameObject.Find("Game Controller").GetComponent<GameControllerBehaviour>();
+
+        if(GameObject.Find("Global Game Controller") != null)
+            audioScript = GameObject.Find("Global Game Controller").GetComponent<AudioMaster>();
+
+        if (audioScript != null)
+            audioScript.UpdateSliders();
+
+        TogglePauseMenuPanel();
+        gameController.PauseToggle();
     }
 
+    public void TogglePauseMenuPanel()
+    {
+        if (pauseMenuEnabled)
+        {
+            canvas.alpha = 0;
+            canvas.blocksRaycasts = false;
+            pauseMenuEnabled = false;
 
-    public void ShowMenu()
-    {
-        menuCanvas.enabled = true;
+            gameController.PauseToggle();
+        }
+        else
+        {
+            canvas.alpha = 1;
+            canvas.blocksRaycasts = true;
+            pauseMenuEnabled = true;
+
+            gameController.PauseToggle();
+        }
     }
-    public void CloseMenu()
+
+    public void ExitToMainMenu()
     {
-        menuCanvas.enabled = false;
+        if (saveAllowed)
+        {
+            GlobalGameControllerBehaviour globalGameController = GameObject.Find("Global Game Controller").GetComponent<GlobalGameControllerBehaviour>();
+
+            globalGameController.Save();
+        }
+
+        SceneManager.LoadScene("Main Menu");
+    }
+
+    public void ExitToDesktop()
+    {
+        if (saveAllowed)
+        {
+            GlobalGameControllerBehaviour globalGameController = GameObject.Find("Global Game Controller").GetComponent<GlobalGameControllerBehaviour>();
+
+            globalGameController.Save();
+        }
+
+        Application.Quit();
     }
 
     public void ChangeMasterVolume(float volume)
-    {   
-        audioScript.ChangeVolume(volume, "master");   
+    {
+        if (audioScript != null)
+            audioScript.ChangeVolume(volume, "master");   
     }
     public void ChangeMusicVolume(float volume)
     {
-        audioScript.ChangeVolume(volume, "music");
+        if (audioScript != null)
+            audioScript.ChangeVolume(volume, "music");
     }
     public void ChangeSFXVolume(float volume)
     {
-        audioScript.ChangeVolume(volume, "sfx");
+        if (audioScript != null)
+            audioScript.ChangeVolume(volume, "sfx");
     }
 
 }
