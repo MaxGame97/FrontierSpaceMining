@@ -53,8 +53,6 @@ public class MissileBehaviour : MonoBehaviour {
         {
             if (Vector3.Angle(transform.up, missileRigidbody.velocity.normalized) < 90f)
                 correctedThrust = Vector3.Reflect(missileRigidbody.velocity.normalized, transform.right);
-            else
-                correctedThrust = -missileRigidbody.velocity.normalized;
         }
 
         // Add force in the direction of travel, this is corrected by the correctional angle
