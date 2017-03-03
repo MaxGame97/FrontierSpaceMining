@@ -40,15 +40,15 @@ public class Inventory : MonoBehaviour {
             return;
         }
 
-        itemDatabase = GetComponent<ItemDatabase>();                                    // Get the item database component
+        itemDatabase = GetComponent<ItemDatabase>();            // Get the item database component
 
-        for (int i = 0; i < inventorySlotCount; i++)                                    // Loops as many times as there are slots in the inventory
+        for (int i = 0; i < inventorySlotCount; i++)            // Loops as many times as there are slots in the inventory
         {
-            items.Add(new Item());                                                      // Add an empty item
+            items.Add(new Item());                              // Add an empty item
             
-            slots.Add(Instantiate(inventorySlotPrefab));                                // Instantiate a slot prefab
-            slots[i].transform.SetParent(slotPanel.transform);                          // Parent the slot panel to the slot
-            slots[i].GetComponent<Slot>().SlotID = i;                                   // Assign the slot an ID
+            slots.Add(Instantiate(inventorySlotPrefab));        // Instantiate a slot prefab
+            slots[i].transform.SetParent(slotPanel.transform);  // Parent the slot panel to the slot
+            slots[i].GetComponent<Slot>().SlotID = i;           // Assign the slot an ID
         }
 
         GameObject hubTransition = GameObject.FindGameObjectWithTag("Hub Transition");
@@ -56,21 +56,22 @@ public class Inventory : MonoBehaviour {
         // If a transition into the Hub exist, then we save the inventory
         if (hubTransition != null)
         {
-            LevelTransition existingInventory;                                          // Get the leveltransition component
+            LevelTransition existingInventory;                                      // Get the leveltransition component
 
-            existingInventory = hubTransition.GetComponent<LevelTransition>();          // Get the existing HubInventory 
+            existingInventory = hubTransition.GetComponent<LevelTransition>();      // Get the existing HubInventory 
 
-            for (int i = 0; i < existingInventory.HubInventory.Count; i++)              // For every item in the hubInventory, we...
+            for (int i = 0; i < existingInventory.HubInventory.Count; i++)          // For every item in the hubInventory, we...
             {
-                for (int j = 0; j < existingInventory.HubInventory[i].amount; j++)      // For every unit of every item in the hubInventory, we...
+                for (int j = 0; j < existingInventory.HubInventory[i].amount; j++)  // For every unit of every item in the hubInventory, we...
                 {
-                    AddItem(existingInventory.HubInventory[i].iD);                      // We add to the new player inventory
+                    AddItem(existingInventory.HubInventory[i].iD);                  // We add to the new player inventory
                 }
             }
 
-            Destroy(hubTransition);                                                     // Destroy the hubTransition prefab
+            Destroy(hubTransition);                                                 // Destroy the hubTransition prefab
         }
 
+        // Hide the inventory panel as default
         ToggleInventoryPanel();
     }
 

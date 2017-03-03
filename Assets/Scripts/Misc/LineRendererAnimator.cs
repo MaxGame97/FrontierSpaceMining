@@ -3,29 +3,57 @@ using System.Collections;
 
 public class LineRendererAnimator : MonoBehaviour {
 
-    [SerializeField] private int uvAnimationTileX = 1;
-    [SerializeField] private int uvAnimationTileY = 1;
+    [SerializeField] private int animationRows = 1;     // The amount of rows in the animation
+    [SerializeField] private int animationColumns = 1;  // The amount of columns in the animation
 
-    [SerializeField] private float framesPerSecond = 30.0f;
+    [SerializeField] [Range(0.1f, 2f)] private float maxInterval = 0.5f; // The max interval (in seconds)
+
+    private int maxIndex;           // The max cell index
+    private int currentIndex;       // The current cell index
+    
+    private float currentInterval;  // The current inverval (in seconds)
+
+    private Vector2 scale;
+
+    void Start()
+    {
+        // Set the max and current index
+        maxIndex = animationRows * animationColumns;
+        currentIndex = 0;
+
+        // Set the current interval to the max interval
+        currentInterval = maxInterval;
+
+        // Calculate the scale of the animation cells
+        scale = new Vector2(1f / animationRows, 1f / animationColumns);
+    }
 
     void Update() {
-        // Calculate index
-        int index = (int)(Time.time * framesPerSecond);
-        // repeat when exhausting all frames
-        index = index % (uvAnimationTileX * uvAnimationTileY);
+        // Decrease the interval
+        currentInterval -= Time.timeScale;
 
-        // Size of every tile
-        var size = new Vector2(1.0f / uvAnimationTileX, 1.0f / uvAnimationTileY);
+        // If the interval has expired
+        if(currentInterval < 0)
+        {
+            // Increase the current animation index
+            currentIndex++;
 
-        // split into horizontal and vertical index
-        var uIndex = index % uvAnimationTileX;
-        var vIndex = index / uvAnimationTileX;
+            // If the animation index has reached the max index, reset it
+            if (currentIndex == maxIndex)
+                currentIndex = 0;
 
-        // build offset
-        // v coordinate is the bottom of the image in opengl so we need to invert.
-        var offset = new Vector2(uIndex * size.x, 1.0f - size.y - vIndex * size.y);
+            // Reset the current interval
+            currentInterval = maxInterval;
+        }
 
+        // Get the cell index based on the current index
+        Vector2 cellIndex = new Vector2(currentIndex % animationRows, currentIndex % animationColumns);
+
+        // Calculate the offset based on the index and scale, invert the y axis
+        Vector2 offset = new Vector2(cellIndex.x * scale.x, 1f - scale.y - cellIndex.y * scale.y);
+
+        // Set the line renderer's offset and scale based on the calculated values
         GetComponent<LineRenderer>().material.SetTextureOffset("_MainTex", offset);
-        GetComponent<LineRenderer>().material.SetTextureScale("_MainTex", size);
+        GetComponent<LineRenderer>().material.SetTextureScale("_MainTex", scale);
     }
 }

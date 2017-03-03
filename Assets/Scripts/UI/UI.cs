@@ -7,7 +7,7 @@ public class UI : MonoBehaviour {
     private Inventory inventory;        // The current inventory system
     private Crafting crafting;          // The current crafting system
     private LevelSelect levelSelect;    // The current level select system
-    private MenuBehaviour pauseMenu;        // The current pause menu system
+    private PauseMenu pauseMenu;        // The current pause menu system
 
     [SerializeField] private string toggleInventoryInput;   // String representing the input used to toggle the inventory system
     [SerializeField] private string toggleCraftingInput;    // String representing the input used to toggle the crafting system
@@ -25,7 +25,7 @@ public class UI : MonoBehaviour {
             inventory = GameObject.Find("Inventory Controller").GetComponent<Inventory>();
             crafting = GameObject.Find("Crafting Controller").GetComponent<Crafting>();
             levelSelect = GameObject.Find("Level Select Controller").GetComponent<LevelSelect>();
-            pauseMenu = GameObject.Find("Pause Menu Controller").GetComponent<MenuBehaviour>();
+            pauseMenu = GameObject.Find("Pause Menu Controller").GetComponent<PauseMenu>();
         }
         else
         {

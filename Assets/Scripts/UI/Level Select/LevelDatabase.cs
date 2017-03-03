@@ -6,26 +6,23 @@ using System.IO;
 
 public class LevelDatabase : MonoBehaviour {
 
-    private List<LevelData> database = new List<LevelData>();
-    private JsonData levelData;
+    private List<LevelData> database = new List<LevelData>();   // The level database
+    private JsonData levelData;                                 // The level .json data
 
-    private GlobalGameControllerBehaviour globalGameController;
+    private GlobalGameControllerBehaviour globalGameController; // Reference to the global game controller
 
     public List<LevelData> Database { get { return database; } }
-
-    void Awake()
-    {
-        // If the global game controller exists
-        if (GameObject.Find("Global Game Controller") != null)
-            // Get the global game controller
-            globalGameController = GameObject.Find("Global Game Controller").GetComponent<GlobalGameControllerBehaviour>();
-    }
 
 	// Use this for initialization
 	void Start () {
         // Get the level data from the .json file
         levelData = JsonMapper.ToObject(File.ReadAllText(Application.dataPath + "/StreamingAssets/LevelData.json"));
-        
+
+        // If the global game controller exists
+        if (GameObject.Find("Global Game Controller") != null)
+            // Get the global game controller
+            globalGameController = GameObject.Find("Global Game Controller").GetComponent<GlobalGameControllerBehaviour>();
+
         // Create the level database
         CreateDatabase();
     }
@@ -36,6 +33,7 @@ public class LevelDatabase : MonoBehaviour {
         // Check all level entries in the Json data
         for (int i = levelData.Count - 1; i >= 0; i--)
         {
+            // If there is a global game controller
             if (globalGameController == null)
             {
                 // Add a new level to the database, the level data is taken from the Json data
@@ -43,36 +41,46 @@ public class LevelDatabase : MonoBehaviour {
             }
             else
             {
+                // Temporary bool used to specify if the levels completed requirements were met
                 bool requirementsMet = false;
 
+                // If there are no required levels to complete, the requirements are met
                 if (levelData[i]["requiredLevelsCompleted"].Count == 0)
                     requirementsMet = true;
-
-                if (globalGameController.CurrentCompletedLevels.Count > 0)
+                
+                // Check all of the level's requirements
+                for (int j = 0; j < levelData[i]["requiredLevelsCompleted"].Count; j++)
                 {
-                    for (int j = 0; j < levelData[i]["requiredLevelsCompleted"].Count; j++)
+                    // Check all of the currently completed levels
+                    for (int k = 0; k < globalGameController.CurrentCompletedLevels.Count; k++)
                     {
-                        for (int k = 0; k < globalGameController.CurrentCompletedLevels.Count; k++)
+                        // If any of the currently completed levels matches the current checked level requirement
+                        if ((int)levelData[i]["requiredLevelsCompleted"][j] == globalGameController.CurrentCompletedLevels[k])
                         {
-                            requirementsMet = false;
-
-                            if ((int)levelData[i]["requiredLevelsCompleted"][j] == globalGameController.CurrentCompletedLevels[k])
-                            {
-                                requirementsMet = true;
-                                break;
-                            }
+                            // This requirement is met, stop checking this requirement
+                            requirementsMet = true;
+                            break;
                         }
                     }
+
+                    // If the previous requirement was not met, stop checking the requirements
+                    if (!requirementsMet)
+                        break;
                 }
 
+                // If the requirements were met
                 if (requirementsMet)
                 {
+                    // Temporary bool used to specify whether or not the current level is completed or not
                     bool completed = false;
                     
+                    // Check all the currently completed levels
                     for (int j = 0; j < globalGameController.CurrentCompletedLevels.Count; j++)
                     {
+                        // If any of them match the current level
                         if ((int)levelData[i]["iD"] == globalGameController.CurrentCompletedLevels[j])
                         {
+                            // The current level has been completed, stop checking
                             completed = true;
                             break;
                         }

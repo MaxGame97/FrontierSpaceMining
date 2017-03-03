@@ -22,7 +22,7 @@ public class Slot : MonoBehaviour, IDropHandler {
     public void OnDrop(PointerEventData eventData)
     {
         // DROPPING CURRENTLY DISABLED
-        return;
+        /*
 
         // Get the item data from the dropped item
         ItemData itemData = eventData.pointerDrag.GetComponent<ItemData>();
@@ -66,5 +66,6 @@ public class Slot : MonoBehaviour, IDropHandler {
 
             Debug.Log(inventory.Items[slotID].ID + " " + itemTransform.GetComponent<ItemData>().Count + " - " + inventory.Items[itemData.SlotID].ID + " " + itemData.Count);
         }
+        */
     }
 }

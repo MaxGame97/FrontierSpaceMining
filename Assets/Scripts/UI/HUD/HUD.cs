@@ -43,8 +43,11 @@ public class HUD : MonoBehaviour {
             // Set the slider value to the player's max value
             healthSlider.maxValue = playerBehaviour.MaxHealth;
         }
+        // If the player does not exist
         else
         {
+            // Disable the HUD elements bound to the player
+
             healthSlider.gameObject.SetActive(false);
             velocityText.gameObject.SetActive(false);
 
@@ -127,6 +130,6 @@ public class HUD : MonoBehaviour {
         // Change the new notification text's text string
         notificationText.GetComponent<Text>().text = " - " + notificationString;
         // Parent the HUD transform to the new notification text
-        notificationText.transform.SetParent(hUDTransform);
+        notificationText.transform.SetParent(hUDTransform, false);
     }
 }

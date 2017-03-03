@@ -56,3 +56,4 @@ MonoBehaviour:
   toggleLevelSelectInput: Level Select
   togglePauseMenuInput: Pause
   advancedOptionsEnabled: 0
+  craftingEnabled: 0

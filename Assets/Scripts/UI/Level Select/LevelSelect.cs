@@ -44,6 +44,10 @@ public class LevelSelect : MonoBehaviour {
             AddLevelSlot(levelDatabase.Database[i]);
         }
 
+        // If there is at least one entry in the level database, set the first one as the currently selected level
+        if(levelDatabase.Database.Count > 0)
+            UpdateCurrentSelectedLevel(levelDatabase.Database[0]);
+
         // Toggle (hide) the level select panel as default
         ToggleLevelSelectPanel();
 	}
@@ -81,17 +85,23 @@ public class LevelSelect : MonoBehaviour {
         // If a level is currently selected
         if (currentSelectedLevel != null)
         {
+            // If there is a global game controller
             if (GameObject.Find("Global Game Controller") != null)
             {
+                // Get the global game controller behaviour
                 GlobalGameControllerBehaviour globalGameController = GameObject.Find("Global Game Controller").GetComponent<GlobalGameControllerBehaviour>();
                 
+                // Save the game
                 globalGameController.Save();
             }
 
+            // Instantiate the level transition object
             GameObject levelTransition = (GameObject)Instantiate(levelTransitionPrefab);
 
+            // Set the level transition object's level ID to the currently selected level's ID
             levelTransition.GetComponent<LevelInfo>().LevelID = currentSelectedLevel.ID;
-
+            
+            // Load the currently selected level
             SceneManager.LoadScene(currentSelectedLevel.Scene);
         }
     }

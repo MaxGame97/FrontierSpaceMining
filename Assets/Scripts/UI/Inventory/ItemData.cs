@@ -5,7 +5,7 @@ using System;
 
 public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler {
 
-    private Inventory inventory;        // The player's inventory
+    //private Inventory inventory;        // The player's inventory
     private InventoryTooltip tooltip;   // The tooltip component
 
     private Item item;                  // The item stored in the item data
@@ -22,7 +22,7 @@ public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     // Use this for initialization
     void Start()
     {   
-        inventory = GameObject.Find("Inventory Controller").GetComponent<Inventory>();      // Get the player's inventory
+        //inventory = GameObject.Find("Inventory Controller").GetComponent<Inventory>();      // Get the player's inventory
         tooltip = GameObject.Find("Inventory Controller").GetComponent<InventoryTooltip>(); // Get the tooltip component
     }
 
@@ -30,7 +30,7 @@ public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     public void OnBeginDrag(PointerEventData eventData)
     {
         // DRAGGING CURRENTLY DISABLED
-        return;
+        /*
 
         // If the item is not an empty item
         if(Item != null && inventory.InventoryEnabled)
@@ -43,13 +43,14 @@ public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
             GetComponent<CanvasGroup>().blocksRaycasts = false;     // Allows raycasts to go through the item when dragged
         }
+        */
     }
 
     // When the item is being dragged
     public void OnDrag(PointerEventData eventData)
     {
         // DRAGGING CURRENTLY DISABLED
-        return;
+        /*
 
         // If the item is not an empty item
         if (Item != null)
@@ -57,19 +58,21 @@ public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
             // Update the position of the mouse's position, minus the drag offset
             transform.position = eventData.position - dragOffset;
         }
+        */
     }
 
     // When the item is let go
     public void OnEndDrag(PointerEventData eventData)
     {
         // DRAGGING CURRENTLY DISABLED
-        return;
+        /*
 
         transform.SetParent(inventory.Slots[slotID].transform);             // Update the item's parent to the slot it's currently in
 
         transform.position = inventory.Slots[slotID].transform.position;    // Update the item's position to be relative zero
 
         GetComponent<CanvasGroup>().blocksRaycasts = true;                  // Allows raycasts to detect the item again
+        */
     }
 
     // When the mouse has entered the item bounds
