@@ -24,7 +24,7 @@ GameObject:
   - 60: {fileID: 60000012794614896}
   - 114: {fileID: 114000013822684158}
   - 114: {fileID: 114000011095655522}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: enemyMissile
   m_TagString: Projectile
   m_Icon: {fileID: 0}
