@@ -14,7 +14,7 @@ public class PlayerBehaviour : MonoBehaviour {
     [Header("Player health values")]
 
     [SerializeField] private float maxHealth = 500f;                            // The Player's maximum health
-    [SerializeField] [Range(1f, 15f)] private float velocityThreshold = 10f;    // The velocity needed to take damage on collision
+    [SerializeField] [Range(1f, 20f)] private float velocityThreshold = 10f;    // The velocity needed to take damage on collision
 
     [SerializeField] private string[] ignoredCollisionTags;                     // The tags that the player will ignore on collision with
 

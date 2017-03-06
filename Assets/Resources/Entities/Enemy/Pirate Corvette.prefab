@@ -67,7 +67,7 @@ Transform:
   m_GameObject: {fileID: 1119883603129434}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -77.2, y: -42.8, z: 0}
-  m_LocalScale: {x: 4, y: 4, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 4000010950391754}
@@ -163,6 +163,7 @@ MonoBehaviour:
   fieldOfView: 60
   viewDistance: 45
   viewCone: {fileID: 1000011559680186, guid: 49e8b6e7842439346b0b571a9040f164, type: 2}
+  weaponsEnabled: 1
   weaponPrefab: {fileID: 1000011634733356, guid: b2a1d8d79e470134dafe8978acffaea5,
     type: 2}
   bulletAliveTime: 5
@@ -177,6 +178,8 @@ MonoBehaviour:
     type: 2}
   alertSoundClip: {fileID: 8300000, guid: f9a1474fc773f9a4ea99ede8ac6c5966, type: 3}
   bulletSoundClip: {fileID: 8300000, guid: 1d7a0d99d58edd540820c4b4a4a30edb, type: 3}
+  informEnemies: []
+  informTurrets: []
 --- !u!212 &212000010141326726
 SpriteRenderer:
   m_ObjectHideFlags: 1

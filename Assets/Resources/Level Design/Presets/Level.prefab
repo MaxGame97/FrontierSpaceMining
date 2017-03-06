@@ -5287,7 +5287,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animationRows: 1
-  animationColumns: 1
+  animationColumns: 15
   maxInterval: 0.5
 --- !u!114 &114000012233569842
 MonoBehaviour:
@@ -6031,7 +6031,7 @@ MonoBehaviour:
   maxSpeed: 14
   rotationSpeed: 50
   maxHealth: 500
-  velocityThreshold: 12
+  velocityThreshold: 17
   ignoredCollisionTags:
   - Item
   soundFXPrefab: {fileID: 1000012480550896, guid: 1dcb1effd7c035344ab8251aa54b28f6,

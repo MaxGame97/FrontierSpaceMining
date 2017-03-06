@@ -24,7 +24,9 @@ public class EnemyBehaviour : MonoBehaviour {
 
     [Header("Enemy weapon values")]
 
-    [SerializeField] GameObject weaponPrefab;                               // The prefab object used for the bullet
+    [SerializeField] private bool weaponsEnabled = true;
+
+    [SerializeField] private GameObject weaponPrefab;                               // The prefab object used for the bullet
 
     [SerializeField] [Range(1f, 5)] private float bulletAliveTime = 5f;     // The Ai's speed of their bullets 
     [SerializeField] [Range(0.1f, 2f)] private float weaponCooldown = 1f;
@@ -447,14 +449,12 @@ public class EnemyBehaviour : MonoBehaviour {
             {
                 enemy.informEnemies[i].GetComponent<EnemyBehaviour>().Inform(enemy.currentTarget);
             }
-
-            /*
+            
             // Informs all assigned turrets of the current target's position
-            for (int i = 0; i < enemy.informEnemies.Length; i++)
+            for (int i = 0; i < enemy.informTurrets.Length; i++)
             {
                 enemy.informTurrets[i].GetComponent<StationaryTurretBehaviour>().Inform(enemy.currentTarget);
             }
-            */
 
             // If the weapon cooldown time has expired
             if (weaponCooldown <= 0)
@@ -673,6 +673,10 @@ public class EnemyBehaviour : MonoBehaviour {
         viewConeTransform.Translate(0f, viewConeSprite.bounds.extents.y, 5f);                           // Translate the view cone to border the enemy's front side
         viewConeTransform.parent = transform;                                                           // Parent the enemy to the view cone, this will make the view cone follow the enemy                                          // Run the current state's entry function
 
+        // If no weapon prefab has been selected, disable the weapons
+        if (weaponPrefab == null)
+            weaponsEnabled = false;
+
         // Set the starting state to the defined starting behaviour
         if (startingBehaviour == Behaviour.idle)
             currentState = idleState;
@@ -795,16 +799,19 @@ public class EnemyBehaviour : MonoBehaviour {
     // Fires the enemy's weapon
     void FireWeapon()
     {
-        // Instantiate a bullet object on the enemy's position and rotation
-        GameObject bulletObject = (GameObject)Instantiate(weaponPrefab, transform.position, transform.rotation);
+        if (weaponsEnabled)
+        {
+            // Instantiate a bullet object on the enemy's position and rotation
+            GameObject bulletObject = (GameObject)Instantiate(weaponPrefab, transform.position, transform.rotation);
 
-        // Set the bullet to self destruct after a defined period of time
-        Destroy(bulletObject, bulletAliveTime);
+            // Set the bullet to self destruct after a defined period of time
+            Destroy(bulletObject, bulletAliveTime);
 
-        // Create a bullet sound FX object
-        GameObject bulletFX = (GameObject)Instantiate(soundFXPrefab, transform.position, new Quaternion());
-        bulletFX.GetComponent<AudioSource>().clip = bulletSoundClip;
-        bulletFX.GetComponent<AudioSource>().volume = 0.7f;
+            // Create a bullet sound FX object
+            GameObject bulletFX = (GameObject)Instantiate(soundFXPrefab, transform.position, new Quaternion());
+            bulletFX.GetComponent<AudioSource>().clip = bulletSoundClip;
+            bulletFX.GetComponent<AudioSource>().volume = 0.7f;
+        }
 
         // Trigger battle music
         musicController.TriggerBattleMusic();
