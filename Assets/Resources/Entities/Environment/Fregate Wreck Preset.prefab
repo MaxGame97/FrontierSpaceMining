@@ -1,0 +1,147 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1000012556220806}
+  m_IsPrefabParent: 1
+--- !u!1 &1000010686836026
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 4000011569635622}
+  - 212: {fileID: 212000013744896454}
+  - 60: {fileID: 60000012549595492}
+  m_Layer: 8
+  m_Name: Wreck
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1000012556220806
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 4000014161823578}
+  m_Layer: 0
+  m_Name: Fregate Wreck Preset
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4000011569635622
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010686836026}
+  m_LocalRotation: {x: -0, y: 0, z: -0.30070576, w: 0.953717}
+  m_LocalPosition: {x: 0, y: 0, z: 21}
+  m_LocalScale: {x: 1.8, y: 1.8, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -35}
+  m_Children: []
+  m_Father: {fileID: 4000014161823578}
+  m_RootOrder: 0
+--- !u!4 &4000014161823578
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000012556220806}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_Children:
+  - {fileID: 4000011569635622}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+--- !u!60 &60000012549595492
+PolygonCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010686836026}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  m_Points:
+    m_Paths:
+    - - {x: 2.5805454, y: -9.317696}
+      - {x: 4.3936477, y: -10.0538645}
+      - {x: 7.7412696, y: -7.741615}
+      - {x: 6.801012, y: -0.38460627}
+      - {x: 4.707203, y: 5.1684065}
+      - {x: -1.6297405, y: 9.674835}
+      - {x: -4.5768805, y: 9.839478}
+      - {x: -6.565086, y: 8.818089}
+      - {x: -7.900705, y: 4.7703724}
+      - {x: -7.0698786, y: 4.9440684}
+      - {x: -5.9097185, y: 8.359307}
+      - {x: -3.7240772, y: 9.216716}
+      - {x: -1.2241004, y: 8.536598}
+      - {x: 3.5859532, y: 5.3764687}
+      - {x: 6.7628436, y: -4.640677}
+      - {x: 1.7300357, y: -8.056728}
+      - {x: -2.6982627, y: -4.394616}
+      - {x: -6.3265, y: -1.5331185}
+      - {x: -6.4359837, y: 0.38377553}
+      - {x: -1.1583338, y: 4.3790536}
+      - {x: -1.2464566, y: 4.607239}
+      - {x: -4.41444, y: 2.489285}
+      - {x: -6.942037, y: 1.8984817}
+      - {x: -7.514388, y: -1.6673449}
+    - - {x: -2.1525447, y: -0.22420248}
+      - {x: 0.57981706, y: 1.5715536}
+      - {x: 2.5189784, y: -1.1593628}
+      - {x: -0.17014611, y: -2.922465}
+--- !u!212 &212000013744896454
+SpriteRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000010686836026}
+  m_Enabled: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_Materials:
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  m_SubsetIndices: 
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_SelectedWireframeHidden: 1
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: 6c639bf6224d118419817662226b8e28, type: 3}
+  m_Color: {r: 0.35294116, g: 0.35294116, b: 0.35294116, a: 1}
+  m_FlipX: 0
+  m_FlipY: 0
