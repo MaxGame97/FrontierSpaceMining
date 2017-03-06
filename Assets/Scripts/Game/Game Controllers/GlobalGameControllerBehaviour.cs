@@ -64,6 +64,9 @@ public class GlobalGameControllerBehaviour : MonoBehaviour {
         // Serialize the save data and unload the file
         binaryFormatter.Serialize(fileStream, saveData);
         fileStream.Close();
+
+        SceneManager.LoadScene("Hub");
+
     }
 
     // Saves the game to the active index
