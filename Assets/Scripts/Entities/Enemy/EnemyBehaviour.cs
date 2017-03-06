@@ -8,7 +8,7 @@ public class EnemyBehaviour : MonoBehaviour {
 
     [Header("Enemy movement values")]
 
-    [SerializeField] [Range(1f, 30f)] private float acceleration = 2;       // The AI's acceleration speed
+    [SerializeField] [Range(1f, 60f)] private float acceleration = 2;       // The AI's acceleration speed
     [SerializeField] [Range(1f, 40f)]  private float maxSpeed = 2;          // The AI's max speed
     [SerializeField] [Range(0.01f, 0.1f)] private float rotationSpeed = 2;  // The AI's rotation speed
     [SerializeField] [Range(1.5f, 5f)] private float minDistance = 2f;      // The AI's minimum distance to the player
@@ -49,11 +49,16 @@ public class EnemyBehaviour : MonoBehaviour {
 
     [Header("Enemy misc values")]
 
-    [SerializeField] GameObject soundFXPrefab;                              // The sound FX prefab
+    [SerializeField] private GameObject soundFXPrefab;                              // The sound FX prefab
 
-    [SerializeField] AudioClip alertSoundClip;                              // The alert sound clip
-    [SerializeField] AudioClip bulletSoundClip;                             // The bullet sound clip
-    
+    [SerializeField] private AudioClip alertSoundClip;                              // The alert sound clip
+    [SerializeField] private AudioClip bulletSoundClip;                             // The bullet sound clip
+
+    [Header("Enemy informant values")]
+
+    [SerializeField] private GameObject[] informEnemies;
+    [SerializeField] private GameObject[] informTurrets;
+
     private Rigidbody2D enemyRigidbody;                                     // The enemy's rigidbody
 
     private Transform currentTarget;
@@ -437,6 +442,20 @@ public class EnemyBehaviour : MonoBehaviour {
 
         public override void Update()
         {
+            // Informs all assigned enemies of the current target's position
+            for (int i = 0; i < enemy.informEnemies.Length; i++)
+            {
+                enemy.informEnemies[i].GetComponent<EnemyBehaviour>().Inform(enemy.currentTarget);
+            }
+
+            /*
+            // Informs all assigned turrets of the current target's position
+            for (int i = 0; i < enemy.informEnemies.Length; i++)
+            {
+                enemy.informTurrets[i].GetComponent<StationaryTurretBehaviour>().Inform(enemy.currentTarget);
+            }
+            */
+
             // If the weapon cooldown time has expired
             if (weaponCooldown <= 0)
             {
@@ -756,14 +775,16 @@ public class EnemyBehaviour : MonoBehaviour {
                 }
             }
 
+            float thrustByMass = (acceleration * amount) * enemyRigidbody.mass;
+
             // Add force in the direction of travel, this is corrected by the correctional angle
-            enemyRigidbody.AddForce(correctedThrust * (acceleration * amount));
+            enemyRigidbody.AddForce(correctedThrust * thrustByMass);
 
             // If the enemy is moving faster than the max speed
             if (enemyRigidbody.velocity.magnitude > maxSpeed)
             {
                 // Calculate how much force is neccesary to counter (neutralize) the thrust force
-                float counterForce = Mathf.Abs(acceleration * amount) - (maxSpeed / enemyRigidbody.velocity.magnitude);
+                float counterForce = Mathf.Abs(thrustByMass) - (maxSpeed / enemyRigidbody.velocity.magnitude);
 
                 // Add the counter force in the opposite direction of travel
                 enemyRigidbody.AddForce(counterForce * -enemyRigidbody.velocity.normalized);
@@ -832,7 +853,7 @@ public class EnemyBehaviour : MonoBehaviour {
         return false;
     }
 
-    //Check whether or not the enemy can hear the target
+    // Check whether or not the enemy can hear the target
     bool CanHearTarget(Transform target)
     {
         // Get the target's engine sound component
@@ -852,5 +873,19 @@ public class EnemyBehaviour : MonoBehaviour {
             return true;
         else
             return false;
+    }
+
+    // Function called to inform the enemy of a target's position
+    public void Inform(Transform target)
+    {
+        // If the enemy is not already alerted
+        if(currentState != alertState)
+        {
+            // Update the enemy's current target
+            currentTarget = target;
+
+            // Exit to the investigating state
+            currentState.Exit(investigatingState);
+        }
     }
 }

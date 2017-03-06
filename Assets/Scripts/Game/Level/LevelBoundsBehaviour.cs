@@ -31,7 +31,7 @@ public class LevelBoundsBehaviour : MonoBehaviour {
         public override void Update()
         {
             // Lerp the color of the bounds warning panel and text to be transparent
-            levelBounds.boundsWarningPanel.color = Color.Lerp(levelBounds.boundsWarningPanel.color, new Color(0.7f, 0f, 0f, 0f), 0.1f);
+            levelBounds.boundsWarningPanel.color = Color.Lerp(levelBounds.boundsWarningPanel.color, new Color(0.8f, 0f, 0f, 0f), 0.1f);
             levelBounds.boundsWarningText.color = Color.Lerp(levelBounds.boundsWarningText.color, new Color(1f, 1f, 1f, 0f), 0.1f);
 
             // If the player is outside the bounds radius, exit to the warning state
@@ -58,12 +58,16 @@ public class LevelBoundsBehaviour : MonoBehaviour {
 
         public override void Update()
         {
+            float distance = (levelBounds.boundsRadius + levelBounds.boundsTolerance) - levelBounds.playerObject.transform.position.magnitude;
+
+            float alpha = Mathf.Clamp(1 - (distance / levelBounds.boundsTolerance), 0f, 1f);
+
             // Lerp the color of the bounds warning panel and text to be visible (semi-opaque)
-            levelBounds.boundsWarningPanel.color = Color.Lerp(levelBounds.boundsWarningPanel.color, new Color(0.7f, 0f, 0f, 0.2f), 0.1f);
-            levelBounds.boundsWarningText.color = Color.Lerp(levelBounds.boundsWarningText.color, new Color(1f, 1f, 1f, 1f), 0.1f);
+            levelBounds.boundsWarningPanel.color = Color.Lerp(levelBounds.boundsWarningPanel.color, new Color(0.8f, 0f, 0f, 0.5f * alpha), 0.1f);
+            levelBounds.boundsWarningText.color = Color.Lerp(levelBounds.boundsWarningText.color, new Color(1f, 1f, 1f, alpha), 0.1f);
 
             // Update the bounds warning text to indicate how far the player is able to move before starting to take damage
-            levelBounds.boundsWarningText.text = "WARNING!\nYou are leaving the asteroid belt\nTurn back now!\n" + (int)((levelBounds.boundsRadius + levelBounds.boundsTolerance) - levelBounds.playerObject.transform.position.magnitude);
+            levelBounds.boundsWarningText.text = "WARNING!\nYou are leaving the asteroid belt\nTurn back now!";
             
             // If the player has returned within the level bounds, exit to the normal state
             if (levelBounds.playerObject.transform.position.magnitude < levelBounds.boundsRadius)
@@ -87,6 +91,11 @@ public class LevelBoundsBehaviour : MonoBehaviour {
         // Reference to the level bounds script
         LevelBoundsBehaviour levelBounds;
 
+        float flashIntensity = 0f;
+        float maxFlashIntensity = 0.3f;
+
+        bool flashAscending = true;
+
         public DangerState(LevelBoundsBehaviour levelBounds)
         {
             this.levelBounds = levelBounds;
@@ -94,15 +103,18 @@ public class LevelBoundsBehaviour : MonoBehaviour {
 
         public override void Update()
         {
+            // Cause the bounds warning panel to flash
+            Flash();
+
             // Lerp the color of the bounds warning panel and text to be visible (semi-opaque), should this be neccesary (you never know)
-            levelBounds.boundsWarningPanel.color = Color.Lerp(levelBounds.boundsWarningPanel.color, new Color(0.8f, 0f, 0f, 0.5f), 0.1f);
+            levelBounds.boundsWarningPanel.color = Color.Lerp(levelBounds.boundsWarningPanel.color, new Color(0.8f, flashIntensity, flashIntensity, 0.5f), 0.1f);
             levelBounds.boundsWarningText.color = Color.Lerp(levelBounds.boundsWarningText.color, new Color(1f, 1f, 1f, 1f), 0.1f);
 
             // Update the bounds warning text to indicate that the player is in the danger zone
-            levelBounds.boundsWarningText.text = "WARNING!\nYou are leaving the asteroid belt\nTurn back now!\nDANGER!";
+            levelBounds.boundsWarningText.text = "WARNING!\nYou are leaving the asteroid belt\nTurn back now!";
 
             // Deal 50 damage to the player each second
-            levelBounds.playerObject.DealDamage(50f * Time.deltaTime);
+            levelBounds.playerObject.DealDamage(100f * Time.deltaTime);
 
             // If the player has returned within the extended level bounds, exit to the warning state
             if (levelBounds.playerObject.transform.position.magnitude < levelBounds.boundsRadius + levelBounds.boundsTolerance)
@@ -113,6 +125,34 @@ public class LevelBoundsBehaviour : MonoBehaviour {
         {
             levelBounds.currentState = exitState;
             levelBounds.currentState.Entry();
+        }
+
+        void Flash()
+        {
+            // If the flash value is ascending
+            if (flashAscending)
+            {
+                // Increase the flash value
+                flashIntensity += (4f * maxFlashIntensity) * Time.deltaTime;
+
+                if(flashIntensity >= maxFlashIntensity)
+                {
+                    flashIntensity = maxFlashIntensity;
+
+                    flashAscending = false;
+                }
+            }
+            else
+            {
+                flashIntensity -= (4f * maxFlashIntensity) * Time.deltaTime;
+
+                if (flashIntensity <= 0f)
+                {
+                    flashIntensity = 0f;
+
+                    flashAscending = true;
+                }
+            }
         }
     }
 

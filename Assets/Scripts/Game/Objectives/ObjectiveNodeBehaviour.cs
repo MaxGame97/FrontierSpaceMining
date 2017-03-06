@@ -53,10 +53,14 @@ public class ObjectiveNodeBehaviour : MonoBehaviour {
     // Is called when the GameObject is destroyed
     void OnDestroy()
     {
-        // Activate all stored GameObjects
-        ActivateGameObjects();
-        // Activate the next objective
-        levelController.NextObjective();
+        // If the GameObject has been disabled
+        if (!enabled)
+        {
+            // Activate all stored GameObjects
+            ActivateGameObjects();
+            // Activate the next objective
+            levelController.NextObjective();
+        }
     }
 
     // Activates all GameObjects in the list

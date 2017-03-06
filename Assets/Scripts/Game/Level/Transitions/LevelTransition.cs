@@ -18,24 +18,27 @@ public class LevelTransition : MonoBehaviour {
 
     public void Start()
     {
-        // Get the player's inventory
-        inventory = GameObject.Find("Inventory Controller").GetComponent<Inventory>();
-
-        // For every item in the players inventory
-        for (int i = 0; i < inventory.Items.Count; i++)                             
+        if (GameObject.Find("Inventory Controller") != null)
         {
-            // If the item ID is not -1 (empty item)
-            if (inventory.Items[i].ID != -1)
+            // Get the player's inventory
+            inventory = GameObject.Find("Inventory Controller").GetComponent<Inventory>();
+
+            // For every item in the players inventory
+            for (int i = 0; i < inventory.Items.Count; i++)
             {
-                // Create a temporary hub item instance
-                HubItems hubItem;
+                // If the item ID is not -1 (empty item)
+                if (inventory.Items[i].ID != -1)
+                {
+                    // Create a temporary hub item instance
+                    HubItems hubItem;
 
-                // Set the hub item's ID and amount based on the inventory
-                hubItem.iD = inventory.Items[i].ID;
-                hubItem.amount = inventory.CheckItemCount(inventory.Items[i].ID);
+                    // Set the hub item's ID and amount based on the inventory
+                    hubItem.iD = inventory.Items[i].ID;
+                    hubItem.amount = inventory.CheckItemCount(inventory.Items[i].ID);
 
-                // Add the hub item to the hub item list
-                hubInventory.Add(hubItem);
+                    // Add the hub item to the hub item list
+                    hubInventory.Add(hubItem);
+                }
             }
         }
         
