@@ -44,7 +44,7 @@ public class StationaryTurretBehaviour : MonoBehaviour {
             }
             else
             {
-                turret.transform.localEulerAngles = Vector3.Lerp(turret.transform.localEulerAngles, turret.startRotation, turret.rotationSpeed);
+                turret.transform.localRotation = Quaternion.Lerp(Quaternion.Euler(turret.transform.localEulerAngles), Quaternion.Euler(turret.startRotation), turret.rotationSpeed);
             }
         }
 
@@ -73,7 +73,7 @@ public class StationaryTurretBehaviour : MonoBehaviour {
             }
             else
             {
-                turret.transform.localEulerAngles = Vector3.Lerp(turret.transform.localEulerAngles, turret.startRotation, turret.rotationSpeed);
+                turret.transform.localRotation = Quaternion.Lerp(Quaternion.Euler(turret.transform.localEulerAngles), Quaternion.Euler(turret.startRotation), turret.rotationSpeed);
             }
         }
 
