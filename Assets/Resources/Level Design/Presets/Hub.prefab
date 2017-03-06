@@ -1999,22 +1999,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1000013891759180
-GameObject:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 4000010695452214}
-  - 114: {fileID: 114000013261179692}
-  m_Layer: 0
-  m_Name: Level Controller
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &1000013948674848
 GameObject:
   m_ObjectHideFlags: 1
@@ -2179,19 +2163,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4000010948410338}
   m_RootOrder: 0
---- !u!4 &4000010695452214
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000013891759180}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_Children: []
-  m_Father: {fileID: 4000012868337314}
-  m_RootOrder: 0
 --- !u!4 &4000010800855210
 Transform:
   m_ObjectHideFlags: 1
@@ -2236,7 +2207,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4000012868337314}
-  m_RootOrder: 1
+  m_RootOrder: 0
 --- !u!4 &4000011255626184
 Transform:
   m_ObjectHideFlags: 1
@@ -2256,7 +2227,7 @@ Transform:
   - {fileID: 4000010176115626}
   - {fileID: 4000011325957868}
   m_Father: {fileID: 4000012868337314}
-  m_RootOrder: 2
+  m_RootOrder: 1
 --- !u!4 &4000011325957868
 Transform:
   m_ObjectHideFlags: 1
@@ -2335,7 +2306,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 4000010695452214}
   - {fileID: 4000011046392680}
   - {fileID: 4000011255626184}
   m_Father: {fileID: 4000010800855210}
@@ -5913,18 +5883,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f11e0f57386f50440b960c852305c6f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114000013261179692
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1000013891759180}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2a2f6a531c7286242b0cbeda3a45ba54, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  objectiveGameObjects: []
 --- !u!114 &114000013270674580
 MonoBehaviour:
   m_ObjectHideFlags: 1
