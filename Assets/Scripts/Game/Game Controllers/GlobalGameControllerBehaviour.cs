@@ -9,6 +9,8 @@ using UnityEngine.SceneManagement;
 
 public class GlobalGameControllerBehaviour : MonoBehaviour {
 
+    private readonly string SAVE_NAME = "saveData_";
+
     private List<int> currentCompletedLevels = new List<int>();
 
     private Inventory currentInventory;
@@ -44,19 +46,10 @@ public class GlobalGameControllerBehaviour : MonoBehaviour {
         BinaryFormatter binaryFormatter = new BinaryFormatter();
         FileStream fileStream;
 
-        // If there does not exist a file representing this save index
-        if (!File.Exists(Application.persistentDataPath + "/playerInfo" + currentSaveIndex + ".dat"))
-        {
-            // Create it
-            fileStream = File.Create(Application.persistentDataPath + "/playerInfo" + currentSaveIndex + ".dat");
-        }
-        // If there already is a file representing this save index
-        else
-        {
-            // Remove it and create a new one
-            File.Delete(Application.persistentDataPath + "/playerInfo" + currentSaveIndex + ".dat");
-            fileStream = File.Create(Application.persistentDataPath + "/playerInfo" + currentSaveIndex + ".dat");
-        }
+        // Create it
+        fileStream = File.Create(Application.persistentDataPath + "/"+ SAVE_NAME + currentSaveIndex + ".dat");
+
+        Debug.Log("Created new game on index: " + index);
 
         // Create a temporary save data representing the current save data
         SaveData saveData = new SaveData();
@@ -67,6 +60,13 @@ public class GlobalGameControllerBehaviour : MonoBehaviour {
 
         SceneManager.LoadScene("Hub");
 
+    }
+
+    public void DeleteGame(int index)
+    {
+        // Remove game on the index slot
+        File.Delete(Application.persistentDataPath + "/" + SAVE_NAME + index + ".dat");
+        Debug.Log("Deleted game on index: " + index);
     }
 
     // Saves the game to the active index
@@ -80,16 +80,16 @@ public class GlobalGameControllerBehaviour : MonoBehaviour {
         FileStream fileStream;
 
         // If there does not exist a file representing the current save index
-        if (!File.Exists(Application.persistentDataPath + "/playerInfo" + currentSaveIndex + ".dat"))
+        if (!File.Exists(Application.persistentDataPath + "/" + SAVE_NAME + currentSaveIndex + ".dat"))
         {
             // Create it
-            fileStream = File.Create(Application.persistentDataPath + "/playerInfo" + currentSaveIndex + ".dat");
+            fileStream = File.Create(Application.persistentDataPath + "/" + SAVE_NAME + currentSaveIndex + ".dat");
         }
         // If there already is a file representing the current save index
         else
         {
             // Load it
-            fileStream = File.Open(Application.persistentDataPath + "/playerInfo" + currentSaveIndex + ".dat", FileMode.Open);
+            fileStream = File.Open(Application.persistentDataPath + "/" + SAVE_NAME + currentSaveIndex + ".dat", FileMode.Open);
         }
 
         // Create a temporary save data representing the current save data
@@ -107,9 +107,10 @@ public class GlobalGameControllerBehaviour : MonoBehaviour {
         // Update the current save index
         currentSaveIndex = index;
 
-        if (!File.Exists(Application.persistentDataPath + "/playerInfo" + currentSaveIndex + ".dat"))
+        if (!File.Exists(Application.persistentDataPath + "/" + SAVE_NAME + currentSaveIndex + ".dat"))
         {
             Debug.LogError("No savegame found on index: " + currentSaveIndex);
+            NewGame(index);
         }
         else
         {
@@ -125,7 +126,7 @@ public class GlobalGameControllerBehaviour : MonoBehaviour {
         BinaryFormatter binaryFormatter = new BinaryFormatter();
 
         // Load the current save file
-        FileStream fileStream = File.Open(Application.persistentDataPath + "/playerInfo" + currentSaveIndex + ".dat", FileMode.Open);
+        FileStream fileStream = File.Open(Application.persistentDataPath + "/" + SAVE_NAME + currentSaveIndex + ".dat", FileMode.Open);
 
         // Get the save data from the save file
         SaveData saveData = (SaveData)binaryFormatter.Deserialize(fileStream);
@@ -166,7 +167,7 @@ public class GlobalGameControllerBehaviour : MonoBehaviour {
         BinaryFormatter binaryFormatter = new BinaryFormatter();
 
         // Load the current save file
-        FileStream fileStream = File.Open(Application.persistentDataPath + "/playerInfo" + currentSaveIndex + ".dat", FileMode.Open);
+        FileStream fileStream = File.Open(Application.persistentDataPath + "/" + SAVE_NAME + currentSaveIndex + ".dat", FileMode.Open);
 
         // Get the save data from the save file
         SaveData saveData = (SaveData)binaryFormatter.Deserialize(fileStream);

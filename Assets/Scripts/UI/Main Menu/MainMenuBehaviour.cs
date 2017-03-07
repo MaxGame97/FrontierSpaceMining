@@ -4,21 +4,28 @@ using System.Collections;
 public class MainMenuBehaviour : MonoBehaviour {
 
     private AudioMaster audioScript;
+    private GlobalGameControllerBehaviour globalBehaviour;
 
     void Start () {
         Time.timeScale = 1.0f;
 
         audioScript = GameObject.Find("Global Game Controller").GetComponent<AudioMaster>();
+        globalBehaviour = GameObject.Find("Global Game Controller").GetComponent<GlobalGameControllerBehaviour>();
 
         audioScript.UpdateSliders();
     }
 
     // Triggers the game to load a specific save index
-	public void Load(int index)
+	public void Play(int index)
     {
         // Calls the load function, this is a workaround for an issue where calling the function directly from the button
         // caused the changed variables to revert, this messed up the loading system, this workaround fixes this issue
-        GameObject.Find("Global Game Controller").GetComponent<GlobalGameControllerBehaviour>().Load(index);
+        globalBehaviour.Load(index);
+    }
+
+    public void Delete(int index)
+    {
+        globalBehaviour.DeleteGame(index);
     }
 
     // Exits the game to the desktop (or the editor)
