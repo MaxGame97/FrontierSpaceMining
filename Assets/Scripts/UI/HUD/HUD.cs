@@ -9,8 +9,9 @@ public class HUD : MonoBehaviour {
 
     [Space(6f)]
 
+    [SerializeField] private bool forceAlternativeStyle = false;
+
     [SerializeField] private float healthNeedleRange = 82f;
-    [SerializeField] [Range(0f, 1f)] private float healthNeedleFloppyness = 0.2f;
 
     List<string> notificationTextQueue = new List<string>();    // List of strings (a queue of strings) that will be displayed as notifications
 
@@ -71,6 +72,12 @@ public class HUD : MonoBehaviour {
             GameObject.Find("Minimap Camera").SetActive(false);
             GameObject.Find("Minimap").SetActive(false);
             GameObject.Find("Bounds Warning Panel").SetActive(false);
+        }
+
+        if (forceAlternativeStyle)
+        {
+            leftCorner.SetActive(false);
+            leftCornerAlt.SetActive(true);
         }
 
         // If the notification object is assigned

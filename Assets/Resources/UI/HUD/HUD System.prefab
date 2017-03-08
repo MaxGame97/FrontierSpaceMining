@@ -765,8 +765,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   notificationTextPrefab: {fileID: 1000011773056194, guid: ffbc8ca1fdc6df9439d4c0daacc07676,
     type: 2}
+  forceAlternativeStyle: 1
   healthNeedleRange: 82
-  healthNeedleFloppyness: 0.2
 --- !u!114 &114000013926998098
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -968,10 +968,10 @@ RectTransform:
   - {fileID: 224000012027676008}
   m_Father: {fileID: 224000011992815098}
   m_RootOrder: 3
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 67, y: 67}
-  m_SizeDelta: {x: 125, y: 125}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 160, y: -135}
+  m_SizeDelta: {x: 250, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224000010586033016
 RectTransform:
@@ -1041,8 +1041,8 @@ RectTransform:
   - {fileID: 224000010222316536}
   - {fileID: 224000013725277406}
   - {fileID: 224000013400094184}
-  - {fileID: 224000012855321040}
   - {fileID: 224000011144497184}
+  - {fileID: 224000012855321040}
   - {fileID: 224000010938304436}
   m_Father: {fileID: 224000011992815098}
   m_RootOrder: 1
@@ -1063,7 +1063,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 224000010950081126}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 34.5, y: 30.75}
@@ -1159,7 +1159,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 224000010950081126}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 98.625, y: 92.62495}
