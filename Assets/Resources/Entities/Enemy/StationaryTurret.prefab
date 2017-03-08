@@ -52,11 +52,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ecb01235d4d3b24895aa338a5759982, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectile: {fileID: 1000012372432268, guid: b586f87f74e6375439ddde580ac43ee1, type: 2}
   hasLimits: 0
+  rotationSpeed: 0.06
   fieldOfView: 120
   viewDistance: 30
-  rotationSpeed: 0.06
+  projectile: {fileID: 1000011634733356, guid: b2a1d8d79e470134dafe8978acffaea5, type: 2}
+  weaponCooldown: 2
+  startingBehaviour: 0
+  maxAttentionTimer: 1
+  informEnemies: []
+  informTurrets: []
 --- !u!212 &212000013371289382
 SpriteRenderer:
   m_ObjectHideFlags: 1

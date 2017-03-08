@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.EventSystems;
 using System;
 
-public class LevelSlot : MonoBehaviour, IPointerDownHandler
+public class LevelSlot : MonoBehaviour
 {
     private LevelSelect levelSelect;    // Reference to the level select controller
 
@@ -17,8 +17,8 @@ public class LevelSlot : MonoBehaviour, IPointerDownHandler
         levelSelect = GameObject.Find("Level Select Controller").GetComponent<LevelSelect>();
 	}
 
-    // If this object has been pressed
-    public void OnPointerDown(PointerEventData eventData)
+    // Sends the level data of this level to the level select controller
+    public void SelectLevel()
     {
         // Update the currently selected level with this object's level data
         levelSelect.UpdateCurrentSelectedLevel(level);
