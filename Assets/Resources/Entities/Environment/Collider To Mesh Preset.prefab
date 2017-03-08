@@ -23,7 +23,7 @@ GameObject:
   - 33: {fileID: 33000010992375190}
   - 23: {fileID: 23000011916907398}
   - 114: {fileID: 114000010458815766}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Collider To Mesh Preset
   m_TagString: Untagged
   m_Icon: {fileID: 0}

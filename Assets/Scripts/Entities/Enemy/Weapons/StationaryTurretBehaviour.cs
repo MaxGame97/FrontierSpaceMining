@@ -220,6 +220,8 @@ public class StationaryTurretBehaviour : MonoBehaviour {
     public void FireTurret()
     {
         GameObject bulletObject = (GameObject)Instantiate(projectile, transform.position, transform.rotation);
+
+        Destroy(bulletObject, 5f);
     }
 
     // Awake is called before Start()

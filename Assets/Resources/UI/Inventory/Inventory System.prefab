@@ -633,7 +633,7 @@ MonoBehaviour:
     type: 2}
   inventoryItemPrefab: {fileID: 1000013464796630, guid: 7ef628bc252c28f42ab4bb246f8a8b7f,
     type: 2}
-  inventorySlotCount: 44
+  inventorySlotCount: 64
 --- !u!114 &114000013752182758
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1000,7 +1000,7 @@ CanvasGroup:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000012107260004}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0

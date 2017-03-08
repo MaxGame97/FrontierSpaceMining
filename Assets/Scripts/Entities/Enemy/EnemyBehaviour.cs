@@ -12,6 +12,7 @@ public class EnemyBehaviour : MonoBehaviour {
     [SerializeField] [Range(1f, 40f)]  private float maxSpeed = 2;          // The AI's max speed
     [SerializeField] [Range(0.01f, 0.1f)] private float rotationSpeed = 2;  // The AI's rotation speed
     [SerializeField] [Range(1.5f, 5f)] private float minDistance = 2f;      // The AI's minimum distance to the player
+    [SerializeField] [Range(3f, 30f)] private float avoidDistance = 6f;
 
     [Header("Enemy stealth values")]
 
@@ -42,11 +43,11 @@ public class EnemyBehaviour : MonoBehaviour {
 
     [Space(6f)]
 
-    [SerializeField] [Range(1f, 35f)] private float roamingRadius = 10f;
+    [SerializeField] [Range(1f, 70f)] private float roamingRadius = 10f;
 
     [Space(6f)]
 
-    [SerializeField] [Range(1f, 15f)] private float searchingRadius = 2.5f;
+    [SerializeField] [Range(1f, 40f)] private float searchingRadius = 2.5f;
     [SerializeField] [Range(10f, 30f)] private float searchingTime = 20f;
 
     [Header("Enemy misc values")]
@@ -66,7 +67,6 @@ public class EnemyBehaviour : MonoBehaviour {
     private Transform currentTarget;
 
     private SpriteRenderer viewConeSprite;                                  // The spriterenderer component of the view cone
-    private Transform viewConeTransform;                                    // The transform component of the view cone
 
     private LayerMask environmentLayerMask;                                 // A layermask containing the environment layer
     private LayerMask playerLayerMask;                                      // A layermask containing the player layer
@@ -139,13 +139,19 @@ public class EnemyBehaviour : MonoBehaviour {
     {
         EnemyBehaviour enemy;
 
+        Vector3 standPosition;
         Vector3 lookPosition;
 
         float lookPause;
 
+        float attentionTime;
+        float maxAttentionTime = 5f;
+
         public SentryState(EnemyBehaviour enemy)
         {
             this.enemy = enemy;
+
+            standPosition = enemy.transform.position;
         }
 
         public override void Entry()
@@ -158,12 +164,48 @@ public class EnemyBehaviour : MonoBehaviour {
 
             // Randomize a look pause
             lookPause = Random.Range(1f, 10f);
+
+            // Set the attention time to the max value
+            attentionTime = maxAttentionTime;
         }
 
         public override void Update()
         {
-            // Rotate towards the current target
-            enemy.RotateTowards(lookPosition);
+            // If the sentry is too far away from the stand position
+            if (Vector3.Distance(enemy.transform.position, standPosition) > enemy.minDistance)
+            {
+                // If the enemy is moving too slow (1/4 of the max speed)
+                if (enemy.enemyRigidbody.velocity.magnitude < enemy.maxSpeed / 4f)
+                {
+                    // Decrease the attention time
+                    attentionTime -= Time.deltaTime;
+
+                    // If the attention time has expired
+                    if (attentionTime <= 0f)
+                    {
+                        // Set the default state to the roaming state
+                        enemy.defaultState = enemy.roamingState;
+
+                        // Exit to the default state (now the roaming state)
+                        Exit(enemy.defaultState);
+                    }
+                }
+                else
+                {
+                    // Increase the attention time (slower than decreasing)
+                    attentionTime += Time.deltaTime / 10f;
+
+                    // If the attention time has exceeded the max value, reset it to the max value
+                    if (attentionTime > maxAttentionTime)
+                        attentionTime = maxAttentionTime;
+                }
+
+                // Move towards the stand position
+                enemy.MoveTowards(standPosition, 0.5f);
+            }
+            else
+                // Rotate towards the current target
+                enemy.RotateTowards(lookPosition);
 
             // If the look pause time has expired
             if (lookPause <= 0)
@@ -229,6 +271,9 @@ public class EnemyBehaviour : MonoBehaviour {
 
         bool positiveIndex;
 
+        float attentionTime;
+        float maxAttentionTime = 5f;
+
         public PatrolState(EnemyBehaviour enemy)
         {
             this.enemy = enemy;
@@ -258,10 +303,39 @@ public class EnemyBehaviour : MonoBehaviour {
             else
                 // Set the current target to the current patrol node
                 enemy.currentTarget = enemy.patrolNodes[patrolIndex];
+
+            // Set the attention time to the max value
+            attentionTime = maxAttentionTime;
         }
 
         public override void Update()
         {
+            // If the enemy is moving too slow (1/4 of the max speed)
+            if (enemy.enemyRigidbody.velocity.magnitude < enemy.maxSpeed / 4f)
+            {
+                // Decrease the attention time
+                attentionTime -= Time.deltaTime;
+
+                // If the attention time has expired
+                if (attentionTime <= 0f)
+                {
+                    // Set the default state to the roaming state
+                    enemy.defaultState = enemy.roamingState;
+
+                    // Exit to the default state (now the roaming state)
+                    Exit(enemy.defaultState);
+                }
+            }
+            else
+            {
+                // Increase the attention time (slower than decreasing)
+                attentionTime += Time.deltaTime / 10f;
+
+                // If the attention time has exceeded the max value, reset it to the max value
+                if (attentionTime > maxAttentionTime)
+                    attentionTime = maxAttentionTime;
+            }
+
             // Move towards the current patrol node
             enemy.MoveTowards(enemy.currentTarget.position, 0.3f);
 
@@ -303,6 +377,8 @@ public class EnemyBehaviour : MonoBehaviour {
                         else
                             patrolIndex--;
                     }
+
+                    attentionTime = maxAttentionTime;
                 }
 
                 // Set the current target to the current patrol node
@@ -351,6 +427,9 @@ public class EnemyBehaviour : MonoBehaviour {
 
         Vector3 roamingPosition;
 
+        float attentionTime;
+        float maxAttentionTime = 1.5f;
+
         public RoamingState(EnemyBehaviour enemy)
         {
             this.enemy = enemy;
@@ -363,10 +442,30 @@ public class EnemyBehaviour : MonoBehaviour {
 
             // Randomize a roaming position
             GenerateRoamingPosition();
+
+            // Set the attention time to the max value
+            attentionTime = maxAttentionTime;
         }
 
         public override void Update()
         {
+            // If the enemy is moving too slow (1/4 of the max speed)
+            if (enemy.enemyRigidbody.velocity.magnitude < enemy.maxSpeed / 4f)
+            {
+                // Decrease the attention time
+                attentionTime -= Time.deltaTime;
+
+                // If the attention time has expired
+                if (attentionTime <= 0f)
+                {
+                    // Generate a new roaming position
+                    GenerateRoamingPosition();
+
+                    // Reset the attention timer to the max value
+                    attentionTime = maxAttentionTime;
+                }
+            }
+
             // Move towards the roaming position
             enemy.MoveTowards(roamingPosition, 0.3f);
 
@@ -495,6 +594,9 @@ public class EnemyBehaviour : MonoBehaviour {
 
         Vector3 lastPosition;
 
+        float attentionTime;
+        float maxAttentionTime = 3f;
+
         public InvestigatingState(EnemyBehaviour enemy)
         {
             this.enemy = enemy;
@@ -509,10 +611,24 @@ public class EnemyBehaviour : MonoBehaviour {
             
             // Update the last spotted position to where the current target is
             lastPosition = enemy.currentTarget.position;
+
+            // Reset the attention timer
+            attentionTime = maxAttentionTime;
         }
 
         public override void Update()
         {
+            // If the enemy is moving too slow (1/4 of the max speed)
+            if (enemy.enemyRigidbody.velocity.magnitude < enemy.maxSpeed / 4f)
+            {
+                // Decrease the attention timer
+                attentionTime -= Time.deltaTime;
+
+                // If the attention timer has expired, exit to the searching state
+                if (attentionTime <= 0f)
+                    Exit(enemy.searchingState);
+            }
+
             // Move towards the last spotted position
             enemy.MoveTowards(lastPosition, 0.8f);
 
@@ -561,7 +677,10 @@ public class EnemyBehaviour : MonoBehaviour {
 
         Vector3 searchingPosition;
 
-        float searchingTime;
+        float attentionTime;
+        float maxAttentionTime = 1f;
+
+        float searchingTimer;
 
         public SearchingState(EnemyBehaviour enemy)
         {
@@ -578,21 +697,41 @@ public class EnemyBehaviour : MonoBehaviour {
 
             searchingPosition = playerPosition + (Random.insideUnitCircle * enemy.searchingRadius);
 
-            // Set the searching time
-            searchingTime = enemy.searchingTime;
+            // Set the attention timer
+            attentionTime = maxAttentionTime;
+
+            // Set the searching timer
+            searchingTimer = enemy.searchingTime;
         }
 
         public override void Update()
         {
+            // If the enemy is moving too slow (1/4 of the max speed)
+            if (enemy.enemyRigidbody.velocity.magnitude < enemy.maxSpeed / 4f)
+            {
+                // Decrease the attention timer
+                attentionTime -= Time.deltaTime;
+
+                // If the attention timer has expired
+                if (attentionTime <= 0f)
+                {
+                    // Get a new searching position
+                    GenerateSearchingPosition();
+
+                    // Reset the attention timer to the max value
+                    attentionTime = maxAttentionTime;
+                }
+            }
+
             // If the searching time has expired, exit to the default state
-            if (searchingTime <= 0)
+            if (searchingTimer <= 0)
                 Exit(enemy.defaultState);
             // If not, decrease the searching time
             else
-                searchingTime -= Time.deltaTime;
+                searchingTimer -= Time.deltaTime;
 
             // Move towards the searching position
-            enemy.MoveTowards(searchingPosition, 0.3f);
+            enemy.MoveTowards(searchingPosition, 0.6f);
 
             // If the enemy has reached the searching position, randomize it to a new position
             if (Vector3.Distance(enemy.transform.position, searchingPosition) < enemy.minDistance)
@@ -663,16 +802,9 @@ public class EnemyBehaviour : MonoBehaviour {
         playerLayerMask = LayerMask.GetMask("Player");                                                  // Get the player layer
 
         musicController = GameObject.Find("Music Controller").GetComponent<MusicControllerBehaviour>(); // Get the music controller component
-
-        GameObject tempCone = Instantiate(viewCone);                                                    // Create a view cone
-        viewConeTransform = tempCone.transform;                                                         // Get the view cone's transform component
-        viewConeSprite = tempCone.GetComponent<SpriteRenderer>();                                       // Get the view cone's sprite renderer component
-
-        viewConeTransform.position = transform.position;                                                // Move the view cone to the enemy's position
-        viewConeTransform.localRotation = transform.localRotation;                                      // Rotate the view cone to have the same rotation as the enemy
-        viewConeTransform.Translate(0f, viewConeSprite.bounds.extents.y, 5f);                           // Translate the view cone to border the enemy's front side
-        viewConeTransform.parent = transform;                                                           // Parent the enemy to the view cone, this will make the view cone follow the enemy                                          // Run the current state's entry function
-
+        
+        viewConeSprite = viewCone.GetComponent<SpriteRenderer>();                                       // Get the view cone's sprite renderer component
+        
         // If no weapon prefab has been selected, disable the weapons
         if (weaponPrefab == null)
             weaponsEnabled = false;
@@ -748,12 +880,12 @@ public class EnemyBehaviour : MonoBehaviour {
             Vector3 correctedThrust = transform.up;
 
             // If there is an obstacle in front of the enemy
-            if (Physics2D.Raycast(transform.position, transform.up, 6f, environmentLayerMask))
+            if (Physics2D.Raycast(transform.position, transform.up, avoidDistance, environmentLayerMask))
             {
                 float correctionalAngle = 0;
 
                 // Check if the path is clear to the left
-                if (!Physics2D.Raycast(transform.position, Quaternion.Euler(0, 0, 35f) * transform.up, 4f, environmentLayerMask))
+                if (!Physics2D.Raycast(transform.position, Quaternion.Euler(0, 0, 35f) * transform.up, avoidDistance - 2f, environmentLayerMask))
                     // If so, set the correctional angle to go left and slightly backwards
                     correctionalAngle = 100;
                 else
@@ -779,16 +911,17 @@ public class EnemyBehaviour : MonoBehaviour {
                 }
             }
 
+            // Calculate the thrust by maxx value (factor in the desired amount)
             float thrustByMass = (acceleration * amount) * enemyRigidbody.mass;
 
             // Add force in the direction of travel, this is corrected by the correctional angle
             enemyRigidbody.AddForce(correctedThrust * thrustByMass);
 
-            // If the enemy is moving faster than the max speed
-            if (enemyRigidbody.velocity.magnitude > maxSpeed)
+            // If the enemy is moving faster than the max speed (factor in the desired amount)
+            if (enemyRigidbody.velocity.magnitude > maxSpeed * amount)
             {
-                // Calculate how much force is neccesary to counter (neutralize) the thrust force
-                float counterForce = Mathf.Abs(thrustByMass) - (maxSpeed / enemyRigidbody.velocity.magnitude);
+                // Calculate how much force is neccesary to counter (neutralize) the thrust force (factor in the desired amount)
+                float counterForce = Mathf.Abs(thrustByMass) - ((maxSpeed * amount) / enemyRigidbody.velocity.magnitude);
 
                 // Add the counter force in the opposite direction of travel
                 enemyRigidbody.AddForce(counterForce * -enemyRigidbody.velocity.normalized);

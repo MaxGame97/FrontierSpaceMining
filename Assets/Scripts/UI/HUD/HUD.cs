@@ -7,6 +7,11 @@ public class HUD : MonoBehaviour {
 
     [SerializeField] private GameObject notificationTextPrefab; // The notification text prefab object
 
+    [Space(6f)]
+
+    [SerializeField] private float healthNeedleRange = 82f;
+    [SerializeField] [Range(0f, 1f)] private float healthNeedleFloppyness = 0.2f;
+
     List<string> notificationTextQueue = new List<string>();    // List of strings (a queue of strings) that will be displayed as notifications
 
     private float maxQueueTime;                                 // The max queue time (in seconds)
@@ -14,7 +19,12 @@ public class HUD : MonoBehaviour {
 
     private Transform hUDTransform;                             // The transform of the HUD canvas
 
-    private Slider healthSlider;                                // The health slider UI
+    private GameObject leftCorner;
+    private GameObject leftCornerAlt;
+
+    private GameObject healthDisplay;
+    private RectTransform healthNeedle;                         // The health needle
+
     private Text velocityText;                                  // The velocity text UI
 
     private Rigidbody2D playerRigidbody;                        // The player's rigidbody
@@ -26,8 +36,14 @@ public class HUD : MonoBehaviour {
         // Get the HUD transform
         hUDTransform = GameObject.Find("HUD System").transform;
 
-        // Get the health slider
-        healthSlider = GameObject.Find("Health Slider").GetComponent<Slider>();
+        leftCorner = GameObject.Find("Left Corner");
+        leftCornerAlt = GameObject.Find("Left Corner Alt");
+
+        // Get the health display
+        healthDisplay = GameObject.Find("Health Display");
+
+        // Get the health needle
+        healthNeedle = GameObject.Find("Health Needle").GetComponent<RectTransform>();
 
         // Get the velocity text
         velocityText = GameObject.Find("Velocity Text").GetComponent<Text>();
@@ -39,16 +55,17 @@ public class HUD : MonoBehaviour {
             playerBehaviour = GameObject.Find("Player").GetComponent<PlayerBehaviour>();
             // Get the player's rigidbody
             playerRigidbody = GameObject.Find("Player").GetComponent<Rigidbody2D>();
-            
-            // Set the slider value to the player's max value
-            healthSlider.maxValue = playerBehaviour.MaxHealth;
+
+            leftCornerAlt.SetActive(false);
         }
         // If the player does not exist
         else
         {
             // Disable the HUD elements bound to the player
 
-            healthSlider.gameObject.SetActive(false);
+            leftCorner.SetActive(false);
+
+            healthDisplay.SetActive(false);
             velocityText.gameObject.SetActive(false);
 
             GameObject.Find("Minimap Camera").SetActive(false);
@@ -78,13 +95,11 @@ public class HUD : MonoBehaviour {
     void Update()
     {
         // If the health slider exists
-        if(healthSlider != null)
+        if(healthNeedle != null)
         {
             // Update the slider value based on the player's current health
             if (playerBehaviour != null)
-                healthSlider.value = playerBehaviour.CurrentHealth;
-            else
-                healthSlider.value = 0f;
+                healthNeedle.localRotation = Quaternion.Lerp(healthNeedle.localRotation, Quaternion.Euler(0f, 0f, -((playerBehaviour.CurrentHealth / playerBehaviour.MaxHealth) - 0.5f) * healthNeedleRange), 0.1f);
         }
 
         // If the velocity text exists
