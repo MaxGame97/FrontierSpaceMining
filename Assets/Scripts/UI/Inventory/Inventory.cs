@@ -92,8 +92,9 @@ public class Inventory : MonoBehaviour {
                 {
                     // Get the item data from the found item
                     ItemData itemData = slots[i].transform.GetChild(0).GetComponent<ItemData>();
-                    
+
                     itemData.Count++;                                                                       // Increase the item count by one
+                    itemData.transform.GetChild(0).GetComponent<Text>().color = new Color(0f, 0f, 0f, 0f);  // Make the item count invisible (temporary)
                     itemData.transform.GetChild(0).GetComponent<Text>().text = itemData.Count.ToString();   // Update the text component (displays the current count of this item)
 
                     // Break the loop, there is no need to keep looping

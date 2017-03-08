@@ -21,7 +21,7 @@ GameObject:
   - 4: {fileID: 4000011555205776}
   - 212: {fileID: 212000010643116934}
   - 61: {fileID: 61000012870804940}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Door Static
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -39,7 +39,7 @@ GameObject:
   - 212: {fileID: 212000014288071756}
   - 61: {fileID: 61000011239442946}
   - 61: {fileID: 61000010439501888}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Door Open
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -56,7 +56,7 @@ GameObject:
   - 4: {fileID: 4000010673765266}
   - 212: {fileID: 212000011785311236}
   - 61: {fileID: 61000011894918166}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Door Locked
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,7 +71,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 4359245999846482}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Door Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}

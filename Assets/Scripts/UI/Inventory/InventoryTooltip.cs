@@ -62,6 +62,6 @@ public class InventoryTooltip : MonoBehaviour {
     void ConstructTooltipString()
     {
         // Update the text component's string based on the current item values
-        tooltipText.text = "<size=14>" + item.Name + "</size><size=4>\n\n</size>" + item.Description + "<size=4>\n\n</size><size=10>Value: " + item.Value + " | Weight: " + item.Weight + "</size>";
+        tooltipText.text = "<size=14>" + item.Name + "</size><size=4>\n\n</size>" + item.Description;
     }
 }

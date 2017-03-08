@@ -538,7 +538,7 @@ public class EnemyBehaviour : MonoBehaviour {
             // Create an alert sound FX object
             GameObject alertFX = (GameObject)Instantiate(enemy.soundFXPrefab, enemy.transform.position, new Quaternion());
             alertFX.GetComponent<AudioSource>().clip = enemy.alertSoundClip;
-            alertFX.GetComponent<AudioSource>().volume = 0.6f;
+            alertFX.GetComponent<AudioSource>().volume = 0f;
         }
 
         public override void Update()
@@ -943,7 +943,7 @@ public class EnemyBehaviour : MonoBehaviour {
             // Create a bullet sound FX object
             GameObject bulletFX = (GameObject)Instantiate(soundFXPrefab, transform.position, new Quaternion());
             bulletFX.GetComponent<AudioSource>().clip = bulletSoundClip;
-            bulletFX.GetComponent<AudioSource>().volume = 0.7f;
+            bulletFX.GetComponent<AudioSource>().volume = 0.4f;
         }
 
         // Trigger battle music
