@@ -1,10 +1,19 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
+using System.Collections.Generic;
+using UnityEngine.UI;
+
+
 
 public class MainMenuBehaviour : MonoBehaviour {
+    private readonly int AMOUNT_OF_SAVES = 3;
+
 
     private AudioMaster audioScript;
     private GlobalGameControllerBehaviour globalBehaviour;
+
+    private List<GameObject> savesList = new List<GameObject>();
 
     void Start () {
         Time.timeScale = 1.0f;
@@ -12,6 +21,14 @@ public class MainMenuBehaviour : MonoBehaviour {
         audioScript = GameObject.Find("Global Game Controller").GetComponent<AudioMaster>();
         globalBehaviour = GameObject.Find("Global Game Controller").GetComponent<GlobalGameControllerBehaviour>();
 
+        savesList.Capacity = AMOUNT_OF_SAVES;
+        for(int i = 0; i < AMOUNT_OF_SAVES; i++)
+        {
+            string save = "Save " + (i + 1);
+            savesList.Add(GameObject.Find(save));
+        }
+
+        UpdateSavesInMenu();
         audioScript.UpdateSliders();
     }
 
@@ -26,6 +43,7 @@ public class MainMenuBehaviour : MonoBehaviour {
     public void Delete(int index)
     {
         globalBehaviour.DeleteGame(index);
+        UpdateSavesInMenu();
     }
 
     // Exits the game to the desktop (or the editor)
@@ -40,6 +58,40 @@ public class MainMenuBehaviour : MonoBehaviour {
                     Application.Quit();
         #endif
     }
+
+    void UpdateSavesInMenu()
+    {
+        for(int i = 0; i < AMOUNT_OF_SAVES; i++)
+        {
+            SaveInformation saveInfo = new SaveInformation();
+            saveInfo = globalBehaviour.GetSaveInfo(i);
+
+
+            if (saveInfo != null)
+            {
+                int itemAmount = 0;
+                int timePlayed = 0;
+                int completedLevels = 0;
+
+                itemAmount = saveInfo.AmountOfItems;
+                timePlayed = (int)saveInfo.TimePlayed;
+                completedLevels = saveInfo.AmountOfLevelsCompleted;
+
+                int minutesPlayed = timePlayed / 60;
+                int hoursPlayed = timePlayed / 3600;
+            
+                savesList[i].GetComponentInChildren<Text>().text = "Items: " + itemAmount + "\n" + "Time played: " + hoursPlayed + " hours, " + minutesPlayed + " minutes" + "\n" + "Completed levels: " + completedLevels;
+            }
+            else
+            {
+                savesList[i].transform.GetChild(1).GetComponentInChildren<Text>().text = "New Game";
+                savesList[i].GetComponentInChildren<Text>().text = "";
+            }
+
+        }
+
+    }
+
 
     public void ChangeMasterVolume(float volume)
     {
