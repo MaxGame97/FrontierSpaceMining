@@ -16,6 +16,8 @@ public class FinalLevelLaser : MonoBehaviour {
     {
         BigLaser = gameObject.GetComponent<MeshRenderer>();      // Get the MeshRenderer component
         BigLaser.enabled = false;                                // Disable the MeshRenderer
+
+        timer = intervall;
     }
     void FixedUpdate()
     {

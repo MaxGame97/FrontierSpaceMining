@@ -11,7 +11,7 @@ public class EnemyBehaviour : MonoBehaviour {
     [SerializeField] [Range(1f, 60f)] private float acceleration = 2;       // The AI's acceleration speed
     [SerializeField] [Range(1f, 40f)]  private float maxSpeed = 2;          // The AI's max speed
     [SerializeField] [Range(0.01f, 0.1f)] private float rotationSpeed = 2;  // The AI's rotation speed
-    [SerializeField] [Range(1.5f, 5f)] private float minDistance = 2f;      // The AI's minimum distance to the player
+    [SerializeField] [Range(1.5f, 10f)] private float minDistance = 2f;      // The AI's minimum distance to the player
     [SerializeField] [Range(3f, 30f)] private float avoidDistance = 6f;
 
     [Header("Enemy stealth values")]
@@ -570,8 +570,13 @@ public class EnemyBehaviour : MonoBehaviour {
 
             // If the current target exists
             if (enemy.currentTarget != null)
-                // Move towards the current target
-                enemy.MoveTowards(enemy.currentTarget.position, 1f);
+            {
+                if (Vector3.Distance(enemy.transform.position, enemy.currentTarget.position) > enemy.avoidDistance * 2f)
+                    // Move towards the current target
+                    enemy.MoveTowards(enemy.currentTarget.position, 1f);
+                else
+                    enemy.RotateTowards(enemy.currentTarget.position);
+            }
             // If not, exit to the default state
             else
                 Exit(enemy.defaultState);

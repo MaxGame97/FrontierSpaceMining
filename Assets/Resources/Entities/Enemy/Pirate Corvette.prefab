@@ -338,9 +338,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   acceleration: 60
-  maxSpeed: 15
-  rotationSpeed: 0.06
-  minDistance: 4
+  maxSpeed: 10.5
+  rotationSpeed: 0.02
+  minDistance: 7
+  avoidDistance: 12
   hearingValue: 7.5
   enemyIntelligence: 2
   hearingDistance: 20

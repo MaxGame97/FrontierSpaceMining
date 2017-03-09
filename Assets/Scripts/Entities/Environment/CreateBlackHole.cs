@@ -6,9 +6,9 @@ public class CreateBlackHole : MonoBehaviour
 {
     [SerializeField] private GameObject areaEffectorPrefab;
 
-    [SerializeField] [Range(1, 5)] private int areaEffectorLayers = 5;
+    [SerializeField] [Range(1, 3)] private int areaEffectorLayers = 3;
 
-    [SerializeField] [Range(5f, 10f)] private float areaEffectorRadius = 5f;
+    [SerializeField] [Range(5f, 18f)] private float areaEffectorRadius = 15f;
     [SerializeField] [Range(0f, 1f)] private float steepness = 0.5f;
     [SerializeField] [Range(-20f, 20f)] private float areaEffectorForce = 3f;
     

@@ -143,10 +143,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   areaEffectorPrefab: {fileID: 1267633666249792, guid: 2cc342fd518ef204cb4c87e19dc24639,
     type: 2}
-  areaEffectorLayers: 5
-  areaEffectorRadius: 5
-  steepness: 0.5
-  areaEffectorForce: 3
+  areaEffectorLayers: 3
+  areaEffectorRadius: 18
+  steepness: 0.7
+  areaEffectorForce: 20
 --- !u!250 &250000011816999102
 PointEffector2D:
   m_ObjectHideFlags: 1
