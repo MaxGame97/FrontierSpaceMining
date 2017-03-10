@@ -22,6 +22,7 @@ GameObject:
   - 212: {fileID: 212000010527104606}
   - 50: {fileID: 50000012120923862}
   - 58: {fileID: 58000012450792226}
+  - 114: {fileID: 114000014169565086}
   m_Layer: 13
   m_Name: scrap metal henk
   m_TagString: Item
@@ -73,6 +74,18 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1
+--- !u!114 &114000014169565086
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013638758374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 316a000b52696a146a447ba15fa4d9af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  deathTimer: 12
 --- !u!212 &212000010527104606
 SpriteRenderer:
   m_ObjectHideFlags: 1
