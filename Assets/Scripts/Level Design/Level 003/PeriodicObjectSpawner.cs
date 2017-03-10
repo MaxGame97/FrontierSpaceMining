@@ -6,17 +6,29 @@ public class PeriodicObjectSpawner : MonoBehaviour {
     [SerializeField]
     GameObject prefab;
     [SerializeField]
-    float interval;
+    //float interval;
     private float count;
+    [SerializeField]
+    GameObject mineDrone;
 
-    private void Update()
+   /*  private void Update()
+     {
+         count += Time.deltaTime;
+
+         if (count > interval)
+         {
+             SpawnPrefab(prefab);
+             count = 0;
+         }
+     }
+     */
+
+   private void OnTriggerEnter2D(Collider2D collision)
     {
-        count += Time.deltaTime;
-
-        if (count > interval)
+        if (collision.gameObject.tag == "Pirate")
         {
+            Destroy(collision.gameObject.transform.FindChild("Carried Asteroid").gameObject);
             SpawnPrefab(prefab);
-            count = 0;
         }
     }
 
