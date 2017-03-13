@@ -11,6 +11,7 @@ public class PauseMenu : MonoBehaviour {
     private CanvasGroup canvas;
     
     private AudioMaster audioScript;
+    private PauseMenuAnimator pauseAnimator;
 
     private bool pauseMenuEnabled = true;
 
@@ -21,6 +22,7 @@ public class PauseMenu : MonoBehaviour {
         canvas = GameObject.Find("Pause Menu System").GetComponent<CanvasGroup>();
 
         gameController = GameObject.Find("Game Controller").GetComponent<GameControllerBehaviour>();
+        pauseAnimator = GetComponent<PauseMenuAnimator>();
 
         if(GameObject.Find("Global Game Controller") != null)
             audioScript = GameObject.Find("Global Game Controller").GetComponent<AudioMaster>();
@@ -29,6 +31,8 @@ public class PauseMenu : MonoBehaviour {
             audioScript.UpdateSliders();
 
         TogglePauseMenuPanel();
+        pauseAnimator.TogglePausePanel();
+
         gameController.PauseToggle();
     }
 
@@ -39,7 +43,7 @@ public class PauseMenu : MonoBehaviour {
             canvas.alpha = 0;
             canvas.blocksRaycasts = false;
             pauseMenuEnabled = false;
-
+            pauseAnimator.TogglePausePanel();
             gameController.PauseToggle();
         }
         else
@@ -47,7 +51,7 @@ public class PauseMenu : MonoBehaviour {
             canvas.alpha = 1;
             canvas.blocksRaycasts = true;
             pauseMenuEnabled = true;
-
+            pauseAnimator.TogglePausePanel();
             gameController.PauseToggle();
         }
     }
@@ -82,6 +86,7 @@ public class PauseMenu : MonoBehaviour {
             Application.Quit();
         #endif
     }
+
 
     public void ChangeMasterVolume(float volume)
     {
