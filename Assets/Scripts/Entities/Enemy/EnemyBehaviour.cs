@@ -69,6 +69,7 @@ public class EnemyBehaviour : MonoBehaviour {
     private SpriteRenderer viewConeSprite;                                  // The spriterenderer component of the view cone
 
     private LayerMask environmentLayerMask;                                 // A layermask containing the environment layer
+    private LayerMask blockerLayerMask;
     private LayerMask playerLayerMask;                                      // A layermask containing the player layer
 
     private MusicControllerBehaviour musicController;
@@ -803,7 +804,8 @@ public class EnemyBehaviour : MonoBehaviour {
     {
         enemyRigidbody = GetComponent<Rigidbody2D>();                                                   // Get the enemy's rigidbody component
 
-        environmentLayerMask = LayerMask.GetMask("Environment");                                        // Get the environment layer
+        environmentLayerMask = LayerMask.GetMask("Environment");                                        // Get the environment layers
+        blockerLayerMask = LayerMask.GetMask("Environment") | LayerMask.GetMask("EnemyBlocker");        // Get the layers that block the enemy movement
         playerLayerMask = LayerMask.GetMask("Player");                                                  // Get the player layer
 
         musicController = GameObject.Find("Music Controller").GetComponent<MusicControllerBehaviour>(); // Get the music controller component
@@ -885,12 +887,12 @@ public class EnemyBehaviour : MonoBehaviour {
             Vector3 correctedThrust = transform.up;
 
             // If there is an obstacle in front of the enemy
-            if (Physics2D.Raycast(transform.position, transform.up, avoidDistance, environmentLayerMask))
+            if (Physics2D.Raycast(transform.position, transform.up, avoidDistance, blockerLayerMask))
             {
                 float correctionalAngle = 0;
 
                 // Check if the path is clear to the left
-                if (!Physics2D.Raycast(transform.position, Quaternion.Euler(0, 0, 35f) * transform.up, avoidDistance - 2f, environmentLayerMask))
+                if (!Physics2D.Raycast(transform.position, Quaternion.Euler(0, 0, 35f) * transform.up, avoidDistance - 2f, blockerLayerMask))
                     // If so, set the correctional angle to go left and slightly backwards
                     correctionalAngle = 100;
                 else
