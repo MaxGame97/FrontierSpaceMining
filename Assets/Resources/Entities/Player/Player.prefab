@@ -416,13 +416,15 @@ MonoBehaviour:
   acceleration: 30
   maxSpeed: 14
   rotationSpeed: 50
-  maxHealth: 500
+  maxHealth: 300
   velocityThreshold: 17
   ignoredCollisionTags:
   - Item
   soundFXPrefab: {fileID: 1000012480550896, guid: 1dcb1effd7c035344ab8251aa54b28f6,
     type: 2}
   impactSoundClip: {fileID: 8300000, guid: 2b6bd7f11f9b3d949bfad3ccbb1fe6a0, type: 3}
+  failStateObject: {fileID: 1000013905347154, guid: ea4bb1df95ec97740aaab7c8840d1f15,
+    type: 2}
 --- !u!120 &120000010039154508
 LineRenderer:
   m_ObjectHideFlags: 1

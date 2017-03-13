@@ -21,6 +21,10 @@ public class PlayerBehaviour : MonoBehaviour {
     [SerializeField] private GameObject soundFXPrefab;                          // The sound FX prefab object
     [SerializeField] private AudioClip impactSoundClip;                         // The impact sound clip
 
+    [Space(6f)]
+
+    [SerializeField] private GameObject failStateObject;
+
     private float currentHealth;                                                // The player's current health
 
     public float MaxHealth { get { return maxHealth; } }
@@ -262,6 +266,8 @@ public class PlayerBehaviour : MonoBehaviour {
             Rigidbody2D rigidbody = player.GetComponent<Rigidbody2D>();
             rigidbody.angularDrag = 0;
             rigidbody.drag = 0;
+
+            Instantiate(player.failStateObject);
         }
 
         public override void Exit(State exitState)
