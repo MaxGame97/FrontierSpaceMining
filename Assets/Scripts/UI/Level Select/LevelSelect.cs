@@ -18,6 +18,8 @@ public class LevelSelect : MonoBehaviour {
     private bool levelSelectEnabled = true;                     // Specifies whether or not the level select system is enabled
 
     public bool LevelSelectEnabled { get { return levelSelectEnabled; } }
+    public LevelData CurrentSelectedLevel { get { return currentSelectedLevel; } }
+
 
 	// Use this for initialization
 	void Start () {

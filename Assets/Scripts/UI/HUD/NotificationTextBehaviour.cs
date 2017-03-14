@@ -4,9 +4,9 @@ using UnityEngine.UI;
 
 public class NotificationTextBehaviour : MonoBehaviour {
 
-    [SerializeField] [Range(5f, 40f)] private float scrollSpeed = 15f;  // The scrolling speed of the notification text
+    [SerializeField] [Range(5f, 50f)] private float scrollSpeed = 15f;  // The scrolling speed of the notification text
     [SerializeField] [Range(0.1f, 1f)] private float decayRate = 0.5f;  // The decay rate of the notification text
-    [SerializeField] [Range(1f, 5f)] private float lifeTime = 1.5f;     // The lifetime of the notification text, before it starts decaying
+    [SerializeField] [Range(0f, 5f)] private float lifeTime = 1.5f;     // The lifetime of the notification text, before it starts decaying
 
     private float alpha;                                                // The notification text's current alpha value
 

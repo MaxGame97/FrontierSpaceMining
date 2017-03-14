@@ -9,11 +9,14 @@ using UnityEngine.SceneManagement;
 
 public class GlobalGameControllerBehaviour : MonoBehaviour {
 
+    private readonly string SAVE_NAME = "saveData_";
+
     private List<int> currentCompletedLevels = new List<int>();
 
     private Inventory currentInventory;
 
     private static int currentSaveIndex = 0;
+    private float startTime = 0;
     
     public List<int> CurrentCompletedLevels { get { return currentCompletedLevels; } set { currentCompletedLevels = value; } }
     public int CurrentSaveIndex { get { return currentSaveIndex; } }
@@ -44,19 +47,10 @@ public class GlobalGameControllerBehaviour : MonoBehaviour {
         BinaryFormatter binaryFormatter = new BinaryFormatter();
         FileStream fileStream;
 
-        // If there does not exist a file representing this save index
-        if (!File.Exists(Application.persistentDataPath + "/playerInfo" + currentSaveIndex + ".dat"))
-        {
-            // Create it
-            fileStream = File.Create(Application.persistentDataPath + "/playerInfo" + currentSaveIndex + ".dat");
-        }
-        // If there already is a file representing this save index
-        else
-        {
-            // Remove it and create a new one
-            File.Delete(Application.persistentDataPath + "/playerInfo" + currentSaveIndex + ".dat");
-            fileStream = File.Create(Application.persistentDataPath + "/playerInfo" + currentSaveIndex + ".dat");
-        }
+        // Create it
+        fileStream = File.Create(Application.persistentDataPath + "/"+ SAVE_NAME + currentSaveIndex + ".dat");
+
+        Debug.Log("Created new game on index: " + index);
 
         // Create a temporary save data representing the current save data
         SaveData saveData = new SaveData();
@@ -64,6 +58,18 @@ public class GlobalGameControllerBehaviour : MonoBehaviour {
         // Serialize the save data and unload the file
         binaryFormatter.Serialize(fileStream, saveData);
         fileStream.Close();
+
+        UpdateCurrentCompletedLevels();
+        startTime = Time.time;
+        SceneManager.LoadScene("Hub");
+
+    }
+
+    public void DeleteGame(int index)
+    {
+        // Remove game on the index slot
+        File.Delete(Application.persistentDataPath + "/" + SAVE_NAME + index + ".dat");
+        Debug.Log("Deleted game on index: " + index);
     }
 
     // Saves the game to the active index
@@ -77,16 +83,16 @@ public class GlobalGameControllerBehaviour : MonoBehaviour {
         FileStream fileStream;
 
         // If there does not exist a file representing the current save index
-        if (!File.Exists(Application.persistentDataPath + "/playerInfo" + currentSaveIndex + ".dat"))
+        if (!File.Exists(Application.persistentDataPath + "/" + SAVE_NAME + currentSaveIndex + ".dat"))
         {
             // Create it
-            fileStream = File.Create(Application.persistentDataPath + "/playerInfo" + currentSaveIndex + ".dat");
+            fileStream = File.Create(Application.persistentDataPath + "/" + SAVE_NAME + currentSaveIndex + ".dat");
         }
         // If there already is a file representing the current save index
         else
         {
             // Load it
-            fileStream = File.Open(Application.persistentDataPath + "/playerInfo" + currentSaveIndex + ".dat", FileMode.Open);
+            fileStream = File.Open(Application.persistentDataPath + "/" + SAVE_NAME + currentSaveIndex + ".dat", FileMode.Open);
         }
 
         // Create a temporary save data representing the current save data
@@ -104,28 +110,23 @@ public class GlobalGameControllerBehaviour : MonoBehaviour {
         // Update the current save index
         currentSaveIndex = index;
 
-        if (!File.Exists(Application.persistentDataPath + "/playerInfo" + currentSaveIndex + ".dat"))
+        if (!File.Exists(Application.persistentDataPath + "/" + SAVE_NAME + currentSaveIndex + ".dat"))
         {
             Debug.LogError("No savegame found on index: " + currentSaveIndex);
+
+            NewGame(index);
         }
         else
         {
             UpdateCurrentCompletedLevels();
-
+            startTime = Time.time;
             SceneManager.LoadScene("Hub");
         }
     }
 
     public void UpdateCurrentInventory()
     {
-        // Instantiate a new binaryformatter
-        BinaryFormatter binaryFormatter = new BinaryFormatter();
-
-        // Load the current save file
-        FileStream fileStream = File.Open(Application.persistentDataPath + "/playerInfo" + currentSaveIndex + ".dat", FileMode.Open);
-
-        // Get the save data from the save file
-        SaveData saveData = (SaveData)binaryFormatter.Deserialize(fileStream);
+        SaveData saveData = GetSaveData();
         
         // Update the current inventory
         UpdateInventory();
@@ -153,20 +154,12 @@ public class GlobalGameControllerBehaviour : MonoBehaviour {
         else
             Debug.LogError("Tried to load save data, but no inventory was found");
 
-        // Close the file stream
-        fileStream.Close();
     }
 
     public void UpdateCurrentCompletedLevels()
     {
-        // Instantiate a new binaryformatter
-        BinaryFormatter binaryFormatter = new BinaryFormatter();
 
-        // Load the current save file
-        FileStream fileStream = File.Open(Application.persistentDataPath + "/playerInfo" + currentSaveIndex + ".dat", FileMode.Open);
-
-        // Get the save data from the save file
-        SaveData saveData = (SaveData)binaryFormatter.Deserialize(fileStream);
+        SaveData saveData = GetSaveData();
 
         currentCompletedLevels.Clear();
 
@@ -175,8 +168,6 @@ public class GlobalGameControllerBehaviour : MonoBehaviour {
             currentCompletedLevels.Add(saveData.CompletedLevels[i]);
         }
 
-        // Close the file stream
-        fileStream.Close();
     }
 
     // Updates the save data to the current save
@@ -198,7 +189,8 @@ public class GlobalGameControllerBehaviour : MonoBehaviour {
                 saveData.Items.Add(data);
             }
         }
-
+        saveData.TimePlayed = Time.time - startTime;
+       
         saveData.CompletedLevels = currentCompletedLevels;
     }
     
@@ -208,6 +200,67 @@ public class GlobalGameControllerBehaviour : MonoBehaviour {
         // Finds the current inventory and sets it as the current one
         currentInventory = GameObject.Find("Inventory Controller").GetComponent<Inventory>();
     }
+
+    SaveData GetSaveData()
+    {
+        SaveData saveData;
+
+        if(File.Exists(Application.persistentDataPath + "/" + SAVE_NAME + currentSaveIndex + ".dat"))
+        {
+            // Instantiate a new binaryformatter
+            BinaryFormatter binaryFormatter = new BinaryFormatter();
+
+            // Load the current save file
+            FileStream fileStream = File.Open(Application.persistentDataPath + "/" + SAVE_NAME + currentSaveIndex + ".dat", FileMode.Open);
+
+            // Get the save data from the save file
+            saveData = (SaveData)binaryFormatter.Deserialize(fileStream);
+
+            fileStream.Close();
+        }
+        else
+        {
+            saveData = null;
+        }
+
+        return saveData;
+    }
+
+
+    public SaveInformation GetSaveInfo(int index)
+    {
+        SaveInformation saveInfo = new SaveInformation();
+        currentSaveIndex = index;
+
+        SaveData saveData = GetSaveData();
+
+        if (saveData != null)
+        {
+            for (int i = 0; i < saveData.Items.Count; i++)
+            {
+                saveInfo.AmountOfItems += saveData.Items[i].Amount;
+            }
+            saveInfo.TimePlayed += saveData.TimePlayed;
+            saveInfo.AmountOfLevelsCompleted = saveData.CompletedLevels.Count;
+        }
+        else
+        {
+            saveInfo = null;
+        }
+        return saveInfo;
+    }
+}
+
+public class SaveInformation
+{
+    private float timePlayed = 0;
+    private int amountOfItems = 0;
+    private int amountOfLevelsCompleted = 0;
+
+    public float TimePlayed { get { return timePlayed; } set { timePlayed = value; } }
+    public int AmountOfItems { get { return amountOfItems; } set { amountOfItems = value; } }
+    public int AmountOfLevelsCompleted { get { return amountOfLevelsCompleted; } set { amountOfLevelsCompleted = value; } }
+
 }
 
 [Serializable]
@@ -215,9 +268,11 @@ class SaveData
 {
     private List<InventoryData> items = new List<InventoryData>();
     private List<int> completedLevels = new List<int>();
+    private float timePlayed = 0;
 
     public List<InventoryData> Items { get { return items; } set { items = value; } }
     public List<int> CompletedLevels { get { return completedLevels; } set { completedLevels = value; } }
+    public float TimePlayed { get { return timePlayed; } set { timePlayed = value; } }
 }
 
 [Serializable]
