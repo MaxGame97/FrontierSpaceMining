@@ -92,6 +92,7 @@ public class AudioMaster : MonoBehaviour {
             masterVol = GameObject.Find("MasterVolSlider").GetComponent<Slider>();
             musicVol = GameObject.Find("MusicVolSlider").GetComponent<Slider>();
             sfxVol = GameObject.Find("SFXVolSlider").GetComponent<Slider>();
+            Debug.Log("Found all sliders");
         }
     }
 

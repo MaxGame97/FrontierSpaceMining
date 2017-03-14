@@ -17,8 +17,18 @@ public class PauseMenuAnimator : MonoBehaviour {
         optionsPanel = GameObject.Find("OptionsPanel").GetComponent<Animator>();
     }
 
+    void CheckPanels()
+    {
+        if(mainPanel == null && optionsPanel == null)
+        {
+            mainPanel = GameObject.Find("PausePanel").GetComponent<Animator>();
+            optionsPanel = GameObject.Find("OptionsPanel").GetComponent<Animator>();
+        }
+    }
+
     public void ToggleOptionsPanel()
     {
+        CheckPanels();
         if (optionsShowing && mainSide)
         {
             optionsPanel.SetTrigger("Close");
@@ -37,6 +47,7 @@ public class PauseMenuAnimator : MonoBehaviour {
 
     public void TogglePausePanel()
     {
+        CheckPanels();
         if (mainShowing)
         {
             if(optionsShowing && mainSide)
@@ -52,7 +63,6 @@ public class PauseMenuAnimator : MonoBehaviour {
         else
         {
             mainPanel.SetTrigger("Open");
-            mainSide = true;
             mainShowing = true;
         }
     }

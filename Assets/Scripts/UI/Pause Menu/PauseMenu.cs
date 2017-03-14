@@ -32,9 +32,10 @@ public class PauseMenu : MonoBehaviour {
 
         TogglePauseMenuPanel();
         pauseAnimator.TogglePausePanel();
-
         gameController.PauseToggle();
     }
+
+
 
     public void TogglePauseMenuPanel()
     {
