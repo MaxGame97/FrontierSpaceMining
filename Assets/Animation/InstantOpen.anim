@@ -20,34 +20,19 @@ AnimationClip:
       serializedVersion: 2
       m_Curve:
       - time: 0
-        value: 2000
-        inSlope: -6000
-        outSlope: -6000
+        value: 500
+        inSlope: -1500
+        outSlope: -1500
         tangentMode: 10
       - time: 0.33333334
         value: 0
-        inSlope: -6000
-        outSlope: -6000
+        inSlope: -1500
+        outSlope: -1500
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_AnchoredPosition.y
-    path: 
-    classID: 224
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 10
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_SizeDelta.y
     path: 
     classID: 224
     script: {fileID: 0}
@@ -61,12 +46,6 @@ AnimationClip:
     genericBindings:
     - path: 0
       attribute: 538195251
-      script: {fileID: 0}
-      classID: 224
-      customType: 0
-      isPPtrCurve: 0
-    - path: 0
-      attribute: 38095219
       script: {fileID: 0}
       classID: 224
       customType: 0
@@ -97,34 +76,19 @@ AnimationClip:
       serializedVersion: 2
       m_Curve:
       - time: 0
-        value: 2000
-        inSlope: -6000
-        outSlope: -6000
+        value: 500
+        inSlope: -1500
+        outSlope: -1500
         tangentMode: 10
       - time: 0.33333334
         value: 0
-        inSlope: -6000
-        outSlope: -6000
+        inSlope: -1500
+        outSlope: -1500
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_AnchoredPosition.y
-    path: 
-    classID: 224
-    script: {fileID: 0}
-  - curve:
-      serializedVersion: 2
-      m_Curve:
-      - time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 10
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    attribute: m_SizeDelta.y
     path: 
     classID: 224
     script: {fileID: 0}

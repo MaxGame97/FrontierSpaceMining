@@ -363,9 +363,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb70d1843866e5448845da68e566961c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  acceleration: 40
-  maxSpeed: 13
-  rotationSpeed: 0.075
+  acceleration: 60
+  maxSpeed: 30
+  rotationSpeed: 0.1
   minDistance: 4
   avoidDistance: 6
   hearingValue: 7.5
