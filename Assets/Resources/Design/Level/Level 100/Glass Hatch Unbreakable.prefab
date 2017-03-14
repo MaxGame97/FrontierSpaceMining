@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 4000011226393148}
   - 212: {fileID: 212000013251595520}
+  - 61: {fileID: 61000012321576450}
   m_Layer: 8
   m_Name: Glass Hatch Unbreakable
   m_TagString: Untagged
@@ -34,12 +35,26 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000011081164418}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -25.24, y: 74.97, z: -2}
+  m_LocalPosition: {x: 89.16346, y: -43.045746, z: -2}
   m_LocalScale: {x: 0.83, y: 0.565, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
+--- !u!61 &61000012321576450
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000011081164418}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0.6, y: 0}
+  serializedVersion: 2
+  m_Size: {x: 0.88, y: 19.08}
 --- !u!212 &212000013251595520
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -22,9 +22,10 @@ GameObject:
   - 212: {fileID: 212000013538743720}
   - 50: {fileID: 50000012339789666}
   - 58: {fileID: 58000011104906478}
-  m_Layer: 13
+  - 114: {fileID: 114000012427786806}
+  m_Layer: 0
   m_Name: Metal Scraps
-  m_TagString: Item
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -50,8 +51,8 @@ Rigidbody2D:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000011685442566}
   m_UseAutoMass: 0
-  m_Mass: 0.0001
-  m_LinearDrag: 0.01
+  m_Mass: 0.05
+  m_LinearDrag: 0.1
   m_AngularDrag: 0.15
   m_GravityScale: 0
   m_IsKinematic: 0
@@ -73,6 +74,18 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.6
+--- !u!114 &114000012427786806
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000011685442566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b8cf47cc57255b641b70a51a13ee6d80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  despawnTimer: 5
 --- !u!212 &212000013538743720
 SpriteRenderer:
   m_ObjectHideFlags: 1
