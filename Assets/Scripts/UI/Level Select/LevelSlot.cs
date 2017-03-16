@@ -12,10 +12,11 @@ public class LevelSlot : MonoBehaviour
     public LevelData Level { get { return level; } set { level = value; } }
     
     // Use this for initialization
-    void Start () {
+    void Start ()
+    {
         // Get the level select controller behaviour
         levelSelect = GameObject.Find("Level Select Controller").GetComponent<LevelSelect>();
-	}
+    }
 
     // Sends the level data of this level to the level select controller
     public void SelectLevel()

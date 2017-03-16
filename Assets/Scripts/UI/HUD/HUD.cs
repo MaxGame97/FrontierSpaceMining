@@ -19,6 +19,7 @@ public class HUD : MonoBehaviour {
     private float currentQueueTime = 0f;                        // The current queue time (in seconds)
 
     private Transform hUDTransform;                             // The transform of the HUD canvas
+    private Transform notificationTextPanelTransform;           // The transform of the notification text panel
 
     private GameObject leftCorner;
     private GameObject leftCornerAlt;
@@ -36,6 +37,8 @@ public class HUD : MonoBehaviour {
 	void Start () {
         // Get the HUD transform
         hUDTransform = GameObject.Find("HUD System").transform;
+        // Get the notification text panel transform
+        notificationTextPanelTransform = GameObject.Find("Notification Text Panel").transform;
 
         leftCorner = GameObject.Find("Left Corner");
         leftCornerAlt = GameObject.Find("Left Corner Alt");
@@ -152,6 +155,6 @@ public class HUD : MonoBehaviour {
         // Change the new notification text's text string
         notificationText.GetComponent<Text>().text = " - " + notificationString;
         // Parent the HUD transform to the new notification text
-        notificationText.transform.SetParent(hUDTransform, false);
+        notificationText.transform.SetParent(notificationTextPanelTransform, false);
     }
 }

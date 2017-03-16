@@ -21,6 +21,10 @@ public class PlayerBehaviour : MonoBehaviour {
     [SerializeField] private GameObject soundFXPrefab;                          // The sound FX prefab object
     [SerializeField] private AudioClip impactSoundClip;                         // The impact sound clip
 
+    [Space(6f)]
+
+    [SerializeField] private GameObject failStateObject;
+
     private float currentHealth;                                                // The player's current health
 
     public float MaxHealth { get { return maxHealth; } }
@@ -79,39 +83,48 @@ public class PlayerBehaviour : MonoBehaviour {
             playerRigidbody.AddTorque(-Input.GetAxis("Horizontal") * player.rotationSpeed);
 
             float thrustForce;
-            float maxSpeed;
 
-            // If the player is pressing the boost button
-            if (Input.GetButton("Boost"))
+            // If the player wants to move forward
+            if (Input.GetAxis("Vertical") > 0f)
             {
-                // Set the thrust force to twice the player's input, times the acceleration
-                thrustForce = Mathf.Clamp(Input.GetAxis("Vertical") * 2, -0.25f, 2f) * player.acceleration;
+                float maxSpeed = player.maxSpeed;
 
-                // Set the max speed to twice the player's max speed
-                maxSpeed = player.maxSpeed * 2;
+                // If the player is pressing the boost button
+                if (Input.GetButton("Boost"))
+                {
+                    // Set the thrust force to twice the player's input, times the acceleration
+                    thrustForce = Mathf.Clamp(Input.GetAxis("Vertical") * 2, -0.25f, 2f) * player.acceleration;
+
+                    // Set the max speed to twice the player's max speed
+                    maxSpeed = player.maxSpeed * 2;
+                }
+                else
+                {
+                    // Set the thrust force to the player's input, times the acceleration
+                    thrustForce = Mathf.Clamp(Input.GetAxis("Vertical"), -0.25f, 1f) * player.acceleration;
+                }
+
+                // Add the thrust force in the forward direction
+                playerRigidbody.AddForce(thrustForce * player.transform.up);
+
+                // If the playerRigidbody is moving faster than the max speed
+                if (playerRigidbody.velocity.magnitude > maxSpeed)
+                {
+                    // Calculate how much force is neccesary to counter (neutralize) the thrust force
+                    float counterForce = Mathf.Abs(thrustForce) - (maxSpeed / playerRigidbody.velocity.magnitude);
+
+                    // Add the counter force in the opposite direction of travel
+                    playerRigidbody.AddForce(counterForce * -playerRigidbody.velocity.normalized);
+                }
             }
-            else
+            // Else, if the player wants to stop
+            else if(Input.GetAxis("Vertical") < 0f)
             {
-                // Set the thrust force to the player's input, times the acceleration
-                thrustForce = Mathf.Clamp(Input.GetAxis("Vertical"), -0.25f, 1f) * player.acceleration;
+                thrustForce = Input.GetAxis("Vertical") * player.acceleration;
 
-                // Set the max speed to the player's max speed
-                maxSpeed = player.maxSpeed;
+                playerRigidbody.AddForce(playerRigidbody.velocity.normalized * thrustForce);
             }
 
-            // Add the thrust force in the forward direction
-            playerRigidbody.AddForce(thrustForce * player.transform.up);
-
-            // If the playerRigidbody is moving faster than the max speed
-            if (playerRigidbody.velocity.magnitude > maxSpeed)
-            {
-                // Calculate how much force is neccesary to counter (neutralize) the thrust force
-                float counterForce = Mathf.Abs(thrustForce) - (maxSpeed / playerRigidbody.velocity.magnitude);
-
-                // Add the counter force in the opposite direction of travel
-                playerRigidbody.AddForce(counterForce * -playerRigidbody.velocity.normalized);
-            }
-            
             // Set the engine's thrust amount to the current value
             playerEngine.PlayerThrustAmount = Mathf.Abs(Input.GetAxis("Vertical"));
         }
@@ -262,6 +275,8 @@ public class PlayerBehaviour : MonoBehaviour {
             Rigidbody2D rigidbody = player.GetComponent<Rigidbody2D>();
             rigidbody.angularDrag = 0;
             rigidbody.drag = 0;
+
+            Instantiate(player.failStateObject);
         }
 
         public override void Exit(State exitState)
