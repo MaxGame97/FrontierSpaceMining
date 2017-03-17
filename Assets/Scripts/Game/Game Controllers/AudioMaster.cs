@@ -19,7 +19,7 @@ public class AudioMaster : MonoBehaviour {
     private float currentMusicValue;
     private float currentSFXValue;
 
-    private int soundValue = 40;
+    private int soundValue = 80;
 
     // Use this for initialization
     void Start () {
@@ -68,8 +68,9 @@ public class AudioMaster : MonoBehaviour {
 
     float GetVolumeValue(float entryVolume)
     {
+        Debug.Log(entryVolume);
         float finalVolume;
-        finalVolume = (entryVolume * soundValue) - soundValue;
+        finalVolume = (soundValue * Mathf.Sin(entryVolume * Mathf.PI / 2f)) - soundValue;
         return finalVolume;
     }
 

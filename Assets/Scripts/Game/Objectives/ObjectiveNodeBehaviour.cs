@@ -12,6 +12,9 @@ public class ObjectiveNodeBehaviour : MonoBehaviour {
 
     [SerializeField] private AudioClip audioClip;
 
+    [Space(6f)]
+
+    [SerializeField] private bool startObjectsActive = false;
     [SerializeField] private bool destroyOnTrigger = false;
 
     private LevelController levelController;
@@ -31,11 +34,15 @@ public class ObjectiveNodeBehaviour : MonoBehaviour {
             return;
         }
 
-        // Go through the GameObject list
-	    for(int i = 0; i < gameObjectsToActivate.Count; i++)
+        // If the assigned objects to activate shouldn't be kept active
+        if (!startObjectsActive)
         {
-            // Deactivate all GameObjects in the list
-            gameObjectsToActivate[i].SetActive(false);
+            // Go through the GameObject list
+            for (int i = 0; i < gameObjectsToActivate.Count; i++)
+            {
+                // Deactivate all GameObjects in the list
+                gameObjectsToActivate[i].SetActive(false);
+            }
         }
 	}
 	
@@ -69,15 +76,17 @@ public class ObjectiveNodeBehaviour : MonoBehaviour {
         // Go through the to spawn GameObject list
         for (int i = 0; i < gameObjectsToActivate.Count; i++)
         {
-            // Activate all GameObjects in the list
-            gameObjectsToActivate[i].SetActive(true);
+            if(gameObjectsToActivate[i] != null)
+                // Activate all GameObjects in the list
+                gameObjectsToActivate[i].SetActive(true);
         }
 
         // Go through the to spawn GameObject list
         for (int i = 0; i < gameObjectsToDeactivate.Count; i++)
         {
-            // Deactivate all GameObjects in the list
-            gameObjectsToDeactivate[i].SetActive(false);
+            if(gameObjectsToDeactivate[i] != null)
+                // Deactivate all GameObjects in the list
+                gameObjectsToDeactivate[i].SetActive(false);
         }
 
         // Go through the to instantiate GameObject list
