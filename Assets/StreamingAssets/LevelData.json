@@ -1,8 +1,17 @@
 [
-	{
-		"iD": 0,
-		"levelName": "Tutorial level",
-		"description": "Learn the basic mechanics",
+  {
+    "iD": 0,
+    "levelName": "Tutorial level",
+    "description": "Learn the basic mechanics",
+    "scene": "level_001",
+    "requiredLevelsCompleted": [
+
+    ]
+  },
+  {
+		"iD": 1,
+		"levelName": "Hostile introductions",
+		"description": "Meet your friendly neighbourhood pirates",
 		"scene": "level_002",
 		"requiredLevelsCompleted":
 		[
@@ -10,7 +19,7 @@
 		]
 	},
 	{
-		"iD": 1,
+		"iD": 2,
 		"levelName": "Battlecruiser level",
 		"description": "Navigate an imperial battlecruiser",
 		"scene": "level_100",
