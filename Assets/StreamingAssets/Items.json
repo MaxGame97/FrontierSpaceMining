@@ -1,6 +1,122 @@
 [
+//Marcelina Zakow's Log
 	{
 		"iD": 0,
+		"name": "Audio Log",
+		"description": "Date: 648a.AE. 28/1.\nID: Zakow, M.\n\nHi! Oh, I mean... captain's log, log entry one! This is Captain Marcelina Zakow speaking! I was given command over one of the rebels' Locke P-38's today. I'm thrilled to be given the opportunity! I shall prove that Haruto's, err... I mean... Mr. Nagano's faith is not misplaced. I know that the last thing Adamec needs is another rebellion, but Nagano has different aspirations. He doesn't want war, he wants peace. He wants freedom. After all, he's no warmonger. No general, no politician. He's an astronomer. And he's discovered a potential home, yet unknown to the Empire. This “Promised Land” is our goal. For such an important task, I should really think of a more inspiring name to my ship. Locke P-38 won't do...\n[STATIC]",
+		"value": 10,
+		"weight": 2,
+		"slug": "datachip_image"
+	},
+	{
+		"iD": 1,
+		"name": "Audio Log",
+		"description": "Date: 648a.AE. 15/3.\nID: Zakow, M.\n\nHello, this is Captain Marcelina Zakow speaking. Log entry... Eighteen? Nineteen? I've already lost count. Over the past two months I've learned that the rebels have partaking in some morally questionable activities. This doesn't really surprise me. It's not like we have people giving us what we need to achieve our goal, we've had to find other ways to get the supplies we need. It is amoral, but I still think it's right. We suffer because of the Empire's inability to reassess control over this sector. We're all being punished for the mistakes made by the dissidents of the first rebellion. Taking away people's freedom and imposing stricter laws, curfew... that is no way to end a rebellion. If anything, they are just fanning the flames. \n[STATIC]",
+		"value": 10,
+		"weight": 2,
+		"slug": ""
+	},
+	{
+		"iD": 2,
+		"name": "Audio Log",
+		"description": "Date: 648a.AE. 05/5.\nID: Zakow, M.\n\nThis is Captain Marcelina Zakow... I, uh, don't really know where to start with this entry. I got the opportunity to commandeer the Locke P-38 today. The crew did fine and we managed to avoid any suspicion from the Empire... but I was not privy to the details of our mission. One of Nagano's officers, Savas Kaptan, was on board. He gave me directives, which I relayed to the rest of the crew. He steered us into the asteroid belt where he met with someone... someone from the remnant of the first rebellion... a pirate! Nagano said we wouldn't repeat the mistakes of the first rebellion, but now I worry... \n[STATIC]",
+		"value": 10,
+		"weight": 2,
+		"slug": "datachip_image"
+	},
+	{
+		"iD": 3,
+		"name": "Audio Log",
+		"description": "Date: 648.a.AE. 28/9.\nID: Zakow, M.\n\nThis is Captain Marcelina Zakow of the Phantom Comet. I'm having doubts, as of late... I got the opportunity to speak with Haruto today and I questioned him as to why we seek help from the pirates. He said that we'll need them to keep the Empire distracted while we make our escape. All this time he's preached for non-violence... and while we're not attacking the Empire directly, we're still responsible for the damage caused. Besides, the pirates would not help us for free. In order to pay for their services, we've increased our raids planet-side. Is that not contradictory to keeping a low profile? We risk bringing the wrath of the Empire down upon us before we've even had a chance to escape. I am not sure we're doing the right thing anymore, but no one seems to agree with me... \n[STATIC]",
+		"value": 10,
+		"weight": 2,
+		"slug": "datachip_image"
+	},
+	{
+		"iD": 4,
+		"name": "Audio Log",
+		"description": "Date: 649.a.AE. 02/1.\nID: Zakow, M.\n\nThis is Captain Zakow of the Phantom Comet. It has finally begun! Our voyage to Haruto's Promised Land has officially begun, with Nagano himself spearheading the migraiton. I'm saddened that I did not get to go in this first wave. Instead I'm left here, in Adamec, with Savas as acting leader of the rebellion. This worries me... Savas is experienced and popular among the people. He's probably done more for the rebellion than any other. I do not doubt his loyalty or his skill. I only question his ethics... \n[STATIC]",
+		"value": 10,
+		"weight": 2,
+		"slug": "datachip_image"
+	},
+	{
+		"iD": 5,
+		"name": "Audio Log",
+		"description": "Date: 649.a.AE. 18/4.\nID: Zakow, M.\n\nThis is Captain Zakow. Would that I could, I'd resign after having witnessed today's atrocities. But I can't! Savas has made it clear that he'll end anything and anyone he'll consider a potential threat to the rebellion. Even if I sought protection from the Empire, they would attempt to squeeze information out of me and even if I told them everything, I'd be locked up in jail for the rest of my life. I have to keep believing in this rebellion, even though I'll never understand Savas' directives. He has planned for more raids and I just don't know why. We have enough supplies to lay low for some time. What's his angle in all of this? \n[STATIC]",
+		"value": 10,
+		"weight": 2,
+		"slug": "datachip_image"
+	},
+	{
+		"iD": 6,
+		"name": "Audio Log",
+		"description": "Date: 649.a.AE. 02/7.\nID: Zakow, M.\n\nFinally... I've been chosen to lead the next wave of settlers. We're taking off in December, about two months from now. Savas is a brute, but he's not stupid. I guess he realized that the two of us would never see eye-to-eye and that it would be easier if I wasn't in the way. I don't really like it but I think it's for the best, too. If Savas is so determined to see the rebellion collapse, then I'd rather be in the Promised Land when it happens.\n[Pause]\nI'm tired of being a captain. When I reach the Promised Land, I'm going to learn agriculture, or something. I don't want the responsibility anymore. \n[STATIC]",
+		"value": 10,
+		"weight": 2,
+		"slug": "datachip_image"
+	},
+	{
+		"iD": 7,
+		"name": "Audio Log",
+		"description": "Date: 649a.AE. 19/10.\nID: Zakow, M.\n\nThis is Captain Zakow of the Phantom Comet. There is little time to explain, but should I perish I pray that my last words will be heeded. The Empire knew about our departure, I don't know how but it's possible word slipped out. Or worse yet, there may be a traitor among our ranks. It matters little now, what matters is our cargo. To whomever finds this, I plead to you, treat the refugees fairly. They've committed no crimes. All they wished for was to live in a better world. If this rebellion is to end, show the benevolence of the Empire. Don't give rise to a third rebellion--[Explosion in the background]--what was that? Lieutenant, report! Lieu--[STATIC]...",
+		"value": 10,
+		"weight": 2,
+		"slug": "datachip_image"
+	},
+//K. Hares' Log
+	{
+		"iD": 8,
+		"name": "Audio Log",
+		"description": "Date: 648a.AE. 05/5.\nID: Hares, K.\n\nThat earthborn fool gave us another visit today. He's fighting for a hopeless cause and I keep trying to tell him so. If they want freedom they should join our big happy asteroid family! But he's as stubborn as he is foolish. At least he's handsome. He wanted to set up a deal, between one rebel leader and another. I brought the message to ours, and he agreed to a meeting. I still think it's a waste of time, but what do I know. \n[STATIC]",
+		"value": 10,
+		"weight": 2,
+		"slug": "datachip_image"
+	},
+	{
+		"iD": 9,
+		"name": "Audio Log",
+		"description": "Date: 649.a.AE. 03/1.\nID: Hares, K.\n\nYesterday was a blast! I can still feel the adrenaline pumping. The Empire had grown complacent, they never suspected our sudden attack. The haul was not bad either, we'll be living like royalty for the next few months. All thanks to those rebels. I am curious as to whether they succeeded or not. If they did... what future can they expect? \n[Long pause]\n... I still think I'd prefer life here. Life is worth so much more when every day is a blessing. \n[STATIC]",
+		"value": 10,
+		"weight": 2,
+		"slug": "datachip_image"
+	},
+	{
+		"iD": 10,
+		"name": "Audio Log",
+		"description": "Date: 649.a.AE. 09/4.\nID: Hares, K.\n\nHe came back today. This time with a flashy title as acting leader of Nagano's little rebellion. Cute! The position agrees with him. He looks so much more... authoritative! He negotiated for another attack. Seems they're ready to launch a second ship of refugees and they need us to occupy the Empire's attention again. It was kind of sad to see him squirm as our leader increased the cost for our services. Not that he's in a position to bargain, we care not for the lives of imperials, rebels or no. Before he left I tried telling him, once again, that his mission is pointless. Normally he just shrugs it off, but this time it seems he took offense. But rage becomes him. \n[STATIC]",
+		"value": 10,
+		"weight": 2,
+		"slug": "datachip_image"
+	},
+	{
+		"iD": 11,
+		"name": "Audio Log",
+		"description": "Date: 649.a.AE. 16/10.\nID: Hares, K.\n\nHello, log book, my only friend. Y'know, my dad used to say: “kiddo, there is no problem a strong drink cannot fix”. Today, I drink to that wisdom!\n[Hares chugs the drink]\nAah..! I feel better already! [Glass shatters in the background] Curses! I know I shouldn't care, and I don't! I don't care in the slightest about the lives of those pathetic rebels. But this treachery will spell the end between Savas and I... we made them steal and plunder in exchange for false promises. I wasn't even aware that we were going to betray them! I honestly thought we were going to attack the Empire again, but our leader told us that we couldn't afford the losses. That, this time, the Empire wouldn't be caught off guard. The only way to survive out here, he says, is to seize every opportunity. Savas gave us the details of his mission and we sold the information to the Empire. Those rebels are dead... \n[STATIC]",
+		"value": 10,
+		"weight": 2,
+		"slug": "datachip_image"
+	},
+//Edelmir Gervaise's Log
+	{
+		"iD": 12,
+		"name": "Audio Log",
+		"description": "Date: 647.a.AE. 03/9.\nID: Gervaise, E.\n\nThis is Commandant Edelmir Gervaise. The date is November third, year six-hundred-forty-seven, Imperial Calendar. Start log:\n[Short pause]\nWe've made an account of the stolen goods over the past few months. The result is curious, to say the least. According to reports from the previous government, the supplies stolen by the first rebels were mainly spacecrafts, munitions and provisions. They had a very militant focus. It seems a new rebellion is stirring, but one with a different focus. Some of the items that have been stolen are tools for planetary colonisation. Why would the rebels want these? One logical conclusion could be that they've found a prospect planet. This is dangerous and could have severe consequences for the Empire in the future, should they succeed in creating a colonony of their own. We must double our investigation efforts. End log. \n[STATIC]",
+		"value": 10,
+		"weight": 2,
+		"slug": "datachip_image"
+	},
+  {
+    "iD": 13,
+    "name": "Audio Log",
+    "description": "Date: 649.a.AE. 11/5.\nID: Gervaise, E.\n\nThis is Commandant Edelmir Gervaise. The date is Quintember eleventh, year six-hundred-forty-nine, Imperial Calendar. Start log:\n[Short pause]\nWe've received a peculiar trade offer from the pirates. They claim to have knowledge about the second rebellion and their scheduled departure to what they refer to as the \"promised land\". In exchange for this information they want a decade-long truce, in addition to a significant amount of supplies. The timing is fortuitous, as the construction of the Yermak is almost complete. We'll pretend to agree to their terms, put an end to the second rebellion before it gets a chance to rear its ugly head and then we'll obliterate the remnants of the first rebellion. Perhaps then, order can be restored to Adamec-14. End log. \n[STATIC]",
+    "value": 10,
+    "weight": 2,
+    "slug": "datachip_image"
+  },
+  //Items
+	{
+		"iD": 100,
 		"name": "Common crystal",
 		"description": "A common green crystal.",
 		"value": 10,
@@ -8,7 +124,7 @@
 		"slug": "common_crystal"
 	},
 	{
-		"iD": 1,
+		"iD": 101,
 		"name": "Scrap metal",
 		"description": "A clump of slightly corroded metals.",
 		"value": 2,
@@ -16,7 +132,7 @@
 		"slug": "scrap_metal"
 	},
 	{
-		"iD": 2,
+		"iD": 102,
 		"name": "Spare part printer",
 		"description": "Stolen from an Imperical cruiser, can print spare parts if supplied with materials and a blueprint.",
 		"value": 3500,
@@ -24,19 +140,19 @@
 		"slug": "spare_part_printer"
 	},
 	{
-		"iD": 3,
+		"iD": 103,
 		"name": "Scarp Mtela",
 		"description": "Not scrap metal, i promise",
 		"value": 112,
 		"weight": 60,
 		"slug": "scrap_metal_not"
 	},
-	{
-		"iD": 4,
-		"name": "Placeholder name",
-		"description": "Placeholder description",
-		"value": -50,
-		"weight": -100,
-		"slug": "placeholder"
-	}
+  {
+    "iD": 104,
+    "name": "Placeholder name",
+    "description": "Placeholder description",
+    "value": -50,
+    "weight": -100,
+    "slug": "placeholder"
+  }
 ]
