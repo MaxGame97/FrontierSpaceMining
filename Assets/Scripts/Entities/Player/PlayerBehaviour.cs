@@ -83,12 +83,11 @@ public class PlayerBehaviour : MonoBehaviour {
             playerRigidbody.AddTorque(-Input.GetAxis("Horizontal") * player.rotationSpeed);
 
             float thrustForce;
+            float maxSpeed = player.maxSpeed;
 
             // If the player wants to move forward
             if (Input.GetAxis("Vertical") > 0f)
             {
-                float maxSpeed = player.maxSpeed;
-
                 // If the player is pressing the boost button
                 if (Input.GetButton("Boost"))
                 {
@@ -120,9 +119,31 @@ public class PlayerBehaviour : MonoBehaviour {
             // Else, if the player wants to stop
             else if(Input.GetAxis("Vertical") < 0f)
             {
-                thrustForce = Input.GetAxis("Vertical") * player.acceleration;
+                maxSpeed = player.maxSpeed / 2f;
 
-                playerRigidbody.AddForce(playerRigidbody.velocity.normalized * thrustForce);
+                if (!Input.GetButton("Boost") || playerRigidbody.velocity.magnitude > maxSpeed)
+                {
+                    thrustForce = Input.GetAxis("Vertical") * player.acceleration;
+
+                    playerRigidbody.AddForce(playerRigidbody.velocity.normalized * thrustForce);
+                }
+                else
+                {
+                    thrustForce = Input.GetAxis("Vertical") * player.acceleration / 2f;
+                    
+                    // Add the thrust force in the forward direction
+                    playerRigidbody.AddForce(thrustForce * player.transform.up);
+
+                    // If the playerRigidbody is moving faster than the max speed
+                    if (playerRigidbody.velocity.magnitude > maxSpeed)
+                    {
+                        // Calculate how much force is neccesary to counter (neutralize) the thrust force
+                        float counterForce = Mathf.Abs(thrustForce) - (maxSpeed / playerRigidbody.velocity.magnitude);
+
+                        // Add the counter force in the opposite direction of travel
+                        playerRigidbody.AddForce(counterForce * -playerRigidbody.velocity.normalized);
+                    }
+                }
             }
 
             // Set the engine's thrust amount to the current value
