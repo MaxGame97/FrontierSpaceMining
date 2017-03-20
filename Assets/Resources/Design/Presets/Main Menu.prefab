@@ -2064,7 +2064,8 @@ AudioSource:
   m_GameObject: {fileID: 1000012318091112}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 243000010042255532, guid: 7ee190f2e651deb42bfbba681fbc1e0a,
+    type: 2}
   m_audioClip: {fileID: 8300000, guid: 2d1937865bcc1fd4a8c1c4f655eb2730, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 1
@@ -2138,7 +2139,8 @@ AudioSource:
   m_GameObject: {fileID: 1000013026229312}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 243000012855283330, guid: 7ee190f2e651deb42bfbba681fbc1e0a,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 0.4
@@ -2373,7 +2375,7 @@ Animator:
   m_GameObject: {fileID: 1000012982763736}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: fdd147be97ea950489af81cc81ef96d3, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -2424,7 +2426,7 @@ Animator:
   m_GameObject: {fileID: 1000014160848300}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: fdd147be97ea950489af81cc81ef96d3, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -2458,7 +2460,7 @@ Animator:
   m_GameObject: {fileID: 1000011767974466}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: fdd147be97ea950489af81cc81ef96d3, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -2628,9 +2630,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114000010739274422, guid: 3f11bfb5f43d1794db5b370a24fcc4f3,
-          type: 2}
-        m_MethodName: NewGame
+      - m_Target: {fileID: 114000012698162620}
+        m_MethodName: Play
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2722,7 +2723,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -2946,6 +2947,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxSpeed: 0.114
+  predictMovementFactor: 0.75
 --- !u!114 &114000010419683104
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -3335,9 +3337,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114000010739274422, guid: 3f11bfb5f43d1794db5b370a24fcc4f3,
-          type: 2}
-        m_MethodName: NewGame
+      - m_Target: {fileID: 114000012698162620}
+        m_MethodName: Play
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4075,7 +4076,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
@@ -4583,9 +4584,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 114000010739274422, guid: 3f11bfb5f43d1794db5b370a24fcc4f3,
-          type: 2}
-        m_MethodName: NewGame
+      - m_Target: {fileID: 114000012698162620}
+        m_MethodName: Play
         m_Mode: 3
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4992,7 +4992,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Navigation:
-    m_Mode: 3
+    m_Mode: 0
     m_SelectOnUp: {fileID: 0}
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}

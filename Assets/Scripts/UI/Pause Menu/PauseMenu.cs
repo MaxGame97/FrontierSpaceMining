@@ -7,6 +7,7 @@ public class PauseMenu : MonoBehaviour {
     [SerializeField] private bool saveAllowed = false;
 
     private GameControllerBehaviour gameController;
+    private GlobalGameControllerBehaviour globalController;
 
     private CanvasGroup canvas;
     
@@ -17,7 +18,6 @@ public class PauseMenu : MonoBehaviour {
 
     public bool PauseMenuEnabled { get { return pauseMenuEnabled; } }
 
-	// Use this for initialization
 	void Start () {
         canvas = GameObject.Find("Pause Menu System").GetComponent<CanvasGroup>();
 
@@ -28,7 +28,10 @@ public class PauseMenu : MonoBehaviour {
             audioScript = GameObject.Find("Global Game Controller").GetComponent<AudioMaster>();
 
         if (audioScript != null)
+        {
             audioScript.UpdateSliders();
+        }
+            
 
         TogglePauseMenuPanel();
         pauseAnimator.TogglePausePanel();
@@ -46,6 +49,7 @@ public class PauseMenu : MonoBehaviour {
             pauseMenuEnabled = false;
             pauseAnimator.TogglePausePanel();
             gameController.PauseToggle();
+            audioScript.SaveAudioSettings();
         }
         else
         {
@@ -65,6 +69,7 @@ public class PauseMenu : MonoBehaviour {
 
             globalGameController.Save();
         }
+        audioScript.SaveAudioSettings();
 
         SceneManager.LoadScene("Main Menu");
     }
@@ -77,11 +82,12 @@ public class PauseMenu : MonoBehaviour {
 
             globalGameController.Save();
         }
+        audioScript.SaveAudioSettings();
 
         //If inside the unity editor
         #if UNITY_EDITOR
-            //stop the playing instance
-            UnityEditor.EditorApplication.isPlaying = false;
+        //stop the playing instance
+        UnityEditor.EditorApplication.isPlaying = false;
         #else
             //Quit the game
             Application.Quit();
