@@ -125,8 +125,6 @@ public class GlobalGameControllerBehaviour : MonoBehaviour {
 
         if (!File.Exists(Application.persistentDataPath + "/" + SAVE_NAME + currentSaveIndex + ".dat"))
         {
-            Debug.LogError("No savegame found on index: " + currentSaveIndex);
-
             NewGame(index);
         }
         else
@@ -309,8 +307,6 @@ public class GlobalGameControllerBehaviour : MonoBehaviour {
 
             audioData = UpdateAudioSaveData();
 
-            Debug.Log(audioData.MasterVolume);
-
             // Serialize the audio data and unload the file
             binaryFormatter.Serialize(fileStream, audioData);
             fileStream.Close();
@@ -325,7 +321,7 @@ public class GlobalGameControllerBehaviour : MonoBehaviour {
 
         if (!File.Exists(Application.persistentDataPath + "/" + AUDIO_NAME + ".dat"))
         {
-            Debug.LogError("No audiodata found, creating new");
+            Debug.LogWarning("No audiodata found, creating new");
             NewAudioData();
             LoadToCurrentAudio();
         }

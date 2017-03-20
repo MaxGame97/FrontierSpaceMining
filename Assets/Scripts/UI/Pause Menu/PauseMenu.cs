@@ -49,7 +49,9 @@ public class PauseMenu : MonoBehaviour {
             pauseMenuEnabled = false;
             pauseAnimator.TogglePausePanel();
             gameController.PauseToggle();
-            audioScript.SaveAudioSettings();
+
+            if(audioScript != null)
+                audioScript.SaveAudioSettings();
         }
         else
         {
@@ -69,7 +71,9 @@ public class PauseMenu : MonoBehaviour {
 
             globalGameController.Save();
         }
-        audioScript.SaveAudioSettings();
+
+        if(audioScript != null)
+            audioScript.SaveAudioSettings();
 
         SceneManager.LoadScene("Main Menu");
     }
@@ -82,7 +86,9 @@ public class PauseMenu : MonoBehaviour {
 
             globalGameController.Save();
         }
-        audioScript.SaveAudioSettings();
+
+        if (audioScript != null)
+            audioScript.SaveAudioSettings();
 
         //If inside the unity editor
         #if UNITY_EDITOR

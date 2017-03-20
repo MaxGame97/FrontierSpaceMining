@@ -9,6 +9,7 @@ public class CameraBehaviour : MonoBehaviour {
 
     [SerializeField] [Range(0.01f, 0.5f)] private float maxSpeed;                   // Max speed that the camera can move at
     [SerializeField] [Range (0f, 2f)] private float predictMovementFactor = 0.75f;
+    [SerializeField] private float maxPredictionDistance = 10f;
 
     private float viewportHeight;                                                   // Vertical width (in units) that the camera is able to view
     private float viewportWidth;                                                    // Horizontal width (in units) that the camera is able to view
@@ -33,7 +34,7 @@ public class CameraBehaviour : MonoBehaviour {
             if(trackingPointRigidbody != null)
             {
                 // Update the current tracking position, shift it in the direction of travel
-                trackingPointPosition = trackingPointTransform.position + (Vector3)(trackingPointRigidbody.velocity * predictMovementFactor);
+                trackingPointPosition = trackingPointTransform.position + Vector3.ClampMagnitude(trackingPointRigidbody.velocity * predictMovementFactor, maxPredictionDistance);
             }
             // If the tracked transform does not have a rigidbody
             else

@@ -44,7 +44,8 @@ public class AudioMaster : MonoBehaviour {
 
     public void SaveAudioSettings()
     {
-        globalController.SaveAudioData();
+        if(globalController != null)
+            globalController.SaveAudioData();
     }
 
     //The function the sliders indirectly call to change the volume of the game. 

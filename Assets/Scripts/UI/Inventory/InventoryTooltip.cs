@@ -8,7 +8,10 @@ public class InventoryTooltip : MonoBehaviour {
     private GameObject tooltipPanel;    // The tooltip panel
 
     private Text tooltipText;           // The text component of the tooltip
+
     private Rect tooltipRect;           // The rectangle object of the tooltip panel
+    private Rect canvasRect;
+
     private Canvas canvas;              // The UI canvas component
 
     private Item item;                  // The current item hovered over
@@ -21,7 +24,9 @@ public class InventoryTooltip : MonoBehaviour {
             tooltipPanel = GameObject.Find("Inventory Tooltip Panel");              // Find the tooltip panel object
         
             tooltipText = tooltipPanel.transform.GetChild(0).GetComponent<Text>();  // Get the text component from the tooltip panel's child object
+
             tooltipRect = tooltipPanel.GetComponent<RectTransform>().rect;          // Get the rectangle object from the tooltip panel
+            canvasRect = GameObject.Find("Inventory System").GetComponent<RectTransform>().rect;
 
             canvas = GameObject.Find("Inventory System").GetComponent<Canvas>();    // Find the UI canvas and get its canvas component
 
@@ -47,8 +52,13 @@ public class InventoryTooltip : MonoBehaviour {
 
         ConstructTooltipString();       // Update the text component's string
 
+        float verticalOffset = ((tooltipText.preferredHeight / 2f) * canvas.scaleFactor) + 30f;
+
+        if (Input.mousePosition.y > canvasRect.height / 2f)
+            verticalOffset = -verticalOffset;
+
         // Move the tooltip panel to be slightly to the left of the cursor
-        tooltipPanel.transform.position = new Vector3(Input.mousePosition.x - ((tooltipRect.width * canvas.scaleFactor) / 1.5f), Input.mousePosition.y, 0f);
+        tooltipPanel.transform.position = new Vector3(Input.mousePosition.x, Input.mousePosition.y + verticalOffset, 0f);
     }
 
     // Deactivates the tooltip panel

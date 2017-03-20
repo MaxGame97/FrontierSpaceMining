@@ -82,7 +82,7 @@ public class PlayerBehaviour : MonoBehaviour {
             // Increase the torque based on the virtual horizontal axis input
             playerRigidbody.AddTorque(-Input.GetAxis("Horizontal") * player.rotationSpeed);
 
-            float thrustForce;
+            float thrustForce = 0f;
             float maxSpeed = player.maxSpeed;
 
             // If the player wants to move forward
@@ -119,16 +119,21 @@ public class PlayerBehaviour : MonoBehaviour {
             // Else, if the player wants to stop
             else if(Input.GetAxis("Vertical") < 0f)
             {
+                // Set the max speed for moving backwards (half the max speed)
                 maxSpeed = player.maxSpeed / 2f;
 
+                // If the player is pressing the boost button, or when the player's velocity is larger than the max speed
                 if (!Input.GetButton("Boost") || playerRigidbody.velocity.magnitude > maxSpeed)
                 {
+                    // Get the thrust force
                     thrustForce = Input.GetAxis("Vertical") * player.acceleration;
 
+                    // Add force in the direction of travel (the force is negative so the direction will be reversed)
                     playerRigidbody.AddForce(playerRigidbody.velocity.normalized * thrustForce);
                 }
                 else
                 {
+                    // Get the thrust force (half the max acceleration)
                     thrustForce = Input.GetAxis("Vertical") * player.acceleration / 2f;
                     
                     // Add the thrust force in the forward direction
