@@ -15,30 +15,39 @@ public class AudioMaster : MonoBehaviour {
     private float currentMusicVolume;
     private float currentSFXVolume;
 
-    private float currentMasterValue;
-    private float currentMusicValue;
-    private float currentSFXValue;
+    private AudioData currentValue = new AudioData();
 
     private int soundValue = 80;
 
-    // Use this for initialization
+    private GlobalGameControllerBehaviour globalController;
+
+    public AudioData CurrentValues { get { return currentValue; } }
+
+
     void Start () {
+        globalController = GetComponent<GlobalGameControllerBehaviour>();
         // Update the current volume values based on the audio mixer's values
         masterMixer.GetFloat("MasterVolume", out currentMasterVolume);
         masterMixer.GetFloat("MusicVolume", out currentMusicVolume);
         masterMixer.GetFloat("SFXVolume", out currentSFXVolume);
 
         // Convert the current volume values to a linear scale between 0 and 1, this is used to reset the volume slider values
-        currentMasterValue = Mathf.Pow(10f, currentMasterVolume / 80f);
-        currentMusicValue = Mathf.Pow(10f, currentMusicVolume / 80f);
-        currentSFXValue = Mathf.Pow(10f, currentSFXVolume / 80f);
+        currentValue.MasterVolume = Mathf.Pow(10f, currentMasterVolume / 80f);
+        currentValue.MusicVolume = Mathf.Pow(10f, currentMusicVolume / 80f);
+        currentValue.SFXVolume = Mathf.Pow(10f, currentSFXVolume / 80f);
+
 
         // Important, these values need to be saved somewhere, while this works fine in the game, it does not carry over between sessions
         // In other words, the sound values need to be saved and restored, this should be made when the audio mixer is instantiated
         // For example, in this script or in the global game controller's script
 	}
 
+    public void SaveAudioSettings()
+    {
+        globalController.SaveAudioData();
+    }
 
+    //The function the sliders indirectly call to change the volume of the game. 
     public void ChangeVolume(float volume, string volumeType)
     {
         float newValue;
@@ -49,43 +58,43 @@ public class AudioMaster : MonoBehaviour {
         {
             masterMixer.SetFloat("MasterVolume", newValue);
             currentMasterVolume = newValue;
-            currentMasterValue = volume;
+            currentValue.MasterVolume = volume;
         }   
         else if(volumeType == "music")
         {
             masterMixer.SetFloat("MusicVolume", newValue);
             currentMusicVolume = newValue;
-            currentMusicValue = volume;
+            currentValue.MusicVolume = volume;
         }
         else if(volumeType == "sfx")
         {
             masterMixer.SetFloat("SFXVolume", newValue);
             currentSFXVolume = newValue;
-            currentSFXValue = volume;
+            currentValue.SFXVolume = volume;
         }
+
     }
 
 
     float GetVolumeValue(float entryVolume)
     {
-        Debug.Log(entryVolume);
         float finalVolume;
         finalVolume = (soundValue * Mathf.Sin(entryVolume * Mathf.PI / 2f)) - soundValue;
         return finalVolume;
     }
 
+    //Update the sliders with the current volume of the game, usually used after scenechange
     public void UpdateSliders()
     {
         CheckSliders();
-        /*masterMixer.SetFloat("MasterVolume", currentMasterVolume);
-        masterMixer.SetFloat("MusicVolume", currentMusicVolume);
-        masterMixer.SetFloat("SFXVolume", currentSFXVolume);*/
 
-        masterVol.value = currentMasterValue;
-        musicVol.value = currentMusicValue;
-        sfxVol.value = currentSFXValue;
+        masterVol.value = currentValue.MasterVolume;
+        musicVol.value = currentValue.MusicVolume;
+        sfxVol.value = currentValue.SFXVolume;
+
     }
 
+    //Checks to see if the sliders are referenced. If not, reference them
     void CheckSliders()
     {
         if (masterVol == null && musicVol == null && sfxVol == null)

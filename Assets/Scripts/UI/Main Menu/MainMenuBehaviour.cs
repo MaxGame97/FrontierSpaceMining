@@ -27,7 +27,6 @@ public class MainMenuBehaviour : MonoBehaviour {
             string save = "Save " + (i + 1);
             savesList.Add(GameObject.Find(save));
         }
-
         UpdateSavesInMenu();
         audioScript.UpdateSliders();
     }
@@ -35,6 +34,8 @@ public class MainMenuBehaviour : MonoBehaviour {
     // Triggers the game to load a specific save index
 	public void Play(int index)
     {
+        audioScript.SaveAudioSettings();
+
         // Calls the load function, this is a workaround for an issue where calling the function directly from the button
         // caused the changed variables to revert, this messed up the loading system, this workaround fixes this issue
         globalBehaviour.Load(index);
@@ -49,10 +50,13 @@ public class MainMenuBehaviour : MonoBehaviour {
     // Exits the game to the desktop (or the editor)
     public void ExitToDesktop()
     {
+        audioScript.SaveAudioSettings();
+
+
         //If inside the unity editor
         #if UNITY_EDITOR
-                //stop the playing instance
-                UnityEditor.EditorApplication.isPlaying = false;
+        //stop the playing instance
+        UnityEditor.EditorApplication.isPlaying = false;
         #else
                     //Quit the game
                     Application.Quit();
@@ -80,7 +84,7 @@ public class MainMenuBehaviour : MonoBehaviour {
                 int minutesPlayed = timePlayed / 60;
                 int hoursPlayed = timePlayed / 3600;
             
-                savesList[i].GetComponentInChildren<Text>().text = "Items: " + itemAmount + "\n" + "Time played: " + hoursPlayed + " hours, " + minutesPlayed + " minutes" + "\n" + "Completed levels: " + completedLevels;
+                savesList[i].GetComponentInChildren<Text>().text = "Completed levels: " + completedLevels + "\n" + "Items: " + itemAmount + "\n" + "Time played: " + hoursPlayed + " hours, " + minutesPlayed + " minutes";
             }
             else
             {
@@ -92,17 +96,17 @@ public class MainMenuBehaviour : MonoBehaviour {
 
     }
 
-
+    //The function the Masterslider calls to change the mastervolume of the game
     public void ChangeMasterVolume(float volume)
     {
         audioScript.ChangeVolume(volume, "master");
     }
-
+    //The function the musicslider calls to change the musicvolume of the game
     public void ChangeMusicVolume(float volume)
     {
         audioScript.ChangeVolume(volume, "music");
     }
-
+    //The function the SFXslider calls to change the SFXvolume of the game
     public void ChangeSFXVolume(float volume)
     {
         audioScript.ChangeVolume(volume, "sfx");

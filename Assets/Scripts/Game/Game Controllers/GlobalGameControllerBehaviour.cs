@@ -10,10 +10,14 @@ using UnityEngine.SceneManagement;
 public class GlobalGameControllerBehaviour : MonoBehaviour {
 
     private readonly string SAVE_NAME = "saveData_";
+    private readonly string AUDIO_NAME = "audioData";
+
+    private AudioMaster audioMaster;
 
     private List<int> currentCompletedLevels = new List<int>();
 
     private Inventory currentInventory;
+    private AudioData currentAudio;
 
     private static int currentSaveIndex = 0;
     private float startTime = 0;
@@ -23,6 +27,7 @@ public class GlobalGameControllerBehaviour : MonoBehaviour {
     
     void Start()
     {
+        audioMaster = GetComponent<AudioMaster>();
         // If this is the only global game controller
         if (GameObject.FindGameObjectsWithTag("Global Game Controller").Length == 1)
         {
@@ -35,7 +40,15 @@ public class GlobalGameControllerBehaviour : MonoBehaviour {
             // Destroy this global game controller
             Destroy(gameObject);
         }
+
+        LoadAudioData();
+
     }
+
+
+    ///////////////////////////
+    ///////SAVE/LOADGAME///////
+    ///////////////////////////
 
     // Creates a new save on the specified index
     public void NewGame(int index)
@@ -118,6 +131,7 @@ public class GlobalGameControllerBehaviour : MonoBehaviour {
         }
         else
         {
+
             UpdateCurrentCompletedLevels();
             startTime = Time.time;
             SceneManager.LoadScene("Hub");
@@ -249,8 +263,142 @@ public class GlobalGameControllerBehaviour : MonoBehaviour {
         }
         return saveInfo;
     }
+
+    ///////////////////
+    ///////AUDIO///////
+    ///////////////////
+
+    void NewAudioData()
+    {
+        AudioData audioData = new AudioData();
+
+        BinaryFormatter binaryFormatter = new BinaryFormatter();
+        FileStream fileStream;
+
+        fileStream = File.Create(Application.persistentDataPath + "/" + AUDIO_NAME + ".dat");
+
+        audioData.MasterVolume = 1;
+        audioData.MusicVolume = 1;
+        audioData.SFXVolume = 1;
+
+        binaryFormatter.Serialize(fileStream, audioData);
+        fileStream.Close();
+    }
+
+    //Saves the currentaudio
+    public void SaveAudioData()
+    {        
+
+        // If there does not exist a file representing the audiodata
+        if (!File.Exists(Application.persistentDataPath + "/" + AUDIO_NAME + ".dat"))
+        {
+            Debug.LogError("No Audiodata found!");
+        }
+        // If there already is a file representing the audiodata
+        else
+        {
+            // Create a temporary save data representing the audiodata
+            AudioData audioData = new AudioData();
+
+            // Instantiate a new binary formatter and a new filestream
+            BinaryFormatter binaryFormatter = new BinaryFormatter();
+            FileStream fileStream;
+
+            // Load the file
+            fileStream = File.Open(Application.persistentDataPath + "/" + AUDIO_NAME + ".dat", FileMode.Open);
+
+            audioData = UpdateAudioSaveData();
+
+            Debug.Log(audioData.MasterVolume);
+
+            // Serialize the audio data and unload the file
+            binaryFormatter.Serialize(fileStream, audioData);
+            fileStream.Close();
+        }
+
+
+    }
+
+    //Loads the saved audio
+    void LoadAudioData()
+    {
+
+        if (!File.Exists(Application.persistentDataPath + "/" + AUDIO_NAME + ".dat"))
+        {
+            Debug.LogError("No audiodata found, creating new");
+            NewAudioData();
+            LoadToCurrentAudio();
+        }
+        else
+        {
+            LoadToCurrentAudio();
+        }
+    }
+
+
+
+    //Applies the saved audio to the currentaudio
+    void LoadToCurrentAudio()
+    {
+        AudioData audioData = GetAudioData();
+        currentAudio = audioData;
+        ApplyAudioFromSave();
+    }
+    //Applies the current audio to the sliders
+    void ApplyAudioFromSave()
+    {
+        if (currentAudio != null)
+        {
+            audioMaster.ChangeVolume(currentAudio.MasterVolume, "master");
+            audioMaster.ChangeVolume(currentAudio.MusicVolume, "music");
+            audioMaster.ChangeVolume(currentAudio.SFXVolume, "sfx");
+
+            audioMaster.UpdateSliders();
+        }
+    }
+
+    //Updates the savedata, only used by the SaveAudio function
+    AudioData UpdateAudioSaveData()
+    {
+        UpdateCurrentAudio();
+        return currentAudio;
+    }
+
+    //Updates the currentAudio with the current audiosettings
+    void UpdateCurrentAudio()
+    {
+        currentAudio = audioMaster.CurrentValues;
+    }
+
+    //Function for getting the AudioData class from save
+    AudioData GetAudioData()
+    {
+        AudioData audioData;
+        if (File.Exists(Application.persistentDataPath + "/" + AUDIO_NAME + ".dat"))
+        {
+            // Instantiate a new binaryformatter
+            BinaryFormatter binaryFormatter = new BinaryFormatter();
+
+            // Load the current save file
+            FileStream fileStream = File.Open(Application.persistentDataPath + "/" + AUDIO_NAME + ".dat", FileMode.Open);
+
+            // Get the save data from the save file
+            audioData = (AudioData)binaryFormatter.Deserialize(fileStream);
+
+            fileStream.Close();
+        }
+        else
+        {
+            audioData = null;
+        }
+        return audioData;
+    }
+
 }
 
+///////////////////
+//////CLASSES//////
+///////////////////
 public class SaveInformation
 {
     private float timePlayed = 0;
@@ -290,4 +438,17 @@ struct InventoryData
         this.iD = iD;
         this.amount = amount;
     }
+}
+
+[Serializable]
+public class AudioData
+{
+    private float masterVolume;
+    private float musicVolume;
+    private float sfxVolume;
+
+    public float MasterVolume { get { return masterVolume; } set { masterVolume = value; } }
+    public float MusicVolume { get { return musicVolume; } set { musicVolume = value; } }
+    public float SFXVolume { get { return sfxVolume; } set { sfxVolume = value; } }
+
 }
