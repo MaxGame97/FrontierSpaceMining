@@ -12,7 +12,7 @@ public class CarryAsteroid : MonoBehaviour {
         {
             GameObject go = (GameObject)Instantiate(prefab, collision.transform.position, Quaternion.identity, collision.transform);
             go.name = "Carried Asteroid";
-            go.transform.localPosition += new Vector3(0, 5);
+            go.transform.localPosition += new Vector3(0, 8);
         }
     }
 }
