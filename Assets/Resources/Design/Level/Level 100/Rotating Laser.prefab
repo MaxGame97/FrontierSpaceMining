@@ -70,10 +70,10 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000012843257104}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: -0, z: 0.7071068, w: -0.7071068}
   m_LocalPosition: {x: -0.000004237623, y: 0.00000008876618, z: 2}
-  m_LocalScale: {x: 3, y: 3, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 270}
   m_Children:
   - {fileID: 4000013698186714}
   m_Father: {fileID: 4638874330080342}
@@ -84,9 +84,9 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000010160189900}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.619999, y: 0, z: 1}
-  m_LocalScale: {x: 6.6066666, y: 1.0666667, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0.7071068, w: -0.7071068}
+  m_LocalPosition: {x: -0, y: 5.429999, z: 1}
+  m_LocalScale: {x: 9.91, y: 1.5999999, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 4000011122608274}
@@ -98,7 +98,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1115445848394860}
   m_LocalRotation: {x: 0, y: -0, z: 0.6996633, w: -0.7144727}
-  m_LocalPosition: {x: 72.4, y: -61.6, z: 0}
+  m_LocalPosition: {x: 39.767887, y: -58.51963, z: 0}
   m_LocalScale: {x: 0.90000004, y: 0.90000004, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 271.2}
   m_Children:
@@ -154,7 +154,7 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 1
 --- !u!61 &61000013642474604
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -237,7 +237,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 636eb718f8be49145938272532d60e1a, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 830ad6ea5a66a894a932551b0d1b324a, type: 3}
   m_Color: {r: 0.986207, g: 1, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0

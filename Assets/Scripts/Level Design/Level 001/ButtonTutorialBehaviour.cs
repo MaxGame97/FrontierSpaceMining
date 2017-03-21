@@ -15,16 +15,22 @@ public class ButtonTutorialBehaviour : MonoBehaviour {
     [SerializeField] private Texture texture;                       // Texture to show in the textbox
     [SerializeField] Texture2D background;                          // Background of the textbox
 
+    [SerializeField] GameObject nextTutorial;                       
+
     private Texture2D RGBBackground;                                // Sliders for the RGB colors of the textbox
     [SerializeField] [Range(0f, 1f)] private float R;               // These are only used if we dont use a texture for the background
     [SerializeField] [Range(0f, 1f)] private float G;
     [SerializeField] [Range(0f, 1f)] private float B;
+
+    private Transform playerPos;
 
     private GUIContent content;                                     // Content holder of the textbox
 
     private GUIStyle style = new GUIStyle();                        // Style holder of the textbox
 
     private bool show = false;                                      // Is true while the textbox is shown
+
+    private float timer = 0;
 
     void Start()
     {
@@ -36,6 +42,8 @@ public class ButtonTutorialBehaviour : MonoBehaviour {
 
         // Place the texture above the textbox
         style.imagePosition = ImagePosition.ImageAbove;
+
+        playerPos = GameObject.Find("Player").transform;
 
         // If we dont have a background texture we create one of the values in the RGB sliders
         if (background == null)
@@ -78,7 +86,21 @@ public class ButtonTutorialBehaviour : MonoBehaviour {
         {
             GUI.Box(new Rect(xPos, yPos, width, height), content, style);
 
-            Destroy(gameObject, duration);
+            timer += Time.deltaTime;
+
+            if(timer > duration)
+            {
+                timer = -0.1f;
+                if (nextTutorial != null)
+                {
+                    Instantiate(nextTutorial, playerPos.position, playerPos.rotation);
+                    Destroy(gameObject);
+                }
+                else
+                {
+                    Destroy(gameObject);
+                }
+            }
         }
     }
 }
