@@ -40,4 +40,17 @@ public class LevelController : MonoBehaviour {
             objectiveGameObjects[objectiveIndex].SetActive(true);
         }
     }
+
+    // Function that disables all objectives
+    public void DisableObjectives()
+    {
+        // Check all the assigned objectives
+        for(int i = 0; i < objectiveGameObjects.Count; i++)
+        {
+            // If the currently checked objective exists
+            if (objectiveGameObjects[i] != null)
+                // Deactivate it
+                objectiveGameObjects[i].SetActive(false);
+        }
+    }
 }

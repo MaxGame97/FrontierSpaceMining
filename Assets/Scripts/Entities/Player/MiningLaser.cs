@@ -5,9 +5,13 @@ public class MiningLaser : MonoBehaviour
 {
     [SerializeField] private GameObject miningParticles;            // Mining particle system
     [SerializeField] [Range(1f, 15f)] private float maxRange = 5;   // Max range of the mining laser
+    [SerializeField] [Range(30f, 90f)] private float maxAngle = 70f;
+    [SerializeField] private Vector2 rayOffset;
 
     private LayerMask environmentLayerMask;                         // A layermask containing the environment layer
     private LineRenderer miningLaser;                               // The linerenderer of the mining laser
+
+    private Camera mainCamera;
 
     [SerializeField] private bool isEnabled = true;
 
@@ -17,6 +21,8 @@ public class MiningLaser : MonoBehaviour
     {
         miningLaser = gameObject.GetComponent<LineRenderer>();      // Get the linerenderer component
         miningLaser.enabled = false;                                // Disable the linerenderer
+
+        mainCamera = Camera.main;
         
         environmentLayerMask = LayerMask.GetMask("Environment");    // Get the environment layer
     }
@@ -38,30 +44,38 @@ public class MiningLaser : MonoBehaviour
         // As long as button is pressed we continously create the laser
         while (Input.GetButton("Fire1") && isEnabled)
         {
-            // Initial setup for laser
-            Ray2D ray = new Ray2D(transform.position, transform.up);
-            RaycastHit2D hit = Physics2D.Raycast(ray.origin, transform.up, maxRange, environmentLayerMask);
+            Vector2 mouseAngle = (mainCamera.ScreenToWorldPoint(Input.mousePosition) - (transform.position + (Quaternion.Euler(0f, 0f, transform.eulerAngles.z) * rayOffset))).normalized;
 
-            // If the raycast hits an "Environment" object with the "Mineable" tag, start the mining laser
-            if (hit.collider != null && hit.collider.tag == "Mineable")
+            if(Vector2.Angle(transform.up, mouseAngle) < maxAngle)
             {
-                Vector3[] laserPosition = { new Vector3(ray.origin.x, ray.origin.y, transform.position.z + 5), new Vector3(hit.point.x, hit.point.y, transform.position.z + 5) };
+                // Initial setup for laser
+                Ray2D ray = new Ray2D(transform.position + (Quaternion.Euler(0f, 0f, transform.eulerAngles.z) * rayOffset), transform.up);
+                RaycastHit2D hit = Physics2D.Raycast(ray.origin, mouseAngle, maxRange, environmentLayerMask);
 
-                // Setting start and end position of the laser
-                miningLaser.SetPosition(0, laserPosition[0]);
-                miningLaser.SetPosition(1, laserPosition[1]);
-                
-                // Cause the mineable object to be mined
-                hit.collider.gameObject.GetComponent<MineableBehaviour>().Mine(transform.localRotation, hit.point);
+                // If the raycast hits an "Environment" object with the "Mineable" tag, start the mining laser
+                if (hit.collider != null && hit.collider.tag == "Mineable")
+                {
+                    Vector3[] laserPosition = { new Vector3(ray.origin.x, ray.origin.y, transform.position.z + 5), new Vector3(hit.point.x, hit.point.y, transform.position.z + 5) };
 
-                GameObject tempParticles = Instantiate(miningParticles);    // Instantiate the mining particles prefab
-                tempParticles.transform.position = hit.point;               // Move the mining particles to the mining point
+                    // Setting start and end position of the laser
+                    miningLaser.SetPosition(0, laserPosition[0]);
+                    miningLaser.SetPosition(1, laserPosition[1]);
+
+                    // Cause the mineable object to be mined
+                    hit.collider.gameObject.GetComponent<MineableBehaviour>().Mine(transform.localRotation, hit.point);
+
+                    GameObject tempParticles = Instantiate(miningParticles);    // Instantiate the mining particles prefab
+                    tempParticles.transform.position = hit.point;               // Move the mining particles to the mining point
+                }
+                // Resetting laser and miningObjects position so it doesn't show
+                else
+                {
+                    miningLaser.enabled = false;
+                }
             }
-            // Resetting laser and miningObjects position so it doesn't show
             else
             {
-                miningLaser.SetPosition(0, ray.origin);
-                miningLaser.SetPosition(1, ray.origin);
+                miningLaser.enabled = false;
             }
 
             yield return null;

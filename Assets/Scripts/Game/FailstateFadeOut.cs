@@ -16,6 +16,8 @@ public class FailstateFadeOut : MonoBehaviour {
         fadePanel = GameObject.Find("Fade Panel").GetComponent<Image>();
 
         missionFailedCanvas = GameObject.Find("Mission Failed Panel").GetComponent<CanvasGroup>();
+
+        GameObject.Find("Level Controller").GetComponent<LevelController>().DisableObjectives();
     }
 
 	// Update is called once per frame
@@ -25,7 +27,7 @@ public class FailstateFadeOut : MonoBehaviour {
             if (fadePanel.color.a >= 0.99f)
             {
                 fadePanel.color = new Color(0f, 0f, 0f, 1f);
-                
+
                 GameObject.Find("Game Controller").GetComponent<GameControllerBehaviour>().PauseToggle();
 
                 GameObject.Find("UI Controller").SetActive(false);
