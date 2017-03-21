@@ -17,3 +17,5 @@ EditorBuildSettings:
     path: Assets/Scenes/level_100.unity
   - enabled: 1
     path: Assets/Scenes/level_001.unity
+  - enabled: 1
+    path: Assets/Scenes/level_003.unity

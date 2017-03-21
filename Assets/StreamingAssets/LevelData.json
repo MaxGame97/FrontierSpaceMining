@@ -20,6 +20,16 @@
 	},
 	{
 		"iD": 2,
+		"levelName": "Pirate Mining Facility",
+		"description": "Wreck pirate property, and steal their stuff",
+		"scene": "level_003",
+		"requiredLevelsCompleted":
+		[
+			
+		]
+	},
+	{
+		"iD": 3,
 		"levelName": "Battlecruiser level",
 		"description": "Navigate an imperial battlecruiser",
 		"scene": "level_100",
