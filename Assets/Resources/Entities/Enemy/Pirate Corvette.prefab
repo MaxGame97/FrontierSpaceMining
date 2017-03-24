@@ -362,7 +362,7 @@ MonoBehaviour:
   soundFXPrefab: {fileID: 1000012480550896, guid: 1dcb1effd7c035344ab8251aa54b28f6,
     type: 2}
   alertSoundClip: {fileID: 8300000, guid: f9a1474fc773f9a4ea99ede8ac6c5966, type: 3}
-  bulletSoundClip: {fileID: 8300000, guid: 1d7a0d99d58edd540820c4b4a4a30edb, type: 3}
+  bulletSoundClip: {fileID: 8300000, guid: 53dd4fa347fceb748a72abb66f46fe7e, type: 3}
   informEnemies: []
   informTurrets:
   - {fileID: 1000014143175118}
