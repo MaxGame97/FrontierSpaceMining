@@ -40,6 +40,7 @@ GameObject:
   - 212: {fileID: 212988248716573334}
   - 114: {fileID: 114644455991148810}
   - 61: {fileID: 61000012444611264}
+  - 114: {fileID: 114000011286065522}
   m_Layer: 8
   m_Name: Glass Destructible
   m_TagString: Mineable
@@ -116,6 +117,18 @@ BoxCollider2D:
   m_Offset: {x: 0.05, y: 4}
   serializedVersion: 2
   m_Size: {x: 0.4, y: 1}
+--- !u!114 &114000011286065522
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1792828462778720}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a631f1d42068774781c52b7520e455a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sound: {fileID: 1000013092850136, guid: ee7cd54e6b139f946b49d8e0ed9c1ba6, type: 2}
 --- !u!114 &114644455991148810
 MonoBehaviour:
   m_ObjectHideFlags: 1
