@@ -9,9 +9,15 @@ using UnityEngine.UI;
 public class MainMenuBehaviour : MonoBehaviour {
     private readonly int AMOUNT_OF_SAVES = 3;
 
+    private int maxAudioLogs = 0;
+    private int maxLevels = 0;
 
     private AudioMaster audioScript;
     private GlobalGameControllerBehaviour globalBehaviour;
+    private LevelDatabase levelDataScript;
+    private ItemDatabase itemDataScript;
+    private List<LevelData> levelData;
+    private List<Item> itemData;
 
     private List<GameObject> savesList = new List<GameObject>();
 
@@ -20,6 +26,8 @@ public class MainMenuBehaviour : MonoBehaviour {
 
         audioScript = GameObject.Find("Global Game Controller").GetComponent<AudioMaster>();
         globalBehaviour = GameObject.Find("Global Game Controller").GetComponent<GlobalGameControllerBehaviour>();
+        levelDataScript = GetComponent<LevelDatabase>();
+        itemDataScript = GetComponent<ItemDatabase>();
 
         savesList.Capacity = AMOUNT_OF_SAVES;
         for(int i = 0; i < AMOUNT_OF_SAVES; i++)
@@ -73,18 +81,23 @@ public class MainMenuBehaviour : MonoBehaviour {
 
             if (saveInfo != null)
             {
-                int itemAmount = 0;
+                int currentAudioLogs = 0;
                 int timePlayed = 0;
                 int completedLevels = 0;
 
-                itemAmount = saveInfo.AmountOfItems;
+
+                currentAudioLogs = saveInfo.AmountOfAudioLogs;
                 timePlayed = (int)saveInfo.TimePlayed;
                 completedLevels = saveInfo.AmountOfLevelsCompleted;
+
+                UpdateMaxValuesInSaveInfo();
 
                 int minutesPlayed = timePlayed / 60;
                 int hoursPlayed = timePlayed / 3600;
             
-                savesList[i].GetComponentInChildren<Text>().text = "Completed levels: " + completedLevels + "\n" + "Items: " + itemAmount + "\n" + "Time played: " + hoursPlayed + " hours, " + minutesPlayed + " minutes";
+                savesList[i].GetComponentInChildren<Text>().text = "Completed levels: " + completedLevels + "/" + maxLevels + "\n"
+                                                                    + "Audiologs: " + currentAudioLogs + "/" + maxAudioLogs + "\n"
+                                                                    + "Time played: " + hoursPlayed + " hours, " + minutesPlayed + " minutes";
             }
             else
             {
@@ -94,6 +107,25 @@ public class MainMenuBehaviour : MonoBehaviour {
 
         }
 
+    }
+
+    void UpdateMaxValuesInSaveInfo()
+    {
+        levelData = levelDataScript.Database;
+        itemData = itemDataScript.Database;
+
+        int thingy = 0;
+
+        maxLevels = levelData.Count;
+        for(int i = 0; i < itemData.Count; i++)
+        {
+            if(itemData[i].ID < 100)
+            {
+                thingy++;
+            }
+            
+        }
+        maxAudioLogs = thingy;
     }
 
     //The function the Masterslider calls to change the mastervolume of the game

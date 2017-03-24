@@ -9,6 +9,8 @@ public class ItemDatabase : MonoBehaviour {
     private List<Item> database = new List<Item>(); // Database of all items
     private JsonData itemData;                      // Json data of all items
 
+
+    public List<Item> Database { get { return database; } }
 	// Use this for initialization
 	void Start () {
         // Get the item data from the .json file

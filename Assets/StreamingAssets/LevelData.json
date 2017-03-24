@@ -2,7 +2,7 @@
   {
     "iD": 0,
     "levelName": "Tutorial level",
-    "description": "Learn the basic mechanics",
+    "description": "\n<size=15>Objective:</size> recover a power core for the ship's engine. \n\nIn the rebels escape from the Empire, the ship's power core was overloaded maintaining the ship's energy shield, at the same time as it was maximizing the output of the ship's engines. It is impressive they got as far as they did, considering they had no means of deceleration. The ship is currently running on a backup generator. It is imperative that a replacement core is installed. Should the ship run out of power, you along with the refugees will die from asphyxiation. My scanners have picked up a crashed vessel in a nearby asteroid. I detect no hostiles in the area. It is possible that the vessel contains a power cell compatible with our system, as the pirate ships are based on the same design as our own.",
     "scene": "level_001",
     "requiredLevelsCompleted": [
 

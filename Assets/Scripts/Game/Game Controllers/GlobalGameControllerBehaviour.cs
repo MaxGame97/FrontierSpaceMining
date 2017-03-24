@@ -239,6 +239,10 @@ public class GlobalGameControllerBehaviour : MonoBehaviour {
     }
 
 
+    //////////////////////
+    ///////SAVEINFO///////
+    //////////////////////
+
     public SaveInformation GetSaveInfo(int index)
     {
         SaveInformation saveInfo = new SaveInformation();
@@ -250,7 +254,11 @@ public class GlobalGameControllerBehaviour : MonoBehaviour {
         {
             for (int i = 0; i < saveData.Items.Count; i++)
             {
-                saveInfo.AmountOfItems += saveData.Items[i].Amount;
+                if(saveData.Items[i].ID < 100)
+                {
+                    saveInfo.AmountOfAudioLogs++;
+                }
+                
             }
             saveInfo.TimePlayed += saveData.TimePlayed;
             saveInfo.AmountOfLevelsCompleted = saveData.CompletedLevels.Count;
@@ -398,12 +406,16 @@ public class GlobalGameControllerBehaviour : MonoBehaviour {
 public class SaveInformation
 {
     private float timePlayed = 0;
-    private int amountOfItems = 0;
+    private int amountOfAudioLogs = 0;
     private int amountOfLevelsCompleted = 0;
+    private int maxAudioLogs = 0;
+    private int maxLevels = 0;
 
     public float TimePlayed { get { return timePlayed; } set { timePlayed = value; } }
-    public int AmountOfItems { get { return amountOfItems; } set { amountOfItems = value; } }
+    public int AmountOfAudioLogs { get { return amountOfAudioLogs; } set { amountOfAudioLogs = value; } }
     public int AmountOfLevelsCompleted { get { return amountOfLevelsCompleted; } set { amountOfLevelsCompleted = value; } }
+    public int MaxAudioLogs { get { return maxAudioLogs; } set { maxAudioLogs = value; } }
+    public int MaxLevels { get { return maxLevels; } set { maxLevels = value; } }
 
 }
 
