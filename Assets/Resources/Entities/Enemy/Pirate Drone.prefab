@@ -364,7 +364,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   acceleration: 60
-  maxSpeed: 30
+  maxSpeed: 23
   rotationSpeed: 0.1
   minDistance: 4
   avoidDistance: 6

@@ -20,6 +20,7 @@ public class PlayerBehaviour : MonoBehaviour {
 
     [SerializeField] private GameObject soundFXPrefab;                          // The sound FX prefab object
     [SerializeField] private AudioClip impactSoundClip;                         // The impact sound clip
+    [SerializeField] private AudioClip damagedSoundClip;                         // The sound clip that plays when damaged
 
     [Space(6f)]
 
@@ -252,6 +253,14 @@ public class PlayerBehaviour : MonoBehaviour {
                 ProjectileBehaviour projectile = collision.gameObject.GetComponent<ProjectileBehaviour>();
                 // Deal the bullet's damage to the player
                 player.DealDamage(projectile.Damage);
+
+                GameObject impactSound = (GameObject)Instantiate(player.soundFXPrefab);
+                AudioSource audioSource = impactSound.GetComponent<AudioSource>();
+
+                impactSound.transform.position = player.transform.position;
+
+                audioSource.clip = player.damagedSoundClip;
+                audioSource.volume = 0.6f;
             }
             else
             {
@@ -276,6 +285,8 @@ public class PlayerBehaviour : MonoBehaviour {
                         impactSound.transform.position = player.transform.position;
 
                         audioSource.clip = player.impactSoundClip;
+                        audioSource.pitch = 1.1f;
+                        audioSource.volume = 0.5f;
                     }
                 }
             }

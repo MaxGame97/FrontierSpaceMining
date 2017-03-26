@@ -25,7 +25,6 @@ public class LevelDatabase : MonoBehaviour {
 
         // Create the level database
         CreateDatabase();
-        Debug.Log(database.Count);
     }
 
     // Creates the level database (SHOULD ONLY BE RUN ONCE)

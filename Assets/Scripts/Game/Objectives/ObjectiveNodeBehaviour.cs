@@ -16,6 +16,8 @@ public class ObjectiveNodeBehaviour : MonoBehaviour {
 
     [SerializeField] private bool startObjectsActive = false;
     [SerializeField] private bool destroyOnTrigger = false;
+    [SerializeField] [Range(0f,1f)] private float audioVolume = 1;
+
 
     private LevelController levelController;
     
@@ -101,6 +103,7 @@ public class ObjectiveNodeBehaviour : MonoBehaviour {
             GameObject soundFX = (GameObject)Instantiate(soundFXPrefab, transform.position, new Quaternion());
 
             soundFX.GetComponent<AudioSource>().clip = audioClip;
+            soundFX.GetComponent<AudioSource>().volume = audioVolume;
         }
     }
 }

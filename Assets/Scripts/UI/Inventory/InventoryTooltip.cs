@@ -9,7 +9,7 @@ public class InventoryTooltip : MonoBehaviour {
 
     private Text tooltipText;           // The text component of the tooltip
 
-    private Rect tooltipRect;           // The rectangle object of the tooltip panel
+    //private Rect tooltipRect;           // The rectangle object of the tooltip panel
     private Rect canvasRect;
 
     private Canvas canvas;              // The UI canvas component
@@ -25,7 +25,7 @@ public class InventoryTooltip : MonoBehaviour {
         
             tooltipText = tooltipPanel.transform.GetChild(0).GetComponent<Text>();  // Get the text component from the tooltip panel's child object
 
-            tooltipRect = tooltipPanel.GetComponent<RectTransform>().rect;          // Get the rectangle object from the tooltip panel
+            //tooltipRect = tooltipPanel.GetComponent<RectTransform>().rect;          // Get the rectangle object from the tooltip panel
             canvasRect = GameObject.Find("Inventory System").GetComponent<RectTransform>().rect;
 
             canvas = GameObject.Find("Inventory System").GetComponent<Canvas>();    // Find the UI canvas and get its canvas component

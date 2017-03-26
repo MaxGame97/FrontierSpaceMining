@@ -11,31 +11,31 @@
   {
 		"iD": 1,
 		"levelName": "Hostile introductions",
-		"description": "Meet your friendly neighbourhood pirates",
+		"description": "\n<size=15>Objective:</size> recover advanced scanners.\n\nThe rebel vessel is a transport ship; not a scout. As such, my scanners have limited range and utility. To improve your chances of survival you should see if you can't find a replacement. Logic based on information from my databanks suggests that the pirate frigates ought to have better developed scanners more suited for this environment. I have detected a large, inactive vessel in the Aukland Sector. It could be that it is derelict. If my estimated guess is correct, it is worth checking it out. Caution is advised, my scanners have picked up energy readings from the area. Likelihood of hostiles is very high.",
 		"scene": "level_002",
 		"requiredLevelsCompleted":
 		[
-			
+			0
 		]
 	},
 	{
 		"iD": 2,
 		"levelName": "Pirate Mining Facility",
-		"description": "Wreck pirate property, and steal their stuff",
+		"description": "\n<size=15>Objective:</size> recover aluminum plating. \n\nCertain rooms within our ship have been exposed to space. I've sealed them off, as to prevent unnecessary drain on our life support system. This is a short-term fix, however, and before we even think about leaving Adamec-14 we must repair these breaches. My scanners have spotted what seems to be an asteroid mining complex in the Leone Sector. While it might be considered a bit primitive, I believe we could use aluminium plating to patch up our hull. Stealth is advised. The pirates wouldn't leave such an operation unguarded.",
 		"scene": "level_003",
 		"requiredLevelsCompleted":
 		[
-			
+			1
 		]
 	},
 	{
 		"iD": 3,
-		"levelName": "Battlecruiser level",
-		"description": "Navigate an imperial battlecruiser",
+		"levelName": "Final Gambit",
+		"description": "\n<size=15>Objective:</size> disable an Imperial Battlecruiser. \n\nMy scanners have picked up something massive. A more human expression would be: oh god, it's huge! The Imperial has sent a battlecruiser. I've examined every file within my databanks yet its designation is unknown to me. An estimated guess suggests it's a new model... and forgive the dramatic pause, it is outfitted with something that releases extreme heat signals. A super weapon. We won't be able to leave the system unless it is disabled.",
 		"scene": "level_100",
 		"requiredLevelsCompleted":
 		[
-			
+			1
 		]
 	}
 ]

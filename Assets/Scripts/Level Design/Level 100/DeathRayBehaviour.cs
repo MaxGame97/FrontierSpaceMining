@@ -16,5 +16,10 @@ public class DeathRayBehaviour : MonoBehaviour
     private void FixedUpdate()
     {
         gameObject.GetComponent<BoxCollider2D>().enabled = GetComponent<MeshRenderer>().enabled;
+        if (transform.FindChild("LaserFX").GetComponent<AudioSource>() != null)
+        {
+            transform.FindChild("LaserFX").GetComponent<AudioSource>().enabled = GetComponent<MeshRenderer>().enabled;
+
+        }
     }
 }

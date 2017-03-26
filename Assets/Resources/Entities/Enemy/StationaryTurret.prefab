@@ -52,6 +52,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ecb01235d4d3b24895aa338a5759982, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bulletSoundClip: {fileID: 8300000, guid: 352460e254ebe6a4aa14acb3eb6f1bdf, type: 3}
+  soundFXPrefab: {fileID: 1000012480550896, guid: 1dcb1effd7c035344ab8251aa54b28f6,
+    type: 2}
   hasLimits: 0
   rotationSpeed: 0.06
   fieldOfView: 120

@@ -18,7 +18,7 @@ public class HUD : MonoBehaviour {
     private float maxQueueTime;                                 // The max queue time (in seconds)
     private float currentQueueTime = 0f;                        // The current queue time (in seconds)
 
-    private Transform hUDTransform;                             // The transform of the HUD canvas
+    //private Transform hUDTransform;                             // The transform of the HUD canvas
     private Transform notificationTextPanelTransform;           // The transform of the notification text panel
 
     private GameObject leftCorner;
@@ -36,7 +36,7 @@ public class HUD : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         // Get the HUD transform
-        hUDTransform = GameObject.Find("HUD System").transform;
+        //hUDTransform = GameObject.Find("HUD System").transform;
         // Get the notification text panel transform
         notificationTextPanelTransform = GameObject.Find("Notification Text Panel").transform;
 

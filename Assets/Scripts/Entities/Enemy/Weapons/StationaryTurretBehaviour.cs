@@ -5,6 +5,10 @@ public class StationaryTurretBehaviour : MonoBehaviour {
 
     private enum Behaviour { independent, connected };
 
+    [SerializeField] private AudioClip bulletSoundClip;                             // The bullet sound clip
+    [SerializeField] private GameObject soundFXPrefab;                             // The sound fx prefab
+
+
     [Header("Turret movement values")]
 
     [SerializeField] private bool hasLimits;                                    // remove?
@@ -219,7 +223,11 @@ public class StationaryTurretBehaviour : MonoBehaviour {
 
     public void FireTurret()
     {
-        GameObject bulletObject = (GameObject)Instantiate(projectile, transform.position, transform.rotation);
+        GameObject bulletObject = (GameObject)Instantiate(projectile, transform.position, transform.rotation);            
+        // Create a bullet sound FX object
+        GameObject bulletFX = (GameObject)Instantiate(soundFXPrefab, transform.position, new Quaternion());
+        bulletFX.GetComponent<AudioSource>().clip = bulletSoundClip;
+        bulletFX.GetComponent<AudioSource>().volume = 0.4f;
 
         Destroy(bulletObject, 5f);
     }

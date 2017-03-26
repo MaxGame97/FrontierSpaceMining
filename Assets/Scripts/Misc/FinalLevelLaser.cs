@@ -12,6 +12,12 @@ public class FinalLevelLaser : MonoBehaviour {
 
     private float timer;
 
+
+    private bool isCharging = true;
+    [SerializeField] private bool hasWindup = false;
+
+    [SerializeField] private GameObject chargingSoundObject;
+
     void Start()
     {
         BigLaser = gameObject.GetComponent<MeshRenderer>();      // Get the MeshRenderer component
@@ -22,7 +28,15 @@ public class FinalLevelLaser : MonoBehaviour {
     void FixedUpdate()
     {
         timer += Time.deltaTime;
-
+        if (hasWindup && isCharging == false)
+        {
+            if (timer >= intervall - 7.5f)
+            {
+                GameObject soundObj = (GameObject)Instantiate(chargingSoundObject, transform.parent.position, transform.parent.rotation, gameObject.transform);
+                Destroy(soundObj, 8f);
+                isCharging = true;
+            }
+        }
         // If the timer runs out, the laser coroutine is started
         if (timer > intervall)
         {
@@ -33,6 +47,7 @@ public class FinalLevelLaser : MonoBehaviour {
         {
             StopCoroutine("FireLaser");
             timer = 0;
+            isCharging = false;
         }
     }
 

@@ -34,8 +34,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000011625939066}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 55, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 45.5, y: -56.7, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
@@ -54,7 +54,7 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 50
+  m_Radius: 25
 --- !u!114 &114000012905623480
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -66,14 +66,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6dca5a22a5a8f34b9a18dfb4956e108, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 20
+  duration: 12
   xPos: 320
   yPos: 80
-  width: 220
-  height: 90
-  text: 
-  texture: {fileID: 0}
-  background: {fileID: 0}
+  width: 320
+  height: 160
+  text: These are the useable controls
+  texture: {fileID: 2800000, guid: 14b994382bdeca146af5d1be87017e1c, type: 3}
+  background: {fileID: 2800000, guid: 51fc90d1d6619f14a87fe54db30639ee, type: 3}
+  nextTutorial: {fileID: 1000012766922966, guid: d8302b9f0f29fa1408f1bca3aee53ce5,
+    type: 2}
   R: 0.6
   G: 0.6
   B: 1
