@@ -22,7 +22,7 @@ GameObject:
   - 212: {fileID: 212000013718180136}
   - 61: {fileID: 61000013454017478}
   - 50: {fileID: 50000013733775648}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: wreck_002_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
